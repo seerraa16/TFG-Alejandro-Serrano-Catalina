@@ -10,6 +10,7 @@ numpy
 pandas
 scipy
 scikit-learn
+pyarrow
 
 # --- Grafos / routing ---
 networkx
@@ -28,6 +29,7 @@ requests
 # --- Utilidades ---
 python-dotenv
 joblib
+folium
 
 # --- Dev / test ---
 pytest

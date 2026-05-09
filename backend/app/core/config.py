@@ -102,8 +102,8 @@ class Settings:
     # --- BPR (cálculo de tiempo de viaje) -------------------------------
     BPR_V_LIBRE_M30: float = 100.0  # km/h en autovía libre
     BPR_V_LIBRE_URB: float = 50.0   # km/h en viario urbano libre
-    BPR_ALPHA: float = 0.15
-    BPR_BETA: float = 4.0
+    BPR_ALPHA: float = 1.0
+    BPR_BETA: float = 2.0
     BPR_CAPACIDAD: int = 500        # vehículos / 15 min
     # Alias retrocompatible con la versión anterior del config
     BPR_V_LIBRE: float = 100.0

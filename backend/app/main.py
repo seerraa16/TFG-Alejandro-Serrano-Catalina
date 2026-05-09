@@ -63,6 +63,11 @@ app.add_middleware(
 app.include_router(prediction_router)
 
 
+@app.get("/debug/bpr")
+def debug_bpr() -> dict:
+    return {"alpha": settings.BPR_ALPHA, "beta": settings.BPR_BETA}
+
+
 @app.get("/")
 def root() -> dict:
     return {

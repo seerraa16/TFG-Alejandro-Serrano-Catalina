@@ -23,7 +23,7 @@ import pandas as pd
 
 from app.eta import compute_eta
 from app.routing import RouteMode, route_by_address
-from app.routing.graph_loader import get_tipo_elem_int
+from app.routing.graph_loader import get_sensors_df, get_tipo_elem_int
 from app.weather import OpenMeteoClient, WeatherInfo
 
 from app.prediction.traffic_inference import predict_for_sensors
@@ -65,6 +65,7 @@ class InferenceResult(TypedDict):
     weather: WeatherInfo                        # meteo aplicada (real o override)
     route_summary: RouteSummary                 # resumen one-shot de la ruta
     info: dict[str, Any]                        # metadatos: mode, datetime, accidente, etc.
+    geometry: list[tuple[float, float]]         # polilínea de la ruta como lista de (lat, lon)
 
 
 # ---------------------------------------------------------------------------
@@ -143,6 +144,14 @@ def predict_eta(
             f"Ruta con < 2 sensores ({len(sensor_ids)}), no se puede calcular ETA"
         )
 
+    raw = route["raw"]
+    if mode == "osm":
+        geometry: list[tuple[float, float]] = list(raw.get("geometry", []))
+    else:
+        sensors_df = get_sensors_df()
+        coords_map = dict(zip(sensors_df["id"], zip(sensors_df["latitud"], sensors_df["longitud"])))
+        geometry = [coords_map[sid] for sid in sensor_ids if sid in coords_map]
+
     # 2) Weather -----------------------------------------------------------
     if weather_override is not None:
         weather: WeatherInfo = {
@@ -206,4 +215,5 @@ def predict_eta(
         "weather": weather,
         "route_summary": summary,
         "info": info,
+        "geometry": geometry,
     }

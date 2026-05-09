@@ -79,6 +79,8 @@ class SensorPredictionOut(BaseModel):
     intensidad: float = Field(description="Vehículos / 15 min predichos.")
     ocupacion: float = Field(description="Ocupación física del carril (%).")
     carga: float = Field(description="Saturación tráfico/capacidad (%).")
+    lat: float | None = Field(None, description="Latitud del sensor.")
+    lon: float | None = Field(None, description="Longitud del sensor.")
 
 
 class WeatherOut(BaseModel):
@@ -104,6 +106,11 @@ class PredictResponse(BaseModel):
     route_summary: RouteSummaryOut
     sensor_predictions: list[SensorPredictionOut]
     weather: WeatherOut
+
+    geometry: list[list[float]] = Field(
+        default_factory=list,
+        description="Polilínea de la ruta: lista de [lat, lon].",
+    )
 
     elapsed_ms: int = Field(description="Tiempo de ejecución en el servidor (ms).")
     requested_datetime: DateTime = Field(description="Echo del datetime recibido.")
