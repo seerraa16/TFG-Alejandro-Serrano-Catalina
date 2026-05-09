@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_64469379119412d264f8bbd1ac3374e8 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    <div style='position:fixed;bottom:30px;left:30px;z-index:1000;background:white;padding:12px 16px;border-radius:8px;border:1px solid #ccc;font-size:13px;line-height:1.9;'><b>Routing OSM real + sensores</b><br><span style='color:#FFD600;font-size:20px;'>&#9733;</span> Origen GPS<br><span style='color:#FF6F00;font-size:20px;'>&#9733;</span> Destino GPS<br><span style='color:#76FF03;font-size:14px;'>&#9644;</span> Ruta real por carretera<br><span style='color:#00E5FF;font-size:16px;'>&#9679;</span> Sensores observados (4)<br><small>Distancia: 3,654 m (3.65 km)<br>Sensores en ruta: 4</small></div>
+    
+            <div class="folium-map" id="map_64469379119412d264f8bbd1ac3374e8" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_64469379119412d264f8bbd1ac3374e8 = L.map(
+                "map_64469379119412d264f8bbd1ac3374e8",
+                {
+                    center: [40.4437486, -3.6843156500000003],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 14,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_35aee9b10c6943ce250d7dc501d134bc = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_35aee9b10c6943ce250d7dc501d134bc.addTo(map_64469379119412d264f8bbd1ac3374e8);
+        
+    
+            var poly_line_6f91d2e7060b1265b735f35471d38d5c = L.polyline(
+                [[40.4350239, -3.6965047], [40.4350323, -3.6960576], [40.4350528, -3.6952584], [40.4350606, -3.6949611], [40.4350642, -3.6948234], [40.4350642, -3.6948234], [40.4351064, -3.6932646], [40.4351098, -3.6931402], [40.4351098, -3.6931402], [40.4351228, -3.6926303], [40.4351234, -3.6926058], [40.4351346, -3.6921067], [40.4351526, -3.6914415], [40.4351577, -3.6912629], [40.4351577, -3.6912629], [40.4351615, -3.6911085], [40.4351753, -3.6905419], [40.4351841, -3.6901827], [40.4351848, -3.6901531], [40.4351848, -3.6901531], [40.4351976, -3.6896272], [40.4352026, -3.6894239], [40.4352026, -3.6894239], [40.4351419, -3.6891964], [40.4350624, -3.688934], [40.4350624, -3.688934], [40.4350143, -3.6888043], [40.435023, -3.6886877], [40.4351046, -3.6885636], [40.4351046, -3.6885636], [40.4352837, -3.688373], [40.4354547, -3.6882146], [40.4354547, -3.6882146], [40.4355781, -3.688253], [40.4356724, -3.6883349], [40.4357637, -3.6884419], [40.4358115, -3.6885619], [40.4358454, -3.6887075], [40.4358991, -3.6888038], [40.4359759, -3.6888735], [40.4360237, -3.6889177], [40.4362228, -3.6890374], [40.4362228, -3.6890374], [40.43634, -3.6889083], [40.43634, -3.6889083], [40.4377465, -3.6880762], [40.4377651, -3.6880648], [40.4377991, -3.6880398], [40.4378177, -3.6880186], [40.4378177, -3.6880186], [40.437789, -3.6873045], [40.437759, -3.6865311], [40.4377576, -3.6864955], [40.4377508, -3.6863908], [40.4377393, -3.6862943], [40.4377393, -3.6862943], [40.4377343, -3.6862525], [40.4377203, -3.6860847], [40.4376921, -3.6854951], [40.4376921, -3.6854951], [40.4377084, -3.6854082], [40.4377316, -3.6853034], [40.4377546, -3.6852375], [40.4377628, -3.6852192], [40.4377709, -3.6852009], [40.4378112, -3.6851235], [40.4378112, -3.6851235], [40.4378576, -3.6850576], [40.4378827, -3.6850221], [40.4379424, -3.6848934], [40.4379424, -3.6848934], [40.4383489, -3.6841778], [40.4383489, -3.6841778], [40.4384927, -3.6839182], [40.4387727, -3.6834198], [40.4388265, -3.6833424], [40.4388906, -3.683273], [40.4388906, -3.683273], [40.4389109, -3.6832321], [40.4390047, -3.6830429], [40.4390047, -3.6830429], [40.4390399, -3.6829719], [40.4390399, -3.6829719], [40.4392176, -3.6826087], [40.4392176, -3.6826087], [40.43932, -3.6824152], [40.43932, -3.6824152], [40.4393449, -3.6823708], [40.4400997, -3.6810244], [40.4401235, -3.6809819], [40.4401337, -3.6809636], [40.4401729, -3.6808764], [40.4402005, -3.6808081], [40.4402106, -3.680765], [40.4402159, -3.6807325], [40.4402159, -3.6807325], [40.4402051, -3.6806926], [40.4401982, -3.6806554], [40.4401982, -3.6806554], [40.4401915, -3.68061], [40.4401929, -3.6805665], [40.4401961, -3.6805315], [40.4402012, -3.6804755], [40.4402108, -3.6804329], [40.4402211, -3.6804063], [40.4402211, -3.6804063], [40.440231, -3.6803807], [40.4402525, -3.6803395], [40.4402663, -3.680323], [40.4402663, -3.680323], [40.4402745, -3.6803132], [40.4403133, -3.6802822], [40.4403513, -3.6802613], [40.4403692, -3.6802556], [40.4404408, -3.6802451], [40.4404891, -3.6802488], [40.4405467, -3.6802656], [40.4405736, -3.6802771], [40.4405736, -3.6802771], [40.4406425, -3.6801221], [40.4406599, -3.6800947], [40.4408089, -3.679831], [40.4408089, -3.679831], [40.441021, -3.6794365], [40.4412286, -3.6790283], [40.4413255, -3.678828], [40.4413255, -3.678828], [40.4414066, -3.6786536], [40.4414066, -3.6786536], [40.4416692, -3.6786252], [40.4417063, -3.6786214], [40.4417591, -3.6786151], [40.4417591, -3.6786151], [40.4418761, -3.6786016], [40.4420323, -3.6785825], [40.4423267, -3.6785523], [40.4426299, -3.6785157], [40.4429238, -3.678484], [40.4433882, -3.6784292], [40.4440816, -3.6783486], [40.4442006, -3.6783352], [40.4442006, -3.6783352], [40.4443788, -3.6783145], [40.4445363, -3.6782973], [40.4454846, -3.6781879], [40.4455297, -3.6781825], [40.4467271, -3.6780452], [40.4468675, -3.6780297], [40.4476619, -3.6779387], [40.4476619, -3.6779387], [40.4484572, -3.6778468], [40.4486171, -3.6779177], [40.4486171, -3.6779177], [40.4487804, -3.6779009], [40.4489247, -3.6778834], [40.4489247, -3.6778834], [40.4490721, -3.6778637], [40.4491009, -3.677862], [40.4491723, -3.6778531], [40.4493561, -3.677832], [40.4494167, -3.6778251], [40.4494464, -3.6778217], [40.4498861, -3.6777739], [40.4504964, -3.6777076], [40.4508294, -3.6776709], [40.4512212, -3.6776247], [40.4514702, -3.677596], [40.4516574, -3.6775705], [40.4516574, -3.6775705], [40.4516564, -3.6773474], [40.4516549, -3.6771454], [40.4516531, -3.6768443], [40.4516538, -3.6767806], [40.4516532, -3.6766378], [40.4516462, -3.6751047], [40.4516462, -3.6751047], [40.4516418, -3.6750839], [40.4516368, -3.6750604], [40.4516356, -3.6750547], [40.4515815, -3.6747997], [40.4515815, -3.6747997], [40.4515505, -3.6747444], [40.4515337, -3.6746819], [40.4515337, -3.6746819], [40.4515276, -3.6746035], [40.451535, -3.6745594], [40.4515469, -3.6744881], [40.4515469, -3.6744881], [40.451578, -3.6744274], [40.451578, -3.6744274], [40.4515993, -3.6742984], [40.4516347, -3.6740849], [40.4516385, -3.6740618], [40.4516385, -3.6740618], [40.4516411, -3.6740141], [40.4516506, -3.6738285], [40.4516743, -3.6736152], [40.4517094, -3.6734005], [40.4517104, -3.6733929], [40.4517104, -3.6733929], [40.4518051, -3.6729458], [40.451806, -3.6729414], [40.451806, -3.6729414], [40.4519215, -3.6730204], [40.4520221, -3.673038], [40.4520827, -3.6730004], [40.452364, -3.6726125], [40.4524738, -3.6721638], [40.4524829, -3.6721266]],
+                {"bubblingMouseEvents": true, "color": "#76FF03", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#76FF03", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.95, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_64469379119412d264f8bbd1ac3374e8);
+        
+    
+            poly_line_6f91d2e7060b1265b735f35471d38d5c.bindTooltip(
+                `<div>
+                     Ruta OSM: 3,654 m (3.65 km)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2b5f48a60a3dff30df899847be12f8e3 = L.circleMarker(
+                [40.45017043438015, -3.67768229804357],
+                {"bubblingMouseEvents": true, "color": "#00ACC1", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00E5FF", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_64469379119412d264f8bbd1ac3374e8);
+        
+    
+        var popup_810525a5f0803365e5f8096245ae0f04 = L.popup({
+  "maxWidth": 240,
+});
+
+        
+            
+                var html_904bebdd585d6795d083bb0548e37295 = $(`<div id="html_904bebdd585d6795d083bb0548e37295" style="width: 100.0%; height: 100.0%;"><b>sensor_id: 3911</b><br>Principe Vergara, 207 S-N - Pradillo-Ramon y Cajal<br>Tipo: URB<br>Posición en ruta: vértice geométrico #162<br>Distancia a ruta: 32.6 m<br>osm_node: 297605509</div>`)[0];
+                popup_810525a5f0803365e5f8096245ae0f04.setContent(html_904bebdd585d6795d083bb0548e37295);
+            
+        
+
+        circle_marker_2b5f48a60a3dff30df899847be12f8e3.bindPopup(popup_810525a5f0803365e5f8096245ae0f04)
+        ;
+
+        
+    
+    
+            circle_marker_2b5f48a60a3dff30df899847be12f8e3.bindTooltip(
+                `<div>
+                     #162  sensor_id: 3911
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d400a9e4f46f3be0e9cf2fc0f6be743f = L.circleMarker(
+                [40.45088723585656, -3.67770082714543],
+                {"bubblingMouseEvents": true, "color": "#00ACC1", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00E5FF", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_64469379119412d264f8bbd1ac3374e8);
+        
+    
+        var popup_cac97244af030cf7e844a4329b500348 = L.popup({
+  "maxWidth": 240,
+});
+
+        
+            
+                var html_86cd2d1fd4f08866d79db3fb284b7962 = $(`<div id="html_86cd2d1fd4f08866d79db3fb284b7962" style="width: 100.0%; height: 100.0%;"><b>sensor_id: 3915</b><br>Principe Vergara N-S - Concha Espina-Pl. CataluÃ±a<br>Tipo: URB<br>Posición en ruta: vértice geométrico #164<br>Distancia a ruta: 6.9 m<br>osm_node: 297605509</div>`)[0];
+                popup_cac97244af030cf7e844a4329b500348.setContent(html_86cd2d1fd4f08866d79db3fb284b7962);
+            
+        
+
+        circle_marker_d400a9e4f46f3be0e9cf2fc0f6be743f.bindPopup(popup_cac97244af030cf7e844a4329b500348)
+        ;
+
+        
+    
+    
+            circle_marker_d400a9e4f46f3be0e9cf2fc0f6be743f.bindTooltip(
+                `<div>
+                     #164  sensor_id: 3915
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_77e702dbd5d5c76b9f4f0f9039d0cc2b = L.circleMarker(
+                [40.45161857563584, -3.67676064970623],
+                {"bubblingMouseEvents": true, "color": "#00ACC1", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00E5FF", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_64469379119412d264f8bbd1ac3374e8);
+        
+    
+        var popup_110498e6f3b0745f7bb5d9be15973f82 = L.popup({
+  "maxWidth": 240,
+});
+
+        
+            
+                var html_0c6edc3e143d0e9e7e8f0761483ab81e = $(`<div id="html_0c6edc3e143d0e9e7e8f0761483ab81e" style="width: 100.0%; height: 100.0%;"><b>sensor_id: 3914</b><br>RamÃ³n y Cajal O-E - Principe Vergara-Marcenado<br>Tipo: URB<br>Posición en ruta: vértice geométrico #172<br>Distancia a ruta: 4.3 m<br>osm_node: 98989165</div>`)[0];
+                popup_110498e6f3b0745f7bb5d9be15973f82.setContent(html_0c6edc3e143d0e9e7e8f0761483ab81e);
+            
+        
+
+        circle_marker_77e702dbd5d5c76b9f4f0f9039d0cc2b.bindPopup(popup_110498e6f3b0745f7bb5d9be15973f82)
+        ;
+
+        
+    
+    
+            circle_marker_77e702dbd5d5c76b9f4f0f9039d0cc2b.bindTooltip(
+                `<div>
+                     #172  sensor_id: 3914
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_80cdd4fe0fd7eb73b5388df0f5f4f1c1 = L.circleMarker(
+                [40.45190416644114, -3.67264777600102],
+                {"bubblingMouseEvents": true, "color": "#00ACC1", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00E5FF", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_64469379119412d264f8bbd1ac3374e8);
+        
+    
+        var popup_dff623e29e25f674435a8523b40623e3 = L.popup({
+  "maxWidth": 240,
+});
+
+        
+            
+                var html_aa7196248bf4b9e8f6bc60307cd41a1b = $(`<div id="html_aa7196248bf4b9e8f6bc60307cd41a1b" style="width: 100.0%; height: 100.0%;"><b>sensor_id: 10076</b><br>RamÃ³n y Cajal E-O - Pardo BazÃ¡n-Pl.Virgen Guadalupana<br>Tipo: URB<br>Posición en ruta: vértice geométrico #201<br>Distancia a ruta: 27.1 m<br>osm_node: 102186298</div>`)[0];
+                popup_dff623e29e25f674435a8523b40623e3.setContent(html_aa7196248bf4b9e8f6bc60307cd41a1b);
+            
+        
+
+        circle_marker_80cdd4fe0fd7eb73b5388df0f5f4f1c1.bindPopup(popup_dff623e29e25f674435a8523b40623e3)
+        ;
+
+        
+    
+    
+            circle_marker_80cdd4fe0fd7eb73b5388df0f5f4f1c1.bindTooltip(
+                `<div>
+                     #201  sensor_id: 10076
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_0cfa1c93c48da53aa8d112bf06cee360 = L.marker(
+                [40.42, -3.7025],
+                {
+}
+            ).addTo(map_64469379119412d264f8bbd1ac3374e8);
+        
+    
+            var div_icon_9144c71df35446861c91fac258058fcd = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:26px;color:#FFD600;text-shadow:0 0 4px #000;line-height:1;\"\u003e\u0026#9733;\u003c/div\u003e",
+  "iconSize": [28, 28],
+  "iconAnchor": [14, 14],
+  "className": "empty",
+});
+        
+    
+        var popup_07eb93fc820f2b093c5ca536aa6af7b4 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_aa805ff4aa765b8a0022d4a4410b340a = $(`<div id="html_aa805ff4aa765b8a0022d4a4410b340a" style="width: 100.0%; height: 100.0%;"><b>ORIGEN</b><br>Lat: 40.42<br>Lon: -3.7025</div>`)[0];
+                popup_07eb93fc820f2b093c5ca536aa6af7b4.setContent(html_aa805ff4aa765b8a0022d4a4410b340a);
+            
+        
+
+        marker_0cfa1c93c48da53aa8d112bf06cee360.bindPopup(popup_07eb93fc820f2b093c5ca536aa6af7b4)
+        ;
+
+        
+    
+    
+            marker_0cfa1c93c48da53aa8d112bf06cee360.bindTooltip(
+                `<div>
+                     Coord. ORIGEN (40.42, -3.7025)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0cfa1c93c48da53aa8d112bf06cee360.setIcon(div_icon_9144c71df35446861c91fac258058fcd);
+            
+    
+            var marker_6255b7ba2bc830d94232a89af44760b2 = L.marker(
+                [40.4525, -3.673],
+                {
+}
+            ).addTo(map_64469379119412d264f8bbd1ac3374e8);
+        
+    
+            var div_icon_c203e66c99ca354ca750142c1aeb4800 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size:26px;color:#FF6F00;text-shadow:0 0 4px #000;line-height:1;\"\u003e\u0026#9733;\u003c/div\u003e",
+  "iconSize": [28, 28],
+  "iconAnchor": [14, 14],
+  "className": "empty",
+});
+        
+    
+        var popup_225b92a21a46d0c6d5802ce30b8c3833 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_c8a65886b79f07bd1d64498a91e6a0da = $(`<div id="html_c8a65886b79f07bd1d64498a91e6a0da" style="width: 100.0%; height: 100.0%;"><b>DESTINO</b><br>Lat: 40.4525<br>Lon: -3.673</div>`)[0];
+                popup_225b92a21a46d0c6d5802ce30b8c3833.setContent(html_c8a65886b79f07bd1d64498a91e6a0da);
+            
+        
+
+        marker_6255b7ba2bc830d94232a89af44760b2.bindPopup(popup_225b92a21a46d0c6d5802ce30b8c3833)
+        ;
+
+        
+    
+    
+            marker_6255b7ba2bc830d94232a89af44760b2.bindTooltip(
+                `<div>
+                     Coord. DESTINO (40.4525, -3.673)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6255b7ba2bc830d94232a89af44760b2.setIcon(div_icon_c203e66c99ca354ca750142c1aeb4800);
+            
+</script>
+</html>
