@@ -1,0 +1,2285 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d4" for="edge" attr.name="distancia_m" attr.type="double" />
+  <key id="d3" for="edge" attr.name="distancia_m" attr.type="float" />
+  <key id="d2" for="node" attr.name="nombre" attr.type="string" />
+  <key id="d1" for="node" attr.name="lon" attr.type="double" />
+  <key id="d0" for="node" attr.name="lat" attr.type="double" />
+  <graph edgedefault="directed">
+    <node id="3592">
+      <data key="d0">40.4698081318107</data>
+      <data key="d1">-3.6858898939948</data>
+      <data key="d2">AGUSTIN DE FOXA N-S(JOSE VASCONCELOS-MAURICIO LEGENDRE)</data>
+    </node>
+    <node id="3801">
+      <data key="d0">40.47515552503011</data>
+      <data key="d1">-3.72237343543397</data>
+      <data key="d2">PM12781</data>
+    </node>
+    <node id="3822">
+      <data key="d0">40.48189679309026</data>
+      <data key="d1">-3.67353222077003</data>
+      <data key="d2">PM20026</data>
+    </node>
+    <node id="3918">
+      <data key="d0">40.45308096196933</data>
+      <data key="d1">-3.66727709353987</data>
+      <data key="d2">Alfonso XIII S-N - Ramon y Cajal-Pintor Ribera</data>
+    </node>
+    <node id="3919">
+      <data key="d0">40.45227429407131</data>
+      <data key="d1">-3.66647243580769</data>
+      <data key="d2">Ramon y  Cajal O-E - La Pedriza-Padre Claret</data>
+    </node>
+    <node id="3926">
+      <data key="d0">40.45171177567173</data>
+      <data key="d1">-3.68009432398302</data>
+      <data key="d2">Concha Espina, 57 E-O - Rodriguez Marin-Serrano</data>
+    </node>
+    <node id="4497">
+      <data key="d0">40.45666089161219</data>
+      <data key="d1">-3.70687796628637</data>
+      <data key="d2">Francos Rodriguez E-O(Margaritas-Jose Calvo)</data>
+    </node>
+    <node id="4523">
+      <data key="d0">40.45241789790751</data>
+      <data key="d1">-3.71040445661619</data>
+      <data key="d2">DR.FEDERICO RUBIO Y GALI O-E(P.IGLESIAS-JERONIMA LLORENTE)</data>
+    </node>
+    <node id="4525">
+      <data key="d0">40.45404391361918</data>
+      <data key="d1">-3.71426421695607</data>
+      <data key="d2">DR.FEDERICO RUBIO Y GALI O-E(FCO. DE DIEGO-MORERAS)</data>
+    </node>
+    <node id="4552">
+      <data key="d0">40.47401106462102</data>
+      <data key="d1">-3.71158787419279</data>
+      <data key="d2">AV. BETANZOS N-S(MELCHOR FERNANDEZ ALMAGRO-CHANTADA)</data>
+    </node>
+    <node id="4562">
+      <data key="d0">40.47641930153111</data>
+      <data key="d1">-3.70122797817145</data>
+      <data key="d2">FINISTERRE N-S(MELCHOR FERNANDEZ ALMAGRO-VILLA MARIN)</data>
+    </node>
+    <node id="4568">
+      <data key="d0">40.47660531486698</data>
+      <data key="d1">-3.70511709465746</data>
+      <data key="d2">MELCHOR FERNANDEZ ALMAGRO E-O(GINZO DE LIMIA-FERROL)</data>
+    </node>
+    <node id="4573">
+      <data key="d0">40.47473634390014</data>
+      <data key="d1">-3.69745416064644</data>
+      <data key="d2">(TACTICO) SALIDA APARCAMIENTO GENERAL HOSPITAL CARLOS III</data>
+    </node>
+    <node id="4587">
+      <data key="d0">40.47485800477387</data>
+      <data key="d1">-3.68559925248016</data>
+      <data key="d2">SALIDA TUNEL PIO XII E-O(MAURICIO LEGENDRE-Po CASTELLANA)</data>
+    </node>
+    <node id="4597">
+      <data key="d0">40.47453583149623</data>
+      <data key="d1">-3.69054452834471</data>
+      <data key="d2">SINESIO DELGADO E-O(SALIDA TUNEL)</data>
+    </node>
+    <node id="4599">
+      <data key="d0">40.47970587807048</data>
+      <data key="d1">-3.68710980743401</data>
+      <data key="d2">ARZOBISPO MORCILLO O-E(ACC.TORRES-Po CASTELLANA)</data>
+    </node>
+    <node id="4601">
+      <data key="d0">40.47986365157298</data>
+      <data key="d1">-3.68832903561914</data>
+      <data key="d2">ARZOBISPO MORCILLO E-O(TUNEL A 180M) (ACC.TORRES-PEDRO RICO)</data>
+    </node>
+    <node id="4604">
+      <data key="d0">40.47929699785206</data>
+      <data key="d1">-3.69024799579346</data>
+      <data key="d2">PEDRO RICO N-S(ARZOBISO MORCILLO-AV. MONFORTE DE LEMOS)</data>
+    </node>
+    <node id="4606">
+      <data key="d0">40.47694998860162</data>
+      <data key="d1">-3.69028052494998</data>
+      <data key="d2">AV.MONFORTE  LEMOS  E-O(TUNEL 80M)(Po CASTELLANA-PEDRO RICO)</data>
+    </node>
+    <node id="5416">
+      <data key="d0">40.47804566620829</data>
+      <data key="d1">-3.71101199771558</data>
+      <data key="d2">AV.MONFORTE DE LEMOS E-O(PL.VERIN-AV.BETANZOS)</data>
+    </node>
+    <node id="5422">
+      <data key="d0">40.47864275512782</data>
+      <data key="d1">-3.71240916413291</data>
+      <data key="d2">Av.Betanzos S-N - Av.Monforte de Lemos-Av.IlustraciÃ³n</data>
+    </node>
+    <node id="5425">
+      <data key="d0">40.48063443468495</data>
+      <data key="d1">-3.71106505893019</data>
+      <data key="d2">(AFOROS)Av.IlustraciÃ³n O-E - Av.Betanzos-Centro CÃ­vico</data>
+    </node>
+    <node id="5431">
+      <data key="d0">40.4801578621987</data>
+      <data key="d1">-3.70445862569318</data>
+      <data key="d2">Ginzo de Limia S-N - Av.Monforte de Lemos-Av.IlustraciÃ³n</data>
+    </node>
+    <node id="5464">
+      <data key="d0">40.4609549447095</data>
+      <data key="d1">-3.68976110412642</data>
+      <data key="d2">PÂºCastellana S-N - Fco.GervÃ¡s-Carlos Maurras</data>
+    </node>
+    <node id="5478">
+      <data key="d0">40.45887948501139</data>
+      <data key="d1">-3.6858624223308</data>
+      <data key="d2">Alberto Alcocer O-E - Padre DamiÃ¡n-JuÃ¡n RamÃ³n JimÃ©nez</data>
+    </node>
+    <node id="5487">
+      <data key="d0">40.45258515189811</data>
+      <data key="d1">-3.69748359974555</data>
+      <data key="d2">General PerÃ³n E-O - Presidente Carmona-Aviador Zorita</data>
+    </node>
+    <node id="5491">
+      <data key="d0">40.45227473629967</data>
+      <data key="d1">-3.69372531136008</data>
+      <data key="d2">General PerÃ³n O-E(Giro) - Orense-Poeta Joan Maragall</data>
+    </node>
+    <node id="5506">
+      <data key="d0">40.45498405613216</data>
+      <data key="d1">-3.68710631276103</data>
+      <data key="d2">PADRE DAMIAN N-S(FALLA-RAFAEL SALGADO)</data>
+    </node>
+    <node id="5513">
+      <data key="d0">40.46292518779289</data>
+      <data key="d1">-3.68968817647332</data>
+      <data key="d2">PÂºCastellana N-S - EstÃ©banez CalderÃ³n-Rosario Pino</data>
+    </node>
+    <node id="5525">
+      <data key="d0">40.4665216803812</data>
+      <data key="d1">-3.68707211916644</data>
+      <data key="d2">Mateo Inurria O-E - Enrique Larreta-Pl.Castilla</data>
+    </node>
+    <node id="5526">
+      <data key="d0">40.46754530930937</data>
+      <data key="d1">-3.68646636000745</data>
+      <data key="d2">Enrique Larreta N-S - AgustÃ­n de FoxÃ¡-Mateo Inurria</data>
+    </node>
+    <node id="5538">
+      <data key="d0">40.46555080331718</data>
+      <data key="d1">-3.67940183427086</data>
+      <data key="d2">PÂº de la Habana S-N - Jerez-Menendez Pidal</data>
+    </node>
+    <node id="5549">
+      <data key="d0">40.45747960394118</data>
+      <data key="d1">-3.67686785877082</data>
+      <data key="d2">(AFOROS)Principe de Vergara S-N - Colombia-Pl.RepÃºblica Dominicana</data>
+    </node>
+    <node id="5575">
+      <data key="d0">40.45867563081612</data>
+      <data key="d1">-3.68083087185569</data>
+      <data key="d2">Alberto Alcocer E-O - VÃ­ctor AndrÃ©s Belaunde-PÂº de la Habana</data>
+    </node>
+    <node id="5584">
+      <data key="d0">40.45845582593343</data>
+      <data key="d1">-3.67598387024532</data>
+      <data key="d2">Costa Rica O-E - Principe de Vergara-Puerto Rico</data>
+    </node>
+    <node id="5595">
+      <data key="d0">40.46033168507651</data>
+      <data key="d1">-3.67524297775454</data>
+      <data key="d2">ALFONSO XIII O-E (CHILE-PUERTO RICO)</data>
+    </node>
+    <node id="5596">
+      <data key="d0">40.46023391559858</data>
+      <data key="d1">-3.67277876017867</data>
+      <data key="d2">ALFONSO XIII O-E (PUERTO RICO-PARAGUAY)</data>
+    </node>
+    <node id="5597">
+      <data key="d0">40.46015518764692</data>
+      <data key="d1">-3.67073827299026</data>
+      <data key="d2">ALFONSO XIII O-E (PARAGUAY-RICARDO CALVO)</data>
+    </node>
+    <node id="5604">
+      <data key="d0">40.45699982512006</data>
+      <data key="d1">-3.67327045376136</data>
+      <data key="d2">COLOMBIA E-O (PUERTO RICO-VICTOR DE LA SERNA)</data>
+    </node>
+    <node id="5610">
+      <data key="d0">40.45454802751662</data>
+      <data key="d1">-3.67805980389532</data>
+      <data key="d2">Serrano N-S - Pl.Ecuador-RodrÃ­guez MarÃ­n</data>
+    </node>
+    <node id="5616">
+      <data key="d0">40.45883962078673</data>
+      <data key="d1">-3.6696555615006</data>
+      <data key="d2">(AFOROS)Costa Rica E-O(Superficie) - Pl.JosÃ© MÂª Soler-Paraguay</data>
+    </node>
+    <node id="5617">
+      <data key="d0">40.45967685647578</data>
+      <data key="d1">-3.66624635330382</data>
+      <data key="d2">Pte Costa Rica E-O(Entrada TÃºnel) - Arturo Soria-JosÃ© MÂª Soler</data>
+    </node>
+    <node id="5656">
+      <data key="d0">40.46082247803297</data>
+      <data key="d1">-3.69307578485875</data>
+      <data key="d2">Francisco GervÃ¡s E-O - Poeta Joan Maragall-Orense</data>
+    </node>
+    <node id="5660">
+      <data key="d0">40.45632353950196</data>
+      <data key="d1">-3.6932477335906</data>
+      <data key="d2">San GermÃ¡n E-O - Poeta Joan Maragall-Orense</data>
+    </node>
+    <node id="5661">
+      <data key="d0">40.45509742121054</data>
+      <data key="d1">-3.69385699917164</data>
+      <data key="d2">Pedro Teixeira E-O - Av.del Brasil-Orense</data>
+    </node>
+    <node id="5662">
+      <data key="d0">40.45651725296801</data>
+      <data key="d1">-3.6967772482774</data>
+      <data key="d2">San GermÃ¡n E-O - JuliÃ¡n Besteiro-Teresita GonzÃ¡lez</data>
+    </node>
+    <node id="5677">
+      <data key="d0">40.46186062667714</data>
+      <data key="d1">-3.69528807735239</data>
+      <data key="d2">Infanta Mercedes S-N - Pedro Villar-San Felipe</data>
+    </node>
+    <node id="5678">
+      <data key="d0">40.46058285031337</data>
+      <data key="d1">-3.69632255929277</data>
+      <data key="d2">Infanta Mercedes S-N - Sor Angela de la Cruz-Francisco GervÃ¡s</data>
+    </node>
+    <node id="5681">
+      <data key="d0">40.45707292455312</data>
+      <data key="d1">-3.70172774168475</data>
+      <data key="d2">Bravo Murillo S-N(Giro a Lope de Haro) - San Enrique-San GermÃ¡n</data>
+    </node>
+    <node id="5686">
+      <data key="d0">40.45966308966229</data>
+      <data key="d1">-3.69936486105464</data>
+      <data key="d2">Bravo Murillo N-S - MarquÃ©s de Viana-Maria Zayas</data>
+    </node>
+    <node id="5690">
+      <data key="d0">40.46457738224849</data>
+      <data key="d1">-3.69483448266939</data>
+      <data key="d2">Bravo Murillo O-E(Giro a Pinos Alta) - OÃ±ate-Azahar</data>
+    </node>
+    <node id="5691">
+      <data key="d0">40.4580181345539</data>
+      <data key="d1">-3.70108047502694</data>
+      <data key="d2">Bravo Murillo N-S(San GermÃ¡n) - Maria Zayas-Lope de Haro</data>
+    </node>
+    <node id="5692">
+      <data key="d0">40.4636183430768</data>
+      <data key="d1">-3.6963197318332</data>
+      <data key="d2">Bravo Murillo S-N - Rosa Silva-OÃ±ate</data>
+    </node>
+    <node id="5693">
+      <data key="d0">40.46036575841516</data>
+      <data key="d1">-3.69765439466949</data>
+      <data key="d2">Sor Angela de la Cruz  O-E(Salida TÃºnel) - Bravo Murillo-JuliÃ¡n Besteiro</data>
+    </node>
+    <node id="5700">
+      <data key="d0">40.45181637058128</data>
+      <data key="d1">-3.70321204748535</data>
+      <data key="d2">Bravo Murillo S-N - Teruel -Avila</data>
+    </node>
+    <node id="5701">
+      <data key="d0">40.45292506872183</data>
+      <data key="d1">-3.70303395434252</data>
+      <data key="d2">Bravo Murillo S-N - Avila-JuÃ¡n de OlÃ­as</data>
+    </node>
+    <node id="5726">
+      <data key="d0">40.45086808679249</data>
+      <data key="d1">-3.69657938837413</data>
+      <data key="d2">Reina Mercedes O-E - Edgar Neville-Orense</data>
+    </node>
+    <node id="5871">
+      <data key="d0">40.48060668567802</data>
+      <data key="d1">-3.72199948394828</data>
+      <data key="d2">Av. Cardenal Herrera Oria, 255 E-O(Pico Balaitus-Julio Calvo)</data>
+    </node>
+    <node id="5873">
+      <data key="d0">40.48173858892402</data>
+      <data key="d1">-3.71937409841427</data>
+      <data key="d2">(AFOROS) CARDENAL HERRERA ORIA, 244 E-O(ISLA AROSA-PICO BALAITUS)</data>
+    </node>
+    <node id="5875">
+      <data key="d0">40.48274357762426</data>
+      <data key="d1">-3.71608946531446</data>
+      <data key="d2">Av. Cardenal Herrera Oria, 221 E-O(La MasÃ³-Isla de Arosa)</data>
+    </node>
+    <node id="5896">
+      <data key="d0">40.48485560002393</data>
+      <data key="d1">-3.71622616556751</data>
+      <data key="d2">VENTISQUERO DE LA CONDESA SALIDA TUNEL S-N</data>
+    </node>
+    <node id="5900">
+      <data key="d0">40.49037221093457</data>
+      <data key="d1">-3.69655400751015</data>
+      <data key="d2">CARDENAL HERRERA ORIA E-O(MANRESA-M-607)</data>
+    </node>
+    <node id="5905">
+      <data key="d0">40.48796021191571</data>
+      <data key="d1">-3.69868313574274</data>
+      <data key="d2">(TACTICO)SANGENJO S-N</data>
+    </node>
+    <node id="6050">
+      <data key="d0">40.45024955655586</data>
+      <data key="d1">-3.65190977300536</data>
+      <data key="d2">Arturo Soria - Giro a Torrecilla del Puerto</data>
+    </node>
+    <node id="6097">
+      <data key="d0">40.48032356042278</data>
+      <data key="d1">-3.66693669756677</data>
+      <data key="d2">Arturo Soria  - Dalia-Violin</data>
+    </node>
+    <node id="6105">
+      <data key="d0">40.48253804124218</data>
+      <data key="d1">-3.66417202876223</data>
+      <data key="d2">LaÃºd  - Jazmin-Arturo Soria</data>
+    </node>
+    <node id="6301">
+      <data key="d0">40.47417792954375</data>
+      <data key="d1">-3.65572286250211</data>
+      <data key="d2">Ctra. Acceso EstaciÃ³n de Hortaleza - Virgen del Carmen-Monovar</data>
+    </node>
+    <node id="6619">
+      <data key="d0">40.49559868955142</data>
+      <data key="d1">-3.66596203107919</data>
+      <data key="d2">Av. Burgos - Francisco Pi y Margall-Av. Burgos</data>
+    </node>
+    <node id="6622">
+      <data key="d0">40.48628429793707</data>
+      <data key="d1">-3.65996979434097</data>
+      <data key="d2">Ingeniero Emilio Herrera - PrÃ­ncipe Carlos-Infanta Catalina Micaela</data>
+    </node>
+    <node id="6624">
+      <data key="d0">40.48735361282759</data>
+      <data key="d1">-3.65845735985895</data>
+      <data key="d2">Ingeniero Emilio Herrera - Av. Francisco Pi y Margall-Av. Manoteras</data>
+    </node>
+    <node id="6639">
+      <data key="d0">40.49167558462718</data>
+      <data key="d1">-3.67156313077558</data>
+      <data key="d2">PM40001</data>
+    </node>
+    <node id="6643">
+      <data key="d0">40.47597971439813</data>
+      <data key="d1">-3.67457932665751</data>
+      <data key="d2">PM10092</data>
+    </node>
+    <node id="6645">
+      <data key="d0">40.47083407137156</data>
+      <data key="d1">-3.67184266843934</data>
+      <data key="d2">PM10142</data>
+    </node>
+    <node id="6649">
+      <data key="d0">40.46332380504482</data>
+      <data key="d1">-3.66698218244293</data>
+      <data key="d2">PM10242</data>
+    </node>
+    <node id="6652">
+      <data key="d0">40.45446724621053</data>
+      <data key="d1">-3.6634958208658</data>
+      <data key="d2">PM10343</data>
+    </node>
+    <node id="6653">
+      <data key="d0">40.45446354712477</data>
+      <data key="d1">-3.6635731152302</data>
+      <data key="d2">PM10344</data>
+    </node>
+    <node id="6700">
+      <data key="d0">40.47273254645181</data>
+      <data key="d1">-3.72893721003249</data>
+      <data key="d2">PM12721</data>
+    </node>
+    <node id="6703">
+      <data key="d0">40.48326335316523</data>
+      <data key="d1">-3.70108296978253</data>
+      <data key="d2">PM12981</data>
+    </node>
+    <node id="6705">
+      <data key="d0">40.48435166146356</data>
+      <data key="d1">-3.69794113576822</data>
+      <data key="d2">PM13014</data>
+    </node>
+    <node id="6712">
+      <data key="d0">40.49223815840436</data>
+      <data key="d1">-3.67067514498134</data>
+      <data key="d2">PM30002</data>
+    </node>
+    <node id="6714">
+      <data key="d0">40.47570596279542</data>
+      <data key="d1">-3.67403407649464</data>
+      <data key="d2">PM20042</data>
+    </node>
+    <node id="6716">
+      <data key="d0">40.47109279548754</data>
+      <data key="d1">-3.67135903808558</data>
+      <data key="d2">PM20152</data>
+    </node>
+    <node id="6717">
+      <data key="d0">40.46652101420724</data>
+      <data key="d1">-3.66824432784873</data>
+      <data key="d2">PM20231</data>
+    </node>
+    <node id="6719">
+      <data key="d0">40.46652900175506</data>
+      <data key="d1">-3.66806181277407</data>
+      <data key="d2">PM20233</data>
+    </node>
+    <node id="6721">
+      <data key="d0">40.4621006164099</data>
+      <data key="d1">-3.66556966667931</data>
+      <data key="d2">PM20262</data>
+    </node>
+    <node id="6724">
+      <data key="d0">40.45719524355984</data>
+      <data key="d1">-3.6637705963709</data>
+      <data key="d2">PM20327</data>
+    </node>
+    <node id="6726">
+      <data key="d0">40.45033081173731</data>
+      <data key="d1">-3.66231028074641</data>
+      <data key="d2">PM20412</data>
+    </node>
+    <node id="6774">
+      <data key="d0">40.48506262218827</data>
+      <data key="d1">-3.69194114885654</data>
+      <data key="d2">PM23073</data>
+    </node>
+    <node id="6775">
+      <data key="d0">40.48364277328885</data>
+      <data key="d1">-3.68850010047197</data>
+      <data key="d2">PM23111</data>
+    </node>
+    <node id="6784">
+      <data key="d0">40.49747347170936</data>
+      <data key="d1">-3.7003101948204</data>
+      <data key="d2">PM33032</data>
+    </node>
+    <node id="6788">
+      <data key="d0">40.48286621242596</data>
+      <data key="d1">-3.65997582793682</data>
+      <data key="d2">PM33202</data>
+    </node>
+    <node id="6804">
+      <data key="d0">40.49390717681455</data>
+      <data key="d1">-3.69995983667557</data>
+      <data key="d2">PM43021</data>
+    </node>
+    <node id="6806">
+      <data key="d0">40.49758775259886</data>
+      <data key="d1">-3.70059726194425</data>
+      <data key="d2">PM43032</data>
+    </node>
+    <node id="6808">
+      <data key="d0">40.4808445551671</data>
+      <data key="d1">-3.68558273726047</data>
+      <data key="d2">PM43152</data>
+    </node>
+    <node id="6810">
+      <data key="d0">40.48315784365918</data>
+      <data key="d1">-3.65992583390915</data>
+      <data key="d2">PM43202</data>
+    </node>
+    <node id="6914">
+      <data key="d0">40.47911339895925</data>
+      <data key="d1">-3.71583602657076</data>
+      <data key="d2">PM12851</data>
+    </node>
+    <node id="6935">
+      <data key="d0">40.48482398887744</data>
+      <data key="d1">-3.67260742713327</data>
+      <data key="d2">PM23222</data>
+    </node>
+    <node id="6980">
+      <data key="d0">40.4587642472944</data>
+      <data key="d1">-3.67815962437393</data>
+      <data key="d2">Alberto Alcocer E-O - Bolivia-VÃ­ctor AndrÃ©s Belaunde</data>
+    </node>
+    <node id="7014">
+      <data key="d0">40.48483856745793</data>
+      <data key="d1">-3.6723088411066</data>
+      <data key="d2">PM13222</data>
+    </node>
+    <node id="7085">
+      <data key="d0">40.45892611283032</data>
+      <data key="d1">-3.687732937432</data>
+      <data key="d2">(TACTICO)Alberto Alcocer E-O(Giro E-S) - Juan RamÃ³n JimÃ©nez - Dr. Fleming</data>
+    </node>
+    <node id="7086">
+      <data key="d0">40.45863479394225</data>
+      <data key="d1">-3.68334972529221</data>
+      <data key="d2">Alberto Alcocer O-E (Giro izqda) - LÃ­gula -Condes del Val</data>
+    </node>
+    <node id="7088">
+      <data key="d0">40.46013214791149</data>
+      <data key="d1">-3.66726365316962</data>
+      <data key="d2">Acceso M-30 S-E(Superficie) - M-30 Sur-Pl.JosÃ© MÂª Sole</data>
+    </node>
+    <node id="7092">
+      <data key="d0">40.4601051386737</data>
+      <data key="d1">-3.66718667147962</data>
+      <data key="d2">Acceso M-30 N-E(TÃºnel) - M-30 Norte-Pl.JosÃ© MÂª Soler</data>
+    </node>
+    <node id="7093">
+      <data key="d0">40.4599849181573</data>
+      <data key="d1">-3.66721351825222</data>
+      <data key="d2">Acceso M-30(TÃºnel)E-O - M-30-Pl.JosÃ© MÂªSoler</data>
+    </node>
+    <node id="7094">
+      <data key="d0">40.45925225561077</data>
+      <data key="d1">-3.69331149188429</data>
+      <data key="d2">Sor Angela de la Cruz O-E(Giro Izqda) - Poeta Joan Maragall-Orense</data>
+    </node>
+    <node id="7097">
+      <data key="d0">40.46465024918142</data>
+      <data key="d1">-3.70648316146635</data>
+      <data key="d2">Pso. Direccion N-S (Aligustre-Marques Viana)</data>
+    </node>
+    <node id="7111">
+      <data key="d0">40.45929055399888</data>
+      <data key="d1">-3.69330829134539</data>
+      <data key="d2">Sor Angela de la Cruz E-O - Poeta Joan Maragall-Orense</data>
+    </node>
+    <node id="7112">
+      <data key="d0">40.46002063738084</data>
+      <data key="d1">-3.69667393508834</data>
+      <data key="d2">Sor Angela de la Cruz O-E(PM62083+PM62081) - Sor Angela de la Cruz O-E(PM62083+PM62081)</data>
+    </node>
+    <node id="7114">
+      <data key="d0">40.45668758687375</data>
+      <data key="d1">-3.70432933814207</data>
+      <data key="d2">Lope de Haro E-O (Giro Izqda)(Berruguete-Francos Rodriguez)</data>
+    </node>
+    <node id="7128">
+      <data key="d0">40.48398749645845</data>
+      <data key="d1">-3.67255187518336</data>
+      <data key="d2">PM33222</data>
+    </node>
+    <node id="7129">
+      <data key="d0">40.48418132016057</data>
+      <data key="d1">-3.67249959357655</data>
+      <data key="d2">PM43222</data>
+    </node>
+    <node id="9846">
+      <data key="d0">40.47233189685072</data>
+      <data key="d1">-3.65692996383144</data>
+      <data key="d2">Ctra. Acceso EstaciÃ³n de Hortaleza - Virgen del Carmen-Av. San Luis</data>
+    </node>
+    <node id="9898">
+      <data key="d0">40.47074347819724</data>
+      <data key="d1">-3.71866126037451</data>
+      <data key="d2">Valle de Mena O-E (Antonio Machado-Valderodrigo)</data>
+    </node>
+    <node id="9900">
+      <data key="d0">40.47020417824083</data>
+      <data key="d1">-3.71623479897292</data>
+      <data key="d2">Valle de Mena E-O(Central)(Cno. Ganapanes-Buitrago de Lozoya)</data>
+    </node>
+    <node id="9912">
+      <data key="d0">40.47151839001286</data>
+      <data key="d1">-3.72132575854847</data>
+      <data key="d2">Valle de Mena E-O (Cesar Mnrique-Isla Malaita)</data>
+    </node>
+    <node id="9916">
+      <data key="d0">40.47473192864145</data>
+      <data key="d1">-3.69613251564017</data>
+      <data key="d2">SINESIO DELGADO O-E (HOSPITAL CARLOS III-ENTRADA TUNEL)</data>
+    </node>
+    <node id="9919">
+      <data key="d0">40.47477343568283</data>
+      <data key="d1">-3.69856871015637</data>
+      <data key="d2">SINESIO DELGADO E-O(HOSPITAL CARLOS III-FINISTERRE)</data>
+    </node>
+    <node id="9931">
+      <data key="d0">40.46030119692283</data>
+      <data key="d1">-3.72823685569842</data>
+      <data key="d2">SINESIO DELGADO N-S(MADRIGAL -AV.MIRAFLORES)</data>
+    </node>
+    <node id="9932">
+      <data key="d0">40.45865899425903</data>
+      <data key="d1">-3.72959213188635</data>
+      <data key="d2">AV.MIRAFLORES N-S(GTA. MIRAFLORES-DEHESA DE LA VILLA)</data>
+    </node>
+    <node id="9974">
+      <data key="d0">40.47243358462904</data>
+      <data key="d1">-3.71496176775233</data>
+      <data key="d2">CAMINO GANAPANES N-S</data>
+    </node>
+    <node id="9975">
+      <data key="d0">40.47048881329749</data>
+      <data key="d1">-3.71451749597152</data>
+      <data key="d2">CAMINO GANAPANES S-N</data>
+    </node>
+    <node id="10049">
+      <data key="d0">40.4507970049718</data>
+      <data key="d1">-3.68190782898808</data>
+      <data key="d2">Serrano 206 S-N - Cinca - Turia</data>
+    </node>
+    <node id="10109">
+      <data key="d0">40.4841533795685</data>
+      <data key="d1">-3.66360139279992</data>
+      <data key="d2">Salida a M-11 E-O  - (Dulce ChacÃ³n-M-11)</data>
+    </node>
+    <node id="10113">
+      <data key="d0">40.45484891653734</data>
+      <data key="d1">-3.65556394589747</data>
+      <data key="d2">Arturo Soria - Luis Carlos Vazquez - Ulises</data>
+    </node>
+    <node id="10116">
+      <data key="d0">40.45357595578532</data>
+      <data key="d1">-3.6544254492612</data>
+      <data key="d2">Arturo Soria - Julian Hernandez - Bueso Pineda</data>
+    </node>
+    <node id="10186">
+      <data key="d0">40.47841505294922</data>
+      <data key="d1">-3.7090930806427</data>
+      <data key="d2">Av .Monforte de Lemos E-O (Pl.Fonsagrada - Pl.Verin)</data>
+    </node>
+    <node id="10187">
+      <data key="d0">40.47911694303613</data>
+      <data key="d1">-3.70598934201663</data>
+      <data key="d2">Av .Monforte de Lemos E-O (Ginzo de Limia - Pl.Arteijo)</data>
+    </node>
+    <node id="10269">
+      <data key="d0">40.48468280454993</data>
+      <data key="d1">-3.6972676028736</data>
+      <data key="d2">PM13012</data>
+    </node>
+    <node id="10278">
+      <data key="d0">40.47932842908332</data>
+      <data key="d1">-3.72505481119388</data>
+      <data key="d2">AV. CARDENAL HERRERA, 282 ORIA E-O(ANGELITA CAMARERO-ALICIA BAENA)</data>
+    </node>
+    <node id="10281">
+      <data key="d0">40.48336289114664</data>
+      <data key="d1">-3.71297006807103</data>
+      <data key="d2">AV. CARDENAL HERRERA ORIA, 204 O-E(VENTISQUERO CONDESA-RONDA BARA)</data>
+    </node>
+    <node id="10291">
+      <data key="d0">40.49116498096124</data>
+      <data key="d1">-3.69114674000986</data>
+      <data key="d2">AV. CARDENAL HERRERA ORIA E-O (MANRESA - SALCEDO)</data>
+    </node>
+    <node id="10293">
+      <data key="d0">40.49047827721107</data>
+      <data key="d1">-3.69224394166413</data>
+      <data key="d2">(TACTICO) SALCEDO S-N (SALVATIERRA - LEZAMA)</data>
+    </node>
+    <node id="10294">
+      <data key="d0">40.49056162978098</data>
+      <data key="d1">-3.69344259898645</data>
+      <data key="d2">AV. CARDENAL HERRERA ORIA O-E (ESTRADA - SALCEDO)</data>
+    </node>
+    <node id="10295">
+      <data key="d0">40.48572896365301</data>
+      <data key="d1">-3.70929093509519</data>
+      <data key="d2">AV. CARDENAL HERRERA ORIA, 176 E-O(LAGUNA GRANDE-RONDA BARA)INTERIOR CRUCE</data>
+    </node>
+    <node id="10321">
+      <data key="d0">40.49423742033139</data>
+      <data key="d1">-3.72616241945292</data>
+      <data key="d2">GLORIA FUERTES O-E LATERAL(SENDA DEL INFANTE-MARIA CASARES)</data>
+    </node>
+    <node id="10666">
+      <data key="d0">40.4949197954439</data>
+      <data key="d1">-3.71852156025292</data>
+      <data key="d2">AV. VENTISQUERO DE LA CONDESA N-S(PZA. TORCUATO FERNANDEZ MIRANDA-COLLADO TIROBARRA)</data>
+    </node>
+    <node id="10737">
+      <data key="d0">40.46200635951113</data>
+      <data key="d1">-3.65863958167552</data>
+      <data key="d2">LÃ³pez de Hoyos - Mesena-Ctra. Canillas</data>
+    </node>
+    <node id="10738">
+      <data key="d0">40.46040278078744</data>
+      <data key="d1">-3.65934129724574</data>
+      <data key="d2">LÃ³pez de Hoyos  - Arturo Soria - Asura</data>
+    </node>
+    <node id="10739">
+      <data key="d0">40.47541879603109</data>
+      <data key="d1">-3.66739559732255</data>
+      <data key="d2">Avda. San Luis - Golfo de SalÃ³nica_Arturo Soria</data>
+    </node>
+    <node id="10740">
+      <data key="d0">40.47529548302747</data>
+      <data key="d1">-3.66739295899515</data>
+      <data key="d2">Av.San Luis - Arturo Soria - Mesena</data>
+    </node>
+    <node id="10741">
+      <data key="d0">40.46777136665711</data>
+      <data key="d1">-3.65344950102974</data>
+      <data key="d2">LÃ³pez de Hoyos - Guisona-Gran VÃ­a de Hortaleza</data>
+    </node>
+    <node id="10742">
+      <data key="d0">40.47438218944033</data>
+      <data key="d1">-3.66403885594055</data>
+      <data key="d2">Avda. San Luis - Eladio LÃ³pez Vilches_Mesena</data>
+    </node>
+    <node id="10743">
+      <data key="d0">40.47407934360439</data>
+      <data key="d1">-3.66398178634801</data>
+      <data key="d2">Avda. San Luis - Eladio LÃ³pez Vilches_C.de las Cuevas de Almanzora</data>
+    </node>
+    <node id="10744">
+      <data key="d0">40.47074458371809</data>
+      <data key="d1">-3.65085009375695</data>
+      <data key="d2">LÃ³pez de Hoyos - Solsona-Ãngel Luis HerrÃ¡n</data>
+    </node>
+    <node id="10745">
+      <data key="d0">40.46889951792361</data>
+      <data key="d1">-3.65232967347982</data>
+      <data key="d2">LÃ³pez de Hoyos - Guisona-Ãngel Luis HerrÃ¡n</data>
+    </node>
+    <node id="10746">
+      <data key="d0">40.47334536342072</data>
+      <data key="d1">-3.66336480463998</data>
+      <data key="d2">Avda. San Luis - Eladio LÃ³pez Vilches_Julio DÃ¡nvila</data>
+    </node>
+    <node id="10747">
+      <data key="d0">40.47310954559263</data>
+      <data key="d1">-3.66288886690817</data>
+      <data key="d2">Avda. San Luis - Julio DÃ¡nvila_C.de las Cuevas de Almanzora</data>
+    </node>
+    <node id="10753">
+      <data key="d0">40.4713129939618</data>
+      <data key="d1">-3.6596706432021</data>
+      <data key="d2">Av. San Luis - Ramonet-AÃ±astro</data>
+    </node>
+    <node id="10759">
+      <data key="d0">40.47133248247626</data>
+      <data key="d1">-3.65633255902332</data>
+      <data key="d2">Av. San Luis  - Ctra. Acceso EstaciÃ³n de Hortaleza-Lorca</data>
+    </node>
+    <node id="10769">
+      <data key="d0">40.49803654621966</data>
+      <data key="d1">-3.65512793882999</data>
+      <data key="d2">Niceto AlcalÃ¡ Zamora - Maria Tudor - Isabel de Valois</data>
+    </node>
+    <node id="10770">
+      <data key="d0">40.49487698098854</data>
+      <data key="d1">-3.66583178673919</data>
+      <data key="d2">Av. Francisco Pi y Margall - MarÃ­a de Portugal-Av. Burgos</data>
+    </node>
+    <node id="10771">
+      <data key="d0">40.49381402225708</data>
+      <data key="d1">-3.66419340325149</data>
+      <data key="d2">Av. Francisco Pi y Margall - Ana de Austria-MarÃ­a de Portugal</data>
+    </node>
+    <node id="10772">
+      <data key="d0">40.48680232654919</data>
+      <data key="d1">-3.65034721008542</data>
+      <data key="d2">Av. Francisco Pi y Margall - Niceto AlcalÃ¡ Zamora-PrÃ­ncipe Carlos</data>
+    </node>
+    <node id="10773">
+      <data key="d0">40.48747637509973</data>
+      <data key="d1">-3.65279341612687</data>
+      <data key="d2">Francisco Pi y Margall - Princesa de Ãboli-Infanta Catalina Micaela</data>
+    </node>
+    <node id="10882">
+      <data key="d0">40.4810194212552</data>
+      <data key="d1">-3.71583135770471</data>
+      <data key="d2">FERMIN CABALLERO E-O LADO SUR(FERMIN CABALLERO-ISLA DE AROSA)</data>
+    </node>
+    <node id="11031">
+      <data key="d0">40.48526697906156</data>
+      <data key="d1">-3.70967229889016</data>
+      <data key="d2">AV. CARDENAL HERRERA ORIA O-E(GINZO DE LIMIA-LAGUNA GRANDE)</data>
+    </node>
+    <node id="11033">
+      <data key="d0">40.4738206375728</data>
+      <data key="d1">-3.72075154807809</data>
+      <data key="d2">Cesar Manrique N-S (Juan SÃ¡nchez-La Cabrera)</data>
+    </node>
+    <node id="11079">
+      <data key="d0">40.45256619724327</data>
+      <data key="d1">-3.69890218841779</data>
+      <data key="d2">Gral PerÃ³n O-E - Giro a Fortunata y Jacinta</data>
+    </node>
+    <node id="11094">
+      <data key="d0">40.45306138921473</data>
+      <data key="d1">-3.6949037059044</data>
+      <data key="d2">Orense N-S - Fortunata y Jacinta -General PerÃ³n</data>
+    </node>
+    <node id="11096">
+      <data key="d0">40.48466916779289</data>
+      <data key="d1">-3.7079473130909</data>
+      <data key="d2">GINZO LIMIA N-S GIRO IZDA. (AV. CARDENAL HERRERA ORIA-FERMIN CABALLERO)</data>
+    </node>
+    <node id="11101">
+      <data key="d0">40.48478517510959</data>
+      <data key="d1">-3.72266187181182</data>
+      <data key="d2">RISCOS DE POLANCO S-N (RAMON GOMEZ DE LA SERNA-VALLE DE PINARES LLANOS)</data>
+    </node>
+    <node id="11125">
+      <data key="d0">40.49219643499499</data>
+      <data key="d1">-3.65979827699154</data>
+      <data key="d2">Ana de Austria 25 - Princesa de Eboli - Fco. Pi y Margall</data>
+    </node>
+    <node id="11126">
+      <data key="d0">40.49079043318299</data>
+      <data key="d1">-3.65953747667911</data>
+      <data key="d2">Francisco Pi y Margall - Vicente Blasco IbÃ¡Ã±ez - Ana de Austria</data>
+    </node>
+    <node id="11127">
+      <data key="d0">40.48996087471215</data>
+      <data key="d1">-3.65822954523943</data>
+      <data key="d2">Francisco Pi y Margall 4 - Octavio Paz - Vicente Blasco IbÃ¡Ã±ez</data>
+    </node>
+    <edge source="3592" target="5526">
+      <data key="d3">266.6</data>
+    </edge>
+    <edge source="3592" target="4587">
+      <data key="d3">830.9</data>
+    </edge>
+    <edge source="3592" target="5538">
+      <data key="d3">1109.6</data>
+    </edge>
+    <edge source="3801" target="11033">
+      <data key="d3">202.6</data>
+    </edge>
+    <edge source="3801" target="5422">
+      <data key="d3">879.3</data>
+    </edge>
+    <edge source="3801" target="10278">
+      <data key="d3">941.9</data>
+    </edge>
+    <edge source="3822" target="6935">
+      <data key="d3">359.8</data>
+    </edge>
+    <edge source="3918" target="3919">
+      <data key="d3">180.9</data>
+    </edge>
+    <edge source="3918" target="5604">
+      <data key="d3">847.2</data>
+    </edge>
+    <edge source="3918" target="5616">
+      <data key="d3">909.4</data>
+    </edge>
+    <edge source="3919" target="3918">
+      <data key="d3">383.0</data>
+    </edge>
+    <edge source="3919" target="10113">
+      <data key="d3">1262.8</data>
+    </edge>
+    <edge source="3919" target="10738">
+      <data key="d3">1438.2</data>
+    </edge>
+    <edge source="3926" target="10049">
+      <data key="d3">402.7</data>
+    </edge>
+    <edge source="3926" target="5610">
+      <data key="d3">415.4</data>
+    </edge>
+    <edge source="3926" target="5575">
+      <data key="d3">828.9</data>
+    </edge>
+    <edge source="4497" target="7114">
+      <data key="d3">532.7</data>
+    </edge>
+    <edge source="4497" target="5701">
+      <data key="d3">582.4</data>
+    </edge>
+    <edge source="4497" target="5681">
+      <data key="d3">663.6</data>
+    </edge>
+    <edge source="4523" target="5700">
+      <data key="d3">629.8</data>
+    </edge>
+    <edge source="4523" target="5701">
+      <data key="d3">643.9</data>
+    </edge>
+    <edge source="4523" target="4497">
+      <data key="d3">726.8</data>
+    </edge>
+    <edge source="4525" target="4523">
+      <data key="d3">548.5</data>
+    </edge>
+    <edge source="4525" target="4497">
+      <data key="d3">889.1</data>
+    </edge>
+    <edge source="4525" target="7097">
+      <data key="d3">1404.7</data>
+    </edge>
+    <edge source="4552" target="5422">
+      <data key="d3">379.1</data>
+    </edge>
+    <edge source="4552" target="9974">
+      <data key="d3">434.5</data>
+    </edge>
+    <edge source="4552" target="5416">
+      <data key="d3">467.5</data>
+    </edge>
+    <edge source="4562" target="4573">
+      <data key="d3">332.9</data>
+    </edge>
+    <edge source="4562" target="4568">
+      <data key="d3">703.9</data>
+    </edge>
+    <edge source="4562" target="5431">
+      <data key="d3">890.6</data>
+    </edge>
+    <edge source="4568" target="5431">
+      <data key="d3">459.8</data>
+    </edge>
+    <edge source="4568" target="4552">
+      <data key="d3">659.2</data>
+    </edge>
+    <edge source="4568" target="4562">
+      <data key="d3">703.9</data>
+    </edge>
+    <edge source="4573" target="4562">
+      <data key="d3">332.9</data>
+    </edge>
+    <edge source="4573" target="4568">
+      <data key="d3">739.9</data>
+    </edge>
+    <edge source="4573" target="5431">
+      <data key="d3">926.6</data>
+    </edge>
+    <edge source="4573" target="9916">
+      <data key="d4">111.8</data>
+    </edge>
+    <edge source="4573" target="9919">
+      <data key="d4">94.4</data>
+    </edge>
+    <edge source="4587" target="3592">
+      <data key="d3">775.7</data>
+    </edge>
+    <edge source="4587" target="4604">
+      <data key="d3">833.1</data>
+    </edge>
+    <edge source="4587" target="5526">
+      <data key="d3">919.9</data>
+    </edge>
+    <edge source="4597" target="4599">
+      <data key="d3">1090.6</data>
+    </edge>
+    <edge source="4597" target="6775">
+      <data key="d3">1231.1</data>
+    </edge>
+    <edge source="4597" target="4604">
+      <data key="d3">1242.8</data>
+    </edge>
+    <edge source="4599" target="4601">
+      <data key="d3">40.7</data>
+    </edge>
+    <edge source="4599" target="4587">
+      <data key="d3">969.3</data>
+    </edge>
+    <edge source="4599" target="3592">
+      <data key="d3">1550.2</data>
+    </edge>
+    <edge source="4601" target="4599">
+      <data key="d3">42.8</data>
+    </edge>
+    <edge source="4601" target="6775">
+      <data key="d3">615.1</data>
+    </edge>
+    <edge source="4601" target="4604">
+      <data key="d3">626.9</data>
+    </edge>
+    <edge source="4604" target="4599">
+      <data key="d3">341.5</data>
+    </edge>
+    <edge source="4604" target="6775">
+      <data key="d3">706.0</data>
+    </edge>
+    <edge source="4604" target="4606">
+      <data key="d3">860.6</data>
+    </edge>
+    <edge source="4606" target="4599">
+      <data key="d3">1215.9</data>
+    </edge>
+    <edge source="4606" target="6775">
+      <data key="d3">1356.4</data>
+    </edge>
+    <edge source="4606" target="4604">
+      <data key="d3">1368.1</data>
+    </edge>
+    <edge source="4606" target="4597">
+      <data key="d4">269.4</data>
+    </edge>
+    <edge source="5416" target="10186">
+      <data key="d3">126.8</data>
+    </edge>
+    <edge source="5422" target="5416">
+      <data key="d3">117.4</data>
+    </edge>
+    <edge source="5422" target="4552">
+      <data key="d3">373.6</data>
+    </edge>
+    <edge source="5422" target="5425">
+      <data key="d3">523.7</data>
+    </edge>
+    <edge source="5425" target="5431">
+      <data key="d3">663.7</data>
+    </edge>
+    <edge source="5425" target="5422">
+      <data key="d3">720.0</data>
+    </edge>
+    <edge source="5425" target="10882">
+      <data key="d3">750.9</data>
+    </edge>
+    <edge source="5431" target="10187">
+      <data key="d3">180.3</data>
+    </edge>
+    <edge source="5431" target="4568">
+      <data key="d3">424.7</data>
+    </edge>
+    <edge source="5431" target="11096">
+      <data key="d3">766.8</data>
+    </edge>
+    <edge source="5464" target="7085">
+      <data key="d3">281.8</data>
+    </edge>
+    <edge source="5464" target="5525">
+      <data key="d3">868.5</data>
+    </edge>
+    <edge source="5464" target="5690">
+      <data key="d3">1244.9</data>
+    </edge>
+    <edge source="5464" target="5513">
+      <data key="d4">219.2</data>
+    </edge>
+    <edge source="5478" target="7086">
+      <data key="d3">185.2</data>
+    </edge>
+    <edge source="5478" target="7085">
+      <data key="d3">212.9</data>
+    </edge>
+    <edge source="5478" target="5506">
+      <data key="d3">448.0</data>
+    </edge>
+    <edge source="5487" target="11079">
+      <data key="d3">305.0</data>
+    </edge>
+    <edge source="5487" target="5491">
+      <data key="d3">320.4</data>
+    </edge>
+    <edge source="5487" target="5661">
+      <data key="d3">496.7</data>
+    </edge>
+    <edge source="5491" target="5487">
+      <data key="d3">470.9</data>
+    </edge>
+    <edge source="5491" target="5660">
+      <data key="d3">522.9</data>
+    </edge>
+    <edge source="5491" target="11094">
+      <data key="d3">552.8</data>
+    </edge>
+    <edge source="5506" target="5478">
+      <data key="d3">441.1</data>
+    </edge>
+    <edge source="5506" target="7085">
+      <data key="d3">529.4</data>
+    </edge>
+    <edge source="5506" target="10049">
+      <data key="d3">855.0</data>
+    </edge>
+    <edge source="5513" target="5464">
+      <data key="d3">761.5</data>
+    </edge>
+    <edge source="5513" target="7111">
+      <data key="d3">772.4</data>
+    </edge>
+    <edge source="5513" target="5660">
+      <data key="d3">908.0</data>
+    </edge>
+    <edge source="5525" target="5526">
+      <data key="d3">95.0</data>
+    </edge>
+    <edge source="5525" target="5690">
+      <data key="d3">851.5</data>
+    </edge>
+    <edge source="5525" target="5538">
+      <data key="d3">856.1</data>
+    </edge>
+    <edge source="5526" target="5525">
+      <data key="d3">95.0</data>
+    </edge>
+    <edge source="5526" target="3592">
+      <data key="d3">250.4</data>
+    </edge>
+    <edge source="5526" target="4587">
+      <data key="d3">1006.9</data>
+    </edge>
+    <edge source="5538" target="5525">
+      <data key="d3">794.4</data>
+    </edge>
+    <edge source="5538" target="5575">
+      <data key="d3">854.7</data>
+    </edge>
+    <edge source="5538" target="6980">
+      <data key="d3">943.5</data>
+    </edge>
+    <edge source="5549" target="5604">
+      <data key="d3">210.6</data>
+    </edge>
+    <edge source="5549" target="5584">
+      <data key="d3">236.8</data>
+    </edge>
+    <edge source="5549" target="6980">
+      <data key="d3">288.0</data>
+    </edge>
+    <edge source="5575" target="5478">
+      <data key="d3">425.2</data>
+    </edge>
+    <edge source="5575" target="5584">
+      <data key="d3">428.9</data>
+    </edge>
+    <edge source="5575" target="6980">
+      <data key="d3">480.1</data>
+    </edge>
+    <edge source="5584" target="5549">
+      <data key="d3">241.2</data>
+    </edge>
+    <edge source="5584" target="5604">
+      <data key="d3">278.1</data>
+    </edge>
+    <edge source="5584" target="5596">
+      <data key="d3">528.5</data>
+    </edge>
+    <edge source="5595" target="5596">
+      <data key="d3">310.8</data>
+    </edge>
+    <edge source="5595" target="6980">
+      <data key="d3">384.2</data>
+    </edge>
+    <edge source="5595" target="5584">
+      <data key="d3">448.9</data>
+    </edge>
+    <edge source="5596" target="5597">
+      <data key="d3">111.0</data>
+    </edge>
+    <edge source="5596" target="5595">
+      <data key="d3">310.8</data>
+    </edge>
+    <edge source="5596" target="5604">
+      <data key="d3">578.7</data>
+    </edge>
+    <edge source="5597" target="5596">
+      <data key="d3">111.0</data>
+    </edge>
+    <edge source="5597" target="5616">
+      <data key="d3">164.9</data>
+    </edge>
+    <edge source="5597" target="3918">
+      <data key="d3">921.6</data>
+    </edge>
+    <edge source="5604" target="5549">
+      <data key="d3">210.6</data>
+    </edge>
+    <edge source="5604" target="5596">
+      <data key="d3">577.0</data>
+    </edge>
+    <edge source="5604" target="3918">
+      <data key="d3">843.9</data>
+    </edge>
+    <edge source="5610" target="5549">
+      <data key="d3">295.2</data>
+    </edge>
+    <edge source="5610" target="3926">
+      <data key="d3">456.4</data>
+    </edge>
+    <edge source="5610" target="10049">
+      <data key="d3">585.2</data>
+    </edge>
+    <edge source="5616" target="5596">
+      <data key="d3">336.3</data>
+    </edge>
+    <edge source="5616" target="5604">
+      <data key="d3">534.3</data>
+    </edge>
+    <edge source="5616" target="6980">
+      <data key="d3">668.0</data>
+    </edge>
+    <edge source="5617" target="5616">
+      <data key="d3">340.6</data>
+    </edge>
+    <edge source="5617" target="5597">
+      <data key="d3">363.8</data>
+    </edge>
+    <edge source="5617" target="3918">
+      <data key="d3">923.8</data>
+    </edge>
+    <edge source="5656" target="7111">
+      <data key="d3">170.2</data>
+    </edge>
+    <edge source="5656" target="5678">
+      <data key="d3">213.4</data>
+    </edge>
+    <edge source="5656" target="5677">
+      <data key="d3">219.5</data>
+    </edge>
+    <edge source="5656" target="5464">
+      <data key="d4">280.8</data>
+    </edge>
+    <edge source="5660" target="5661">
+      <data key="d3">335.9</data>
+    </edge>
+    <edge source="5660" target="5662">
+      <data key="d3">396.1</data>
+    </edge>
+    <edge source="5660" target="7111">
+      <data key="d3">528.2</data>
+    </edge>
+    <edge source="5661" target="11094">
+      <data key="d3">231.9</data>
+    </edge>
+    <edge source="5661" target="5660">
+      <data key="d3">341.1</data>
+    </edge>
+    <edge source="5661" target="5662">
+      <data key="d3">587.8</data>
+    </edge>
+    <edge source="5662" target="5661">
+      <data key="d3">333.7</data>
+    </edge>
+    <edge source="5662" target="5660">
+      <data key="d3">396.1</data>
+    </edge>
+    <edge source="5662" target="5691">
+      <data key="d3">468.7</data>
+    </edge>
+    <edge source="5677" target="5678">
+      <data key="d3">123.6</data>
+    </edge>
+    <edge source="5677" target="5656">
+      <data key="d3">219.5</data>
+    </edge>
+    <edge source="5677" target="5692">
+      <data key="d3">335.7</data>
+    </edge>
+    <edge source="5678" target="5677">
+      <data key="d3">123.6</data>
+    </edge>
+    <edge source="5678" target="5656">
+      <data key="d3">213.4</data>
+    </edge>
+    <edge source="5678" target="5693">
+      <data key="d3">249.6</data>
+    </edge>
+    <edge source="5681" target="5691">
+      <data key="d3">149.2</data>
+    </edge>
+    <edge source="5681" target="7114">
+      <data key="d3">313.3</data>
+    </edge>
+    <edge source="5681" target="5701">
+      <data key="d3">458.8</data>
+    </edge>
+    <edge source="5686" target="5693">
+      <data key="d3">127.4</data>
+    </edge>
+    <edge source="5686" target="5691">
+      <data key="d3">238.5</data>
+    </edge>
+    <edge source="5686" target="5662">
+      <data key="d3">555.0</data>
+    </edge>
+    <edge source="5690" target="5692">
+      <data key="d3">150.3</data>
+    </edge>
+    <edge source="5690" target="5677">
+      <data key="d3">406.0</data>
+    </edge>
+    <edge source="5690" target="5656">
+      <data key="d3">537.7</data>
+    </edge>
+    <edge source="5691" target="5681">
+      <data key="d3">149.2</data>
+    </edge>
+    <edge source="5691" target="5686">
+      <data key="d3">238.5</data>
+    </edge>
+    <edge source="5691" target="7114">
+      <data key="d3">302.7</data>
+    </edge>
+    <edge source="5692" target="5690">
+      <data key="d3">150.3</data>
+    </edge>
+    <edge source="5692" target="5677">
+      <data key="d3">293.2</data>
+    </edge>
+    <edge source="5692" target="5693">
+      <data key="d3">377.3</data>
+    </edge>
+    <edge source="5693" target="5686">
+      <data key="d3">127.4</data>
+    </edge>
+    <edge source="5693" target="7112">
+      <data key="d3">171.0</data>
+    </edge>
+    <edge source="5693" target="5678">
+      <data key="d3">240.7</data>
+    </edge>
+    <edge source="5700" target="5701">
+      <data key="d3">110.5</data>
+    </edge>
+    <edge source="5700" target="4523">
+      <data key="d3">677.2</data>
+    </edge>
+    <edge source="5700" target="5726">
+      <data key="d3">954.5</data>
+    </edge>
+    <edge source="5701" target="5700">
+      <data key="d3">110.5</data>
+    </edge>
+    <edge source="5701" target="11079">
+      <data key="d3">335.9</data>
+    </edge>
+    <edge source="5701" target="5681">
+      <data key="d3">458.8</data>
+    </edge>
+    <edge source="5726" target="5487">
+      <data key="d3">239.9</data>
+    </edge>
+    <edge source="5726" target="5491">
+      <data key="d3">416.8</data>
+    </edge>
+    <edge source="5726" target="5661">
+      <data key="d3">611.6</data>
+    </edge>
+    <edge source="5871" target="11101">
+      <data key="d3">465.4</data>
+    </edge>
+    <edge source="5871" target="11033">
+      <data key="d3">921.3</data>
+    </edge>
+    <edge source="5871" target="5873">
+      <data key="d3">972.3</data>
+    </edge>
+    <edge source="5873" target="5871">
+      <data key="d3">257.2</data>
+    </edge>
+    <edge source="5873" target="10882">
+      <data key="d3">723.4</data>
+    </edge>
+    <edge source="5873" target="5875">
+      <data key="d3">805.7</data>
+    </edge>
+    <edge source="5875" target="5873">
+      <data key="d3">401.4</data>
+    </edge>
+    <edge source="5896" target="5875">
+      <data key="d3">459.9</data>
+    </edge>
+    <edge source="5896" target="11101">
+      <data key="d3">673.5</data>
+    </edge>
+    <edge source="5896" target="11031">
+      <data key="d3">928.7</data>
+    </edge>
+    <edge source="5900" target="10294">
+      <data key="d3">713.5</data>
+    </edge>
+    <edge source="5900" target="10269">
+      <data key="d3">1180.2</data>
+    </edge>
+    <edge source="5900" target="10295">
+      <data key="d3">1224.3</data>
+    </edge>
+    <edge source="5900" target="6806">
+      <data key="d4">872.1</data>
+    </edge>
+    <edge source="5905" target="6703">
+      <data key="d3">774.0</data>
+    </edge>
+    <edge source="5905" target="11096">
+      <data key="d3">980.3</data>
+    </edge>
+    <edge source="5905" target="10295">
+      <data key="d3">1065.4</data>
+    </edge>
+    <edge source="6050" target="10116">
+      <data key="d3">454.3</data>
+    </edge>
+    <edge source="6050" target="6726">
+      <data key="d3">3267.5</data>
+    </edge>
+    <edge source="6097" target="6105">
+      <data key="d3">335.3</data>
+    </edge>
+    <edge source="6097" target="10739">
+      <data key="d3">846.9</data>
+    </edge>
+    <edge source="6097" target="10742">
+      <data key="d3">897.0</data>
+    </edge>
+    <edge source="6105" target="10109">
+      <data key="d3">267.9</data>
+    </edge>
+    <edge source="6105" target="6097">
+      <data key="d3">465.2</data>
+    </edge>
+    <edge source="6105" target="6788">
+      <data key="d3">466.0</data>
+    </edge>
+    <edge source="6301" target="10759">
+      <data key="d3">504.5</data>
+    </edge>
+    <edge source="6301" target="9846">
+      <data key="d3">710.4</data>
+    </edge>
+    <edge source="6301" target="10744">
+      <data key="d3">739.1</data>
+    </edge>
+    <edge source="6619" target="6712">
+      <data key="d3">579.2</data>
+    </edge>
+    <edge source="6619" target="10770">
+      <data key="d3">701.8</data>
+    </edge>
+    <edge source="6619" target="10771">
+      <data key="d3">708.1</data>
+    </edge>
+    <edge source="6622" target="10109">
+      <data key="d3">546.4</data>
+    </edge>
+    <edge source="6622" target="10773">
+      <data key="d3">674.9</data>
+    </edge>
+    <edge source="6622" target="11127">
+      <data key="d3">811.2</data>
+    </edge>
+    <edge source="6624" target="6622">
+      <data key="d3">309.8</data>
+    </edge>
+    <edge source="6624" target="10109">
+      <data key="d3">577.5</data>
+    </edge>
+    <edge source="6624" target="11126">
+      <data key="d3">1030.6</data>
+    </edge>
+    <edge source="6639" target="6619">
+      <data key="d3">1947.2</data>
+    </edge>
+    <edge source="6639" target="6712">
+      <data key="d3">1952.5</data>
+    </edge>
+    <edge source="6639" target="6808">
+      <data key="d3">1975.7</data>
+    </edge>
+    <edge source="6643" target="3822">
+      <data key="d3">631.1</data>
+    </edge>
+    <edge source="6643" target="10109">
+      <data key="d3">1817.8</data>
+    </edge>
+    <edge source="6643" target="6105">
+      <data key="d3">2063.2</data>
+    </edge>
+    <edge source="6645" target="6649">
+      <data key="d3">964.7</data>
+    </edge>
+    <edge source="6649" target="7088">
+      <data key="d3">409.2</data>
+    </edge>
+    <edge source="6649" target="6653">
+      <data key="d3">1042.6</data>
+    </edge>
+    <edge source="6649" target="6717">
+      <data key="d4">371.2</data>
+    </edge>
+    <edge source="6652" target="3919">
+      <data key="d3">3853.5</data>
+    </edge>
+    <edge source="6652" target="3918">
+      <data key="d3">3964.0</data>
+    </edge>
+    <edge source="6652" target="6050">
+      <data key="d3">4028.4</data>
+    </edge>
+    <edge source="6653" target="3919">
+      <data key="d3">3853.5</data>
+    </edge>
+    <edge source="6653" target="3918">
+      <data key="d3">3964.0</data>
+    </edge>
+    <edge source="6653" target="6050">
+      <data key="d3">4028.4</data>
+    </edge>
+    <edge source="6653" target="6652">
+      <data key="d4">6.6</data>
+    </edge>
+    <edge source="6700" target="3801">
+      <data key="d3">721.0</data>
+    </edge>
+    <edge source="6700" target="9912">
+      <data key="d3">782.0</data>
+    </edge>
+    <edge source="6700" target="10278">
+      <data key="d3">1025.2</data>
+    </edge>
+    <edge source="6703" target="6705">
+      <data key="d3">180.9</data>
+    </edge>
+    <edge source="6703" target="5905">
+      <data key="d3">637.2</data>
+    </edge>
+    <edge source="6703" target="5431">
+      <data key="d3">879.2</data>
+    </edge>
+    <edge source="6705" target="6808">
+      <data key="d3">1304.6</data>
+    </edge>
+    <edge source="6705" target="4601">
+      <data key="d3">1533.9</data>
+    </edge>
+    <edge source="6712" target="7129">
+      <data key="d3">1458.5</data>
+    </edge>
+    <edge source="6712" target="6808">
+      <data key="d3">2199.6</data>
+    </edge>
+    <edge source="6712" target="6775">
+      <data key="d3">3054.7</data>
+    </edge>
+    <edge source="6712" target="6639">
+      <data key="d4">97.7</data>
+    </edge>
+    <edge source="6714" target="3822">
+      <data key="d3">631.1</data>
+    </edge>
+    <edge source="6714" target="10109">
+      <data key="d3">1817.8</data>
+    </edge>
+    <edge source="6714" target="6105">
+      <data key="d3">2063.2</data>
+    </edge>
+    <edge source="6714" target="6643">
+      <data key="d4">55.3</data>
+    </edge>
+    <edge source="6716" target="6714">
+      <data key="d3">639.7</data>
+    </edge>
+    <edge source="6716" target="10747">
+      <data key="d3">892.1</data>
+    </edge>
+    <edge source="6716" target="10743">
+      <data key="d3">926.0</data>
+    </edge>
+    <edge source="6716" target="6645">
+      <data key="d4">50.0</data>
+    </edge>
+    <edge source="6717" target="6716">
+      <data key="d3">520.0</data>
+    </edge>
+    <edge source="6717" target="10747">
+      <data key="d3">1305.9</data>
+    </edge>
+    <edge source="6717" target="10743">
+      <data key="d3">1339.8</data>
+    </edge>
+    <edge source="6717" target="6719">
+      <data key="d4">15.5</data>
+    </edge>
+    <edge source="6719" target="6716">
+      <data key="d3">520.0</data>
+    </edge>
+    <edge source="6719" target="10747">
+      <data key="d3">1305.9</data>
+    </edge>
+    <edge source="6719" target="10743">
+      <data key="d3">1339.8</data>
+    </edge>
+    <edge source="6721" target="5617">
+      <data key="d3">540.8</data>
+    </edge>
+    <edge source="6721" target="10738">
+      <data key="d3">737.1</data>
+    </edge>
+    <edge source="6721" target="6716">
+      <data key="d3">1351.7</data>
+    </edge>
+    <edge source="6724" target="7093">
+      <data key="d3">665.7</data>
+    </edge>
+    <edge source="6726" target="6724">
+      <data key="d3">749.2</data>
+    </edge>
+    <edge source="6726" target="6721">
+      <data key="d3">2562.7</data>
+    </edge>
+    <edge source="6774" target="10294">
+      <data key="d3">1195.7</data>
+    </edge>
+    <edge source="6774" target="6775">
+      <data key="d3">1540.3</data>
+    </edge>
+    <edge source="6774" target="5900">
+      <data key="d3">1661.1</data>
+    </edge>
+    <edge source="6775" target="6774">
+      <data key="d3">1260.9</data>
+    </edge>
+    <edge source="6775" target="10269">
+      <data key="d3">1743.6</data>
+    </edge>
+    <edge source="6775" target="10293">
+      <data key="d3">1882.4</data>
+    </edge>
+    <edge source="6784" target="6804">
+      <data key="d3">2015.3</data>
+    </edge>
+    <edge source="6784" target="5900">
+      <data key="d3">2511.2</data>
+    </edge>
+    <edge source="6784" target="10291">
+      <data key="d3">2679.4</data>
+    </edge>
+    <edge source="6788" target="6301">
+      <data key="d3">1768.9</data>
+    </edge>
+    <edge source="6788" target="10772">
+      <data key="d3">1812.3</data>
+    </edge>
+    <edge source="6788" target="10109">
+      <data key="d3">2142.7</data>
+    </edge>
+    <edge source="6804" target="10294">
+      <data key="d3">994.8</data>
+    </edge>
+    <edge source="6804" target="10269">
+      <data key="d3">1165.5</data>
+    </edge>
+    <edge source="6804" target="6784">
+      <data key="d3">1452.3</data>
+    </edge>
+    <edge source="6806" target="6804">
+      <data key="d3">2015.3</data>
+    </edge>
+    <edge source="6806" target="5900">
+      <data key="d3">2511.2</data>
+    </edge>
+    <edge source="6806" target="10291">
+      <data key="d3">2679.4</data>
+    </edge>
+    <edge source="6808" target="4587">
+      <data key="d3">942.0</data>
+    </edge>
+    <edge source="6808" target="4604">
+      <data key="d3">1221.5</data>
+    </edge>
+    <edge source="6808" target="4606">
+      <data key="d3">1508.8</data>
+    </edge>
+    <edge source="6810" target="6301">
+      <data key="d3">1768.9</data>
+    </edge>
+    <edge source="6810" target="10772">
+      <data key="d3">1812.3</data>
+    </edge>
+    <edge source="6810" target="10109">
+      <data key="d3">2142.7</data>
+    </edge>
+    <edge source="6914" target="5422">
+      <data key="d3">530.0</data>
+    </edge>
+    <edge source="6914" target="5425">
+      <data key="d3">531.5</data>
+    </edge>
+    <edge source="6914" target="10882">
+      <data key="d3">703.0</data>
+    </edge>
+    <edge source="6935" target="6619">
+      <data key="d3">1441.8</data>
+    </edge>
+    <edge source="6935" target="10770">
+      <data key="d3">1593.9</data>
+    </edge>
+    <edge source="6935" target="10771">
+      <data key="d3">1600.3</data>
+    </edge>
+    <edge source="6935" target="7014">
+      <data key="d4">25.3</data>
+    </edge>
+    <edge source="6980" target="5575">
+      <data key="d3">233.9</data>
+    </edge>
+    <edge source="6980" target="5538">
+      <data key="d3">994.7</data>
+    </edge>
+    <edge source="7014" target="10109">
+      <data key="d3">1124.0</data>
+    </edge>
+    <edge source="7014" target="6619">
+      <data key="d3">1421.4</data>
+    </edge>
+    <edge source="7014" target="10770">
+      <data key="d3">1573.5</data>
+    </edge>
+    <edge source="7085" target="5478">
+      <data key="d3">240.0</data>
+    </edge>
+    <edge source="7085" target="5464">
+      <data key="d3">273.0</data>
+    </edge>
+    <edge source="7085" target="7086">
+      <data key="d3">396.7</data>
+    </edge>
+    <edge source="7086" target="5478">
+      <data key="d3">175.7</data>
+    </edge>
+    <edge source="7086" target="5575">
+      <data key="d3">274.2</data>
+    </edge>
+    <edge source="7086" target="6980">
+      <data key="d3">671.8</data>
+    </edge>
+    <edge source="7088" target="5616">
+      <data key="d3">248.0</data>
+    </edge>
+    <edge source="7088" target="5597">
+      <data key="d3">271.2</data>
+    </edge>
+    <edge source="7088" target="3918">
+      <data key="d3">831.2</data>
+    </edge>
+    <edge source="7088" target="7092">
+      <data key="d4">7.2</data>
+    </edge>
+    <edge source="7092" target="5616">
+      <data key="d3">248.0</data>
+    </edge>
+    <edge source="7092" target="5597">
+      <data key="d3">271.2</data>
+    </edge>
+    <edge source="7092" target="3918">
+      <data key="d3">831.2</data>
+    </edge>
+    <edge source="7093" target="5616">
+      <data key="d3">248.0</data>
+    </edge>
+    <edge source="7093" target="5597">
+      <data key="d3">271.2</data>
+    </edge>
+    <edge source="7093" target="3918">
+      <data key="d3">831.2</data>
+    </edge>
+    <edge source="7094" target="7111">
+      <data key="d3">409.2</data>
+    </edge>
+    <edge source="7094" target="5661">
+      <data key="d3">458.5</data>
+    </edge>
+    <edge source="7094" target="5662">
+      <data key="d3">518.7</data>
+    </edge>
+    <edge source="7097" target="5693">
+      <data key="d3">865.0</data>
+    </edge>
+    <edge source="7097" target="4497">
+      <data key="d3">1095.2</data>
+    </edge>
+    <edge source="7097" target="7114">
+      <data key="d3">1160.1</data>
+    </edge>
+    <edge source="7111" target="5678">
+      <data key="d3">283.0</data>
+    </edge>
+    <edge source="7111" target="5693">
+      <data key="d3">376.1</data>
+    </edge>
+    <edge source="7111" target="5661">
+      <data key="d3">471.4</data>
+    </edge>
+    <edge source="7112" target="5678">
+      <data key="d3">93.4</data>
+    </edge>
+    <edge source="7112" target="5693">
+      <data key="d3">186.6</data>
+    </edge>
+    <edge source="7112" target="7094">
+      <data key="d3">210.3</data>
+    </edge>
+    <edge source="7114" target="4497">
+      <data key="d3">203.6</data>
+    </edge>
+    <edge source="7114" target="5681">
+      <data key="d3">278.3</data>
+    </edge>
+    <edge source="7114" target="5691">
+      <data key="d3">309.9</data>
+    </edge>
+    <edge source="7128" target="10109">
+      <data key="d3">940.4</data>
+    </edge>
+    <edge source="7128" target="6788">
+      <data key="d3">1133.3</data>
+    </edge>
+    <edge source="7128" target="6105">
+      <data key="d3">1185.8</data>
+    </edge>
+    <edge source="7129" target="10109">
+      <data key="d3">940.4</data>
+    </edge>
+    <edge source="7129" target="6788">
+      <data key="d3">1133.3</data>
+    </edge>
+    <edge source="7129" target="6105">
+      <data key="d3">1185.8</data>
+    </edge>
+    <edge source="7129" target="7128">
+      <data key="d4">22.0</data>
+    </edge>
+    <edge source="9846" target="10759">
+      <data key="d3">203.8</data>
+    </edge>
+    <edge source="9846" target="6301">
+      <data key="d3">284.1</data>
+    </edge>
+    <edge source="9846" target="10744">
+      <data key="d3">703.7</data>
+    </edge>
+    <edge source="9898" target="9912">
+      <data key="d3">185.0</data>
+    </edge>
+    <edge source="9898" target="9975">
+      <data key="d3">397.5</data>
+    </edge>
+    <edge source="9898" target="11033">
+      <data key="d3">413.4</data>
+    </edge>
+    <edge source="9900" target="9975">
+      <data key="d3">235.8</data>
+    </edge>
+    <edge source="9900" target="9898">
+      <data key="d3">501.2</data>
+    </edge>
+    <edge source="9900" target="9931">
+      <data key="d3">2191.9</data>
+    </edge>
+    <edge source="9912" target="9898">
+      <data key="d3">380.7</data>
+    </edge>
+    <edge source="9912" target="11033">
+      <data key="d3">393.1</data>
+    </edge>
+    <edge source="9912" target="9900">
+      <data key="d3">429.4</data>
+    </edge>
+    <edge source="9916" target="4587">
+      <data key="d3">995.0</data>
+    </edge>
+    <edge source="9916" target="4568">
+      <data key="d3">1160.0</data>
+    </edge>
+    <edge source="9916" target="4573">
+      <data key="d3">1212.2</data>
+    </edge>
+    <edge source="9919" target="4573">
+      <data key="d3">387.1</data>
+    </edge>
+    <edge source="9919" target="4562">
+      <data key="d3">457.1</data>
+    </edge>
+    <edge source="9919" target="4568">
+      <data key="d3">631.7</data>
+    </edge>
+    <edge source="9931" target="9932">
+      <data key="d3">185.3</data>
+    </edge>
+    <edge source="9931" target="6700">
+      <data key="d3">1744.5</data>
+    </edge>
+    <edge source="9931" target="9912">
+      <data key="d3">1953.0</data>
+    </edge>
+    <edge source="9932" target="9931">
+      <data key="d3">807.9</data>
+    </edge>
+    <edge source="9932" target="4525">
+      <data key="d3">3024.8</data>
+    </edge>
+    <edge source="9932" target="9974">
+      <data key="d3">3242.2</data>
+    </edge>
+    <edge source="9974" target="4552">
+      <data key="d3">434.5</data>
+    </edge>
+    <edge source="9974" target="9975">
+      <data key="d3">606.2</data>
+    </edge>
+    <edge source="9974" target="9898">
+      <data key="d3">946.9</data>
+    </edge>
+    <edge source="9975" target="9898">
+      <data key="d3">389.6</data>
+    </edge>
+    <edge source="9975" target="9900">
+      <data key="d3">540.6</data>
+    </edge>
+    <edge source="9975" target="4552">
+      <data key="d3">719.3</data>
+    </edge>
+    <edge source="10049" target="3926">
+      <data key="d3">513.6</data>
+    </edge>
+    <edge source="10049" target="5610">
+      <data key="d3">577.1</data>
+    </edge>
+    <edge source="10049" target="5506">
+      <data key="d3">818.6</data>
+    </edge>
+    <edge source="10109" target="6810">
+      <data key="d3">550.7</data>
+    </edge>
+    <edge source="10109" target="6105">
+      <data key="d3">616.6</data>
+    </edge>
+    <edge source="10109" target="6097">
+      <data key="d3">644.4</data>
+    </edge>
+    <edge source="10113" target="10116">
+      <data key="d3">581.5</data>
+    </edge>
+    <edge source="10113" target="6050">
+      <data key="d3">803.4</data>
+    </edge>
+    <edge source="10113" target="10738">
+      <data key="d3">852.3</data>
+    </edge>
+    <edge source="10116" target="10113">
+      <data key="d3">179.3</data>
+    </edge>
+    <edge source="10186" target="5431">
+      <data key="d3">542.8</data>
+    </edge>
+    <edge source="10186" target="4568">
+      <data key="d3">829.6</data>
+    </edge>
+    <edge source="10186" target="11096">
+      <data key="d3">1171.7</data>
+    </edge>
+    <edge source="10187" target="5431">
+      <data key="d3">334.6</data>
+    </edge>
+    <edge source="10187" target="5422">
+      <data key="d3">513.6</data>
+    </edge>
+    <edge source="10187" target="4568">
+      <data key="d3">621.4</data>
+    </edge>
+    <edge source="10269" target="6703">
+      <data key="d3">253.9</data>
+    </edge>
+    <edge source="10269" target="5905">
+      <data key="d3">782.3</data>
+    </edge>
+    <edge source="10269" target="11096">
+      <data key="d3">1053.1</data>
+    </edge>
+    <edge source="10278" target="5871">
+      <data key="d3">627.8</data>
+    </edge>
+    <edge source="10278" target="11101">
+      <data key="d3">760.9</data>
+    </edge>
+    <edge source="10278" target="11033">
+      <data key="d3">891.4</data>
+    </edge>
+    <edge source="10281" target="5875">
+      <data key="d3">138.0</data>
+    </edge>
+    <edge source="10281" target="5896">
+      <data key="d3">505.0</data>
+    </edge>
+    <edge source="10281" target="11031">
+      <data key="d3">595.0</data>
+    </edge>
+    <edge source="10291" target="5900">
+      <data key="d3">497.5</data>
+    </edge>
+    <edge source="10291" target="10293">
+      <data key="d3">857.6</data>
+    </edge>
+    <edge source="10291" target="6774">
+      <data key="d3">2523.8</data>
+    </edge>
+    <edge source="10293" target="10294">
+      <data key="d4">101.8</data>
+    </edge>
+    <edge source="10294" target="5900">
+      <data key="d4">264.0</data>
+    </edge>
+    <edge source="10295" target="11031">
+      <data key="d3">79.3</data>
+    </edge>
+    <edge source="10295" target="10281">
+      <data key="d3">459.3</data>
+    </edge>
+    <edge source="10321" target="10666">
+      <data key="d3">1260.8</data>
+    </edge>
+    <edge source="10321" target="5896">
+      <data key="d3">1564.9</data>
+    </edge>
+    <edge source="10321" target="11101">
+      <data key="d3">1744.9</data>
+    </edge>
+    <edge source="10666" target="5896">
+      <data key="d3">1031.4</data>
+    </edge>
+    <edge source="10666" target="10321">
+      <data key="d3">1166.5</data>
+    </edge>
+    <edge source="10666" target="5875">
+      <data key="d3">1381.3</data>
+    </edge>
+    <edge source="10737" target="10738">
+      <data key="d3">105.5</data>
+    </edge>
+    <edge source="10737" target="10741">
+      <data key="d3">828.7</data>
+    </edge>
+    <edge source="10737" target="5617">
+      <data key="d3">999.6</data>
+    </edge>
+    <edge source="10738" target="10737">
+      <data key="d3">79.7</data>
+    </edge>
+    <edge source="10738" target="10113">
+      <data key="d3">1149.6</data>
+    </edge>
+    <edge source="10738" target="10116">
+      <data key="d3">1168.7</data>
+    </edge>
+    <edge source="10739" target="6097">
+      <data key="d3">648.8</data>
+    </edge>
+    <edge source="10739" target="10742">
+      <data key="d3">668.5</data>
+    </edge>
+    <edge source="10739" target="6716">
+      <data key="d3">1065.2</data>
+    </edge>
+    <edge source="10740" target="6097">
+      <data key="d3">648.8</data>
+    </edge>
+    <edge source="10740" target="10742">
+      <data key="d3">668.5</data>
+    </edge>
+    <edge source="10740" target="6716">
+      <data key="d3">1065.2</data>
+    </edge>
+    <edge source="10741" target="10745">
+      <data key="d3">206.4</data>
+    </edge>
+    <edge source="10741" target="10737">
+      <data key="d3">834.3</data>
+    </edge>
+    <edge source="10741" target="9846">
+      <data key="d3">1244.7</data>
+    </edge>
+    <edge source="10742" target="10746">
+      <data key="d3">93.4</data>
+    </edge>
+    <edge source="10742" target="10740">
+      <data key="d3">383.3</data>
+    </edge>
+    <edge source="10742" target="6716">
+      <data key="d3">908.7</data>
+    </edge>
+    <edge source="10743" target="10746">
+      <data key="d3">93.4</data>
+    </edge>
+    <edge source="10743" target="10740">
+      <data key="d3">383.3</data>
+    </edge>
+    <edge source="10743" target="6716">
+      <data key="d3">908.7</data>
+    </edge>
+    <edge source="10744" target="10745">
+      <data key="d3">198.6</data>
+    </edge>
+    <edge source="10744" target="10759">
+      <data key="d3">918.7</data>
+    </edge>
+    <edge source="10744" target="6301">
+      <data key="d3">1193.3</data>
+    </edge>
+    <edge source="10745" target="10744">
+      <data key="d3">201.2</data>
+    </edge>
+    <edge source="10745" target="10741">
+      <data key="d3">206.4</data>
+    </edge>
+    <edge source="10746" target="10747">
+      <data key="d3">198.5</data>
+    </edge>
+    <edge source="10746" target="10753">
+      <data key="d3">381.2</data>
+    </edge>
+    <edge source="10746" target="6716">
+      <data key="d3">880.3</data>
+    </edge>
+    <edge source="10747" target="10746">
+      <data key="d3">46.2</data>
+    </edge>
+    <edge source="10747" target="10743">
+      <data key="d3">438.3</data>
+    </edge>
+    <edge source="10747" target="10740">
+      <data key="d3">461.4</data>
+    </edge>
+    <edge source="10753" target="9846">
+      <data key="d3">361.1</data>
+    </edge>
+    <edge source="10753" target="10747">
+      <data key="d3">598.3</data>
+    </edge>
+    <edge source="10753" target="10744">
+      <data key="d3">972.4</data>
+    </edge>
+    <edge source="10759" target="9846">
+      <data key="d3">261.3</data>
+    </edge>
+    <edge source="10759" target="6301">
+      <data key="d3">376.1</data>
+    </edge>
+    <edge source="10759" target="10744">
+      <data key="d3">655.9</data>
+    </edge>
+    <edge source="10769" target="11125">
+      <data key="d3">928.0</data>
+    </edge>
+    <edge source="10769" target="11127">
+      <data key="d3">1437.2</data>
+    </edge>
+    <edge source="10769" target="10772">
+      <data key="d3">1920.2</data>
+    </edge>
+    <edge source="10770" target="6619">
+      <data key="d3">110.1</data>
+    </edge>
+    <edge source="10770" target="10771">
+      <data key="d3">186.5</data>
+    </edge>
+    <edge source="10771" target="11125">
+      <data key="d3">505.7</data>
+    </edge>
+    <edge source="10771" target="11126">
+      <data key="d3">695.8</data>
+    </edge>
+    <edge source="10771" target="6624">
+      <data key="d3">1019.6</data>
+    </edge>
+    <edge source="10772" target="11127">
+      <data key="d3">798.5</data>
+    </edge>
+    <edge source="10772" target="6624">
+      <data key="d3">978.6</data>
+    </edge>
+    <edge source="10772" target="6622">
+      <data key="d3">1085.5</data>
+    </edge>
+    <edge source="10773" target="10772">
+      <data key="d3">475.8</data>
+    </edge>
+    <edge source="10773" target="11127">
+      <data key="d3">864.4</data>
+    </edge>
+    <edge source="10773" target="6622">
+      <data key="d3">881.6</data>
+    </edge>
+    <edge source="10882" target="5873">
+      <data key="d3">442.5</data>
+    </edge>
+    <edge source="10882" target="5875">
+      <data key="d3">550.3</data>
+    </edge>
+    <edge source="10882" target="5422">
+      <data key="d3">612.7</data>
+    </edge>
+    <edge source="10882" target="6914">
+      <data key="d4">211.9</data>
+    </edge>
+    <edge source="11031" target="10295">
+      <data key="d3">166.0</data>
+    </edge>
+    <edge source="11031" target="11096">
+      <data key="d3">234.7</data>
+    </edge>
+    <edge source="11031" target="5431">
+      <data key="d3">865.3</data>
+    </edge>
+    <edge source="11033" target="9912">
+      <data key="d3">305.5</data>
+    </edge>
+    <edge source="11033" target="9898">
+      <data key="d3">470.9</data>
+    </edge>
+    <edge source="11033" target="9975">
+      <data key="d3">727.6</data>
+    </edge>
+    <edge source="11079" target="5487">
+      <data key="d3">163.1</data>
+    </edge>
+    <edge source="11079" target="5701">
+      <data key="d3">524.8</data>
+    </edge>
+    <edge source="11079" target="5662">
+      <data key="d3">637.4</data>
+    </edge>
+    <edge source="11094" target="5491">
+      <data key="d3">199.9</data>
+    </edge>
+    <edge source="11094" target="5487">
+      <data key="d3">269.1</data>
+    </edge>
+    <edge source="11094" target="5661">
+      <data key="d3">360.0</data>
+    </edge>
+    <edge source="11096" target="10295">
+      <data key="d3">253.5</data>
+    </edge>
+    <edge source="11096" target="5905">
+      <data key="d3">884.1</data>
+    </edge>
+    <edge source="11096" target="6703">
+      <data key="d3">955.2</data>
+    </edge>
+    <edge source="11101" target="5896">
+      <data key="d3">632.5</data>
+    </edge>
+    <edge source="11101" target="5875">
+      <data key="d3">982.4</data>
+    </edge>
+    <edge source="11101" target="5871">
+      <data key="d3">1084.1</data>
+    </edge>
+    <edge source="11101" target="10321">
+      <data key="d4">1091.9</data>
+    </edge>
+    <edge source="11125" target="11126">
+      <data key="d3">392.4</data>
+    </edge>
+    <edge source="11125" target="10770">
+      <data key="d3">551.6</data>
+    </edge>
+    <edge source="11125" target="6624">
+      <data key="d3">716.2</data>
+    </edge>
+    <edge source="11126" target="11125">
+      <data key="d3">125.0</data>
+    </edge>
+    <edge source="11126" target="11127">
+      <data key="d3">591.4</data>
+    </edge>
+    <edge source="11126" target="10769">
+      <data key="d3">1337.6</data>
+    </edge>
+    <edge source="11127" target="11126">
+      <data key="d3">186.3</data>
+    </edge>
+    <edge source="11127" target="6624">
+      <data key="d3">903.9</data>
+    </edge>
+    <edge source="11127" target="10773">
+      <data key="d3">1178.9</data>
+    </edge>
+  </graph>
+</graphml>

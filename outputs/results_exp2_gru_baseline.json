@@ -1,0 +1,21 @@
+{
+  "model_name": "exp2_gru_baseline",
+  "targets": {
+    "intensidad_trafico": {
+      "mae": 59.935848,
+      "rmse": 123.413732
+    },
+    "ocupacion": {
+      "mae": 1.888328,
+      "rmse": 4.144154
+    },
+    "carga": {
+      "mae": 3.015062,
+      "rmse": 4.906453
+    }
+  },
+  "mean_mae": 21.613079,
+  "mean_rmse": 44.15478,
+  "epochs_trained": 16,
+  "stopped_early": true
+}

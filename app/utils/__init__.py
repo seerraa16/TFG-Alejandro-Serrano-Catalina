@@ -1,1 +1,0 @@
-"""Utilidades transversales del backend."""

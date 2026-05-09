@@ -1,0 +1,50 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Entornos virtuales ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Configuración local ---
+.env
+.env.local
+*.local
+
+# --- IDE / editores ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# --- Tests / coverage ---
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# --- Modelos entrenados (binarios pesados) ---
+app/modelos/*.pt
+app/modelos/*.pth
+app/modelos/*.h5
+app/modelos/*.keras
+app/modelos/*.pkl
+app/modelos/*.joblib
+!app/modelos/.gitkeep
+!app/modelos/README.md
+
+# --- Cachés / outputs ---
+cache/
+outputs/
+logs/
+*.log
