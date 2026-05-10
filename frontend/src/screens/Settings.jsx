@@ -1,7 +1,7 @@
 import Header from '../components/Header'
 import BottomNav from '../components/BottomNav'
 import { useSettings } from '../context/SettingsContext'
-import { Lock, RefreshCw, ChevronRight, LogOut, Info } from 'lucide-react'
+import { Lock, RefreshCw, ChevronRight, LogOut, Info, Home } from 'lucide-react'
 
 function Toggle({ value, onChange }) {
   return (
@@ -68,6 +68,29 @@ export default function Settings() {
           <p className="text-xs text-blue-600 leading-relaxed">
             Los ajustes marcados con <b>API</b> afectan directamente a las llamadas al modelo de predicción.
           </p>
+        </div>
+
+        {/* Mi Casa */}
+        <div className="bg-white rounded-2xl shadow-sm p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <Home size={15} className="text-blue-600" />
+            <p className="font-semibold text-gray-800 text-sm">Mi Casa</p>
+          </div>
+          <div>
+            <label className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">
+              Dirección de casa
+            </label>
+            <input
+              type="text"
+              value={settings.homeAddress}
+              onChange={e => updateSetting('homeAddress', e.target.value)}
+              placeholder="Ej: Calle Gran Vía, 10, Madrid"
+              className="w-full text-sm text-gray-700 border border-gray-100 rounded-xl px-3 py-2.5 mt-1.5 focus:outline-none focus:border-blue-300 transition-colors"
+            />
+            <p className="text-[11px] text-gray-400 mt-1.5 leading-relaxed">
+              Punto de partida para calcular tiempos desde casa en el planificador.
+            </p>
+          </div>
         </div>
 
         {/* Modelo de predicción */}

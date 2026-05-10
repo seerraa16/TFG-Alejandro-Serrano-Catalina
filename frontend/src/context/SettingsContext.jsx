@@ -10,6 +10,7 @@ const DEFAULTS = {
   walkSpeed: 5.2,
   maxSpeed: 120,
   useOsmSpeedLimits: false, // [OSM-SPEED]
+  homeAddress: 'Calle Valderrodrigo 31, Madrid',
 }
 
 function load() {

@@ -1,66 +1,61 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { predictETA } from '../api/traffic'
 import { useSettings } from '../context/SettingsContext'
-import Header from '../components/Header'
+import { useEvents } from '../context/EventsContext'
 import BottomNav from '../components/BottomNav'
 import {
-  MapPin, Clock, Calendar, Navigation, AlertTriangle,
-  ChevronRight, Layers, Loader,
+  Calendar, Clock, MapPin, Navigation, Plus, X,
+  Loader, Search, RefreshCw,
 } from 'lucide-react'
 
-const HOME = 'Calle Valderrodrigo 31, Madrid'
-
-const MEETINGS = [
-  {
-    id: 1,
-    dayLabel: 'JUE',
-    dayNum: '12',
-    title: 'Reunión de Equipo',
-    time: '09:15 AM – 10:30 AM',
-    departureTime: '08:45',
-    location: 'Distrito Telefónica, Edificio Oeste 1',
-    destination: 'Distrito Telefónica, Las Tablas, Madrid',
-    date: '2026-10-12',
-    status: 'CONFIRMADO',
-  },
-  {
-    id: 2,
-    dayLabel: null,
-    dayNum: null,
-    title: 'Comida con Proveedores',
-    time: '14:00 PM',
-    departureTime: '13:30',
-    location: 'Restaurante El Viso, Madrid',
-    destination: 'Restaurante El Viso, Madrid',
-    date: '2026-10-12',
-    status: null,
-  },
+const MONTHS_ES = [
+  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
 ]
+
+function getMonthLabel(dateStr) {
+  if (!dateStr) return ''
+  const d = new Date(dateStr + 'T12:00:00')
+  return `${MONTHS_ES[d.getMonth()]} ${d.getFullYear()}`
+}
+
+function subMinutes(timeStr, mins) {
+  const [h, m] = timeStr.split(':').map(Number)
+  const total = Math.max(0, h * 60 + m - mins)
+  return `${String(Math.floor(total / 60)).padStart(2, '0')}:${String(total % 60).padStart(2, '0')}`
+}
 
 export default function Planner() {
   const navigate = useNavigate()
   const { weatherOverride, settings } = useSettings()
+  const { events, addEvent, removeEvent } = useEvents()
 
-  const [origin, setOrigin] = useState(HOME)
-  const [destination, setDestination] = useState('')
-  const [date, setDate] = useState('2026-10-12')
-  const [time, setTime] = useState('09:00')
-  const [mode, setMode] = useState('osm')
-  const [accidente, setAccidente] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const HOME = settings.homeAddress || 'Calle Valderrodrigo 31, Madrid'
 
-  // ETAs pre-calculados para cada evento
   const [eventETAs, setEventETAs] = useState({})
-  const [etaLoading, setEtaLoading] = useState(true)
+  const [etaLoading, setEtaLoading] = useState({})
+  const [loadingRoute, setLoadingRoute] = useState(null)
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [newEvent, setNewEvent] = useState({ title: '', date: '', eventTime: '', destination: '' })
+  const [addError, setAddError] = useState('')
+
+  const fetchedKey = useRef('')
+  const eventIds = events.map(e => e.id).join(',')
 
   useEffect(() => {
-    let cancelled = false
-    const calcETAs = async () => {
+    const key = eventIds + HOME
+    if (key === fetchedKey.current) return
+    fetchedKey.current = key
+
+    const loadingMap = {}
+    events.forEach(e => { loadingMap[e.id] = true })
+    setEtaLoading(loadingMap)
+
+    const calc = async () => {
       const results = {}
       await Promise.allSettled(
-        MEETINGS.map(async (m) => {
+        events.map(async (m) => {
           try {
             const dt = `${m.date}T${m.departureTime}:00`
             const res = await predictETA({
@@ -69,7 +64,7 @@ export default function Planner() {
               datetime: dt,
               mode: 'osm',
               weatherOverride,
-              useOsmSpeedLimits: settings.useOsmSpeedLimits, // [OSM-SPEED]
+              useOsmSpeedLimits: settings.useOsmSpeedLimits,
             })
             results[m.id] = res.eta_minutes
           } catch {
@@ -77,161 +72,102 @@ export default function Planner() {
           }
         })
       )
-      if (!cancelled) {
-        setEventETAs(results)
-        setEtaLoading(false)
-      }
+      setEventETAs(results)
+      setEtaLoading({})
     }
-    calcETAs()
-    return () => { cancelled = true }
-  }, [])
+    calc()
+  }, [eventIds, HOME])
 
-  const handleSelectMeeting = (meeting) => {
-    setDestination(meeting.destination)
-    setDate(meeting.date)
-    setTime(meeting.departureTime)
-    setError(null)
-  }
-
-  const handleOpenRoute = async (meeting) => {
-    // Abrir directamente en la pantalla RUTA con el resultado calculado
-    setLoading(true)
-    setError(null)
+  const handleOpenRoute = async (event) => {
+    setLoadingRoute(event.id)
     try {
-      const dt = `${meeting.date}T${meeting.departureTime}:00`
+      const dt = `${event.date}T${event.departureTime}:00`
       const result = await predictETA({
         origin: HOME,
-        destination: meeting.destination,
+        destination: event.destination,
         datetime: dt,
-        mode,
-        accidente,
+        mode: 'osm',
         weatherOverride,
-        useOsmSpeedLimits: settings.useOsmSpeedLimits, // [OSM-SPEED]
+        useOsmSpeedLimits: settings.useOsmSpeedLimits,
       })
       navigate('/route', {
-        state: { result, origin: HOME, destination: meeting.destination, mode },
+        state: { result, origin: HOME, destination: event.destination, mode: 'osm', datetime: dt },
       })
     } catch (e) {
-      setError(e.message)
+      console.error(e)
     } finally {
-      setLoading(false)
+      setLoadingRoute(null)
     }
   }
 
-  const handleCalculate = async () => {
-    if (!origin.trim() || !destination.trim()) {
-      setError('Introduce un origen y un destino.')
+  const handleAddEvent = () => {
+    if (!newEvent.title.trim() || !newEvent.date || !newEvent.eventTime || !newEvent.destination.trim()) {
+      setAddError('Rellena todos los campos obligatorios.')
       return
     }
-    setLoading(true)
-    setError(null)
-    try {
-      const dt = `${date}T${time}:00`
-      const result = await predictETA({
-        origin,
-        destination,
-        datetime: dt,
-        mode,
-        accidente,
-        weatherOverride,
-        useOsmSpeedLimits: settings.useOsmSpeedLimits, // [OSM-SPEED]
-      })
-      navigate('/route', { state: { result, origin, destination, dt, mode } })
-    } catch (e) {
-      setError(e.message)
-    } finally {
-      setLoading(false)
-    }
+    addEvent({
+      title: newEvent.title.trim(),
+      date: newEvent.date,
+      eventTime: newEvent.eventTime,
+      departureTime: subMinutes(newEvent.eventTime, 30),
+      location: newEvent.destination.trim(),
+      destination: newEvent.destination.trim().toLowerCase().includes('madrid')
+        ? newEvent.destination.trim()
+        : newEvent.destination.trim() + ', Madrid',
+      status: null,
+    })
+    setNewEvent({ title: '', date: '', eventTime: '', destination: '' })
+    setAddError('')
+    setShowAddModal(false)
   }
+
+  const upcomingEvents = events.filter(
+    e => new Date(`${e.date}T${e.eventTime}`) >= new Date(new Date().setHours(0, 0, 0, 0))
+  )
+  const monthLabel = upcomingEvents.length > 0
+    ? getMonthLabel(upcomingEvents[0].date)
+    : getMonthLabel(new Date().toISOString().slice(0, 10))
 
   return (
     <div className="flex flex-col h-full bg-dots">
-      <Header />
+      {/* Planner header */}
+      <div className="bg-white border-b border-gray-100 px-4 py-3 flex-shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+            <Calendar size={20} className="text-white" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="font-bold text-gray-900 text-sm leading-tight">Planificador de Calendario</p>
+            <div className="flex items-center gap-1 mt-0.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+              <p className="text-[11px] text-gray-400 leading-tight">Google Calendar · Conectado</p>
+            </div>
+          </div>
+          <button className="p-2 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors flex-shrink-0">
+            <RefreshCw size={15} className="text-gray-500" />
+          </button>
+        </div>
+      </div>
 
       <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3 scrollbar-hide pb-4">
 
-        {/* Origen / Destino */}
-        <div className="bg-white rounded-2xl shadow-sm p-4">
-          <div className="flex gap-3 items-stretch">
-            <div className="flex flex-col items-center pt-5 pb-2 flex-shrink-0">
-              <div className="w-3 h-3 rounded-full bg-blue-600" />
-              <div className="w-px flex-1 bg-gray-200 my-1.5" style={{ minHeight: 20 }} />
-              <div className="w-3 h-3 rounded-full border-2 border-gray-400" />
-            </div>
-            <div className="flex-1 min-w-0 space-y-1">
-              <div>
-                <label className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Origen</label>
-                <input
-                  type="text"
-                  value={origin}
-                  onChange={e => setOrigin(e.target.value)}
-                  className="w-full text-sm text-gray-800 py-1 focus:outline-none"
-                />
-              </div>
-              <div className="border-t border-gray-100" />
-              <div>
-                <label className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Destino</label>
-                <input
-                  type="text"
-                  value={destination}
-                  onChange={e => setDestination(e.target.value)}
-                  className="w-full text-sm text-gray-800 py-1 focus:outline-none"
-                  placeholder="¿A dónde vas?"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Crear evento */}
+        <button
+          onClick={() => setShowAddModal(true)}
+          className="w-full bg-blue-600 text-white py-3.5 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 shadow-sm shadow-blue-200 active:scale-[0.98] transition-all"
+        >
+          <Plus size={18} />
+          Crear evento
+        </button>
 
-        {/* Salida */}
-        <div className="bg-white rounded-2xl shadow-sm p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Clock size={15} className="text-blue-600" />
-            <span className="font-semibold text-gray-800 text-sm">Salida</span>
-          </div>
-          <div className="flex gap-4">
-            <div className="flex-1">
-              <p className="text-[10px] text-gray-400 mb-1.5">Fecha</p>
-              <div className="flex items-center gap-1.5">
-                <Calendar size={13} className="text-gray-400 flex-shrink-0" />
-                <input type="date" value={date} onChange={e => setDate(e.target.value)}
-                  className="text-sm text-gray-700 focus:outline-none w-full" />
-              </div>
-            </div>
-            <div className="w-px bg-gray-100" />
-            <div className="flex-1">
-              <p className="text-[10px] text-gray-400 mb-1.5">Hora</p>
-              <div className="flex items-center gap-1.5">
-                <Clock size={13} className="text-gray-400 flex-shrink-0" />
-                <input type="time" value={time} onChange={e => setTime(e.target.value)}
-                  className="text-sm text-gray-700 focus:outline-none w-full" />
-              </div>
-            </div>
-          </div>
-          <p className="text-xs text-blue-500 italic mt-3 leading-relaxed">
-            La predicción se ajustará automáticamente según el histórico de tráfico.
-          </p>
-        </div>
-
-        {/* Modo de ruta */}
-        <div className="bg-white rounded-2xl shadow-sm p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Layers size={15} className="text-blue-600" />
-            <span className="font-semibold text-gray-800 text-sm">Modo de Ruta</span>
-          </div>
-          <div className="flex bg-gray-100 rounded-xl p-1">
-            <button onClick={() => setMode('osm')}
-              className={`flex-1 py-2 px-2 rounded-lg text-xs font-semibold transition-all ${mode === 'osm' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}>
-              🛣️ Red Vial (OSM)
-            </button>
-            <button onClick={() => setMode('sensors')}
-              className={`flex-1 py-2 px-2 rounded-lg text-xs font-semibold transition-all ${mode === 'sensors' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}>
-              📡 Sensores
-            </button>
-          </div>
-          <p className="text-[11px] text-gray-400 mt-2">
-            {mode === 'osm' ? 'Ruta real por la red vial de Madrid (recomendado).' : 'Dijkstra sobre el grafo de sensores DGT.'}
-          </p>
+        {/* Buscador */}
+        <div className="bg-white rounded-2xl shadow-sm px-4 py-3 flex items-center gap-2">
+          <Search size={15} className="text-gray-400 flex-shrink-0" />
+          <input
+            type="text"
+            placeholder="Añadir ubicación o cita"
+            className="flex-1 text-sm text-gray-600 focus:outline-none bg-transparent"
+          />
         </div>
 
         {/* Próximos eventos */}
@@ -241,123 +177,180 @@ export default function Planner() {
               <Calendar size={15} className="text-blue-600" />
               <span className="font-semibold text-gray-800 text-sm">Próximos eventos</span>
             </div>
-            <button className="text-blue-600 text-xs font-medium">Ver calendario</button>
+            <span className="text-xs text-gray-400 font-medium">{monthLabel}</span>
           </div>
 
-          {/* Evento principal — click rellena el formulario, click en flecha abre ruta */}
-          <div className="border border-gray-100 rounded-xl p-3">
-            <div className="flex gap-3 items-start">
-              <div className="bg-blue-600 text-white rounded-xl px-2.5 py-1.5 text-center flex-shrink-0">
-                <p className="text-[9px] font-bold leading-none mb-0.5">{MEETINGS[0].dayLabel}</p>
-                <p className="text-xl font-bold leading-none">{MEETINGS[0].dayNum}</p>
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-sm font-semibold text-gray-800">{MEETINGS[0].title}</span>
-                  <span className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold">CONFIRMADO</span>
-                </div>
-                <div className="flex items-center gap-1 text-xs text-blue-500 mt-1">
-                  <Clock size={10} />
-                  <span>{MEETINGS[0].time}</span>
-                </div>
-                <div className="flex items-center gap-1 text-xs text-gray-500 mt-0.5">
-                  <MapPin size={10} />
-                  <span className="truncate">{MEETINGS[0].location}</span>
-                </div>
-                {/* ETA pre-calculado */}
-                <div className="flex items-center gap-1 mt-1.5">
-                  {etaLoading ? (
-                    <span className="text-[11px] text-gray-400 flex items-center gap-1">
-                      <Loader size={10} className="animate-spin" /> Calculando tiempo...
-                    </span>
-                  ) : eventETAs[MEETINGS[0].id] != null ? (
-                    <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
-                      ⏱️ ~{eventETAs[MEETINGS[0].id].toFixed(0)} min desde casa
-                    </span>
-                  ) : (
-                    <span className="text-[11px] text-gray-400">Tiempo no disponible</span>
-                  )}
-                </div>
-              </div>
-              {/* Botón abrir ruta */}
-              <button
-                onClick={() => handleOpenRoute(MEETINGS[0])}
-                className="flex-shrink-0 p-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors active:scale-95"
-                title="Ver ruta completa"
-              >
-                <Navigation size={16} className="text-blue-600" />
-              </button>
+          {upcomingEvents.length === 0 ? (
+            <div className="py-6 text-center">
+              <Calendar size={32} className="text-gray-200 mx-auto mb-2" />
+              <p className="text-sm text-gray-400">No hay eventos próximos</p>
+              <p className="text-xs text-gray-300 mt-0.5">Pulsa "Crear evento" para añadir uno</p>
             </div>
-          </div>
-
-          {/* Botón calcular */}
-          <button
-            onClick={handleCalculate}
-            disabled={loading || !destination.trim()}
-            className="w-full mt-3 bg-blue-600 text-white py-3.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98] transition-all shadow-sm shadow-blue-200"
-          >
-            {loading ? (
-              <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Calculando ruta...
-              </>
-            ) : (
-              <>
-                <Navigation size={16} />
-                Calcular ruta
-              </>
-            )}
-          </button>
-
-          {error && (
-            <div className="mt-2 p-2.5 bg-red-50 text-red-600 text-xs rounded-xl flex items-start gap-2">
-              <AlertTriangle size={13} className="flex-shrink-0 mt-0.5" />
-              <span>{error}</span>
+          ) : (
+            <div className="space-y-3">
+              {upcomingEvents.map((event) => (
+                <EventCard
+                  key={event.id}
+                  event={event}
+                  eta={eventETAs[event.id]}
+                  etaLoading={!!etaLoading[event.id]}
+                  loadingRoute={loadingRoute === event.id}
+                  onOpenRoute={() => handleOpenRoute(event)}
+                  onRemove={() => removeEvent(event.id)}
+                />
+              ))}
             </div>
           )}
-        </div>
-
-        {/* Aviso tráfico */}
-        <div className="bg-amber-50 border border-amber-100 rounded-xl p-3 flex items-center gap-2">
-          <AlertTriangle size={14} className="text-amber-500 flex-shrink-0" />
-          <span className="text-xs text-amber-700">Tráfico moderado previsto para mañana a esta hora</span>
-        </div>
-
-        {/* Segundo evento */}
-        <button
-          onClick={() => handleSelectMeeting(MEETINGS[1])}
-          className="w-full bg-white rounded-2xl shadow-sm p-4 flex items-center justify-between hover:bg-gray-50 active:scale-[0.99] transition-all"
-        >
-          <div className="text-left flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-800">{MEETINGS[1].title}</p>
-            <p className="text-xs text-gray-400 mt-0.5">{MEETINGS[1].time} · {MEETINGS[1].location}</p>
-            {!etaLoading && eventETAs[MEETINGS[1].id] != null && (
-              <span className="text-[11px] font-semibold text-blue-600">
-                ⏱️ ~{eventETAs[MEETINGS[1].id].toFixed(0)} min desde casa
-              </span>
-            )}
-          </div>
-          <ChevronRight size={16} className="text-gray-300 flex-shrink-0" />
-        </button>
-
-        {/* Toggle incidente */}
-        <div className="bg-white rounded-2xl shadow-sm p-4 flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium text-gray-800">Simular incidente</p>
-            <p className="text-xs text-gray-400 mt-0.5">Penaliza todos los sensores de la ruta</p>
-          </div>
-          <button
-            onClick={() => setAccidente(v => !v)}
-            className={`relative w-11 h-6 rounded-full transition-colors flex-shrink-0 ${accidente ? 'bg-blue-600' : 'bg-gray-200'}`}
-          >
-            <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${accidente ? 'translate-x-5' : ''}`} />
-          </button>
         </div>
 
         <div className="h-2" />
       </div>
 
+      {/* Modal añadir evento */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-end" onClick={e => e.target === e.currentTarget && setShowAddModal(false)}>
+          <div className="bg-white w-full rounded-t-3xl p-6 space-y-4 max-w-[430px] mx-auto">
+            <div className="flex items-center justify-between">
+              <h2 className="font-bold text-gray-900 text-base">Nuevo evento</h2>
+              <button
+                onClick={() => { setShowAddModal(false); setAddError('') }}
+                className="p-1.5 rounded-xl hover:bg-gray-100 transition-colors"
+              >
+                <X size={18} className="text-gray-500" />
+              </button>
+            </div>
+
+            <input
+              type="text"
+              placeholder="Título del evento *"
+              value={newEvent.title}
+              onChange={e => setNewEvent(p => ({ ...p, title: e.target.value }))}
+              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-400 transition-colors"
+            />
+
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <p className="text-[10px] text-gray-400 mb-1 font-semibold uppercase tracking-wider">Fecha *</p>
+                <input
+                  type="date"
+                  value={newEvent.date}
+                  onChange={e => setNewEvent(p => ({ ...p, date: e.target.value }))}
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-400 transition-colors"
+                />
+              </div>
+              <div className="flex-1">
+                <p className="text-[10px] text-gray-400 mb-1 font-semibold uppercase tracking-wider">Hora *</p>
+                <input
+                  type="time"
+                  value={newEvent.eventTime}
+                  onChange={e => setNewEvent(p => ({ ...p, eventTime: e.target.value }))}
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-400 transition-colors"
+                />
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[10px] text-gray-400 mb-1 font-semibold uppercase tracking-wider">Dirección *</p>
+              <input
+                type="text"
+                placeholder="Ej: Calle Gran Vía, 10, Madrid"
+                value={newEvent.destination}
+                onChange={e => setNewEvent(p => ({ ...p, destination: e.target.value }))}
+                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-400 transition-colors"
+              />
+            </div>
+
+            {addError && (
+              <p className="text-xs text-red-500 bg-red-50 px-3 py-2 rounded-lg">{addError}</p>
+            )}
+
+            <button
+              onClick={handleAddEvent}
+              className="w-full bg-blue-600 text-white py-3.5 rounded-xl font-semibold text-sm active:scale-[0.98] transition-all"
+            >
+              Guardar evento
+            </button>
+          </div>
+        </div>
+      )}
+
       <BottomNav />
+    </div>
+  )
+}
+
+function EventCard({ event, eta, etaLoading, loadingRoute, onOpenRoute, onRemove }) {
+  return (
+    <div className="border border-gray-100 rounded-xl p-3 hover:border-blue-100 transition-colors">
+      <div className="flex gap-3 items-start">
+        {/* Day badge */}
+        <div className="bg-blue-600 text-white rounded-xl px-2.5 py-1.5 text-center flex-shrink-0 min-w-[46px]">
+          <p className="text-[9px] font-bold leading-none mb-0.5 uppercase">{event.dayLabel}</p>
+          <p className="text-xl font-bold leading-none">{event.dayNum}</p>
+        </div>
+
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-sm font-semibold text-gray-800">{event.title}</span>
+            {event.status && (
+              <span className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold">
+                {event.status}
+              </span>
+            )}
+          </div>
+
+          <div className="flex items-center gap-1 text-xs text-blue-500 mt-1">
+            <Clock size={10} />
+            <span>{event.eventTime}</span>
+          </div>
+
+          <div className="flex items-center gap-1 text-xs text-gray-500 mt-0.5">
+            <MapPin size={10} />
+            <span className="truncate">{event.location}</span>
+          </div>
+
+          <div className="mt-1.5">
+            {etaLoading ? (
+              <span className="text-[11px] text-gray-400 flex items-center gap-1">
+                <Loader size={10} className="animate-spin" />
+                Calculando tiempo...
+              </span>
+            ) : eta != null ? (
+              <span className="text-[11px] font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded-full inline-block">
+                Si sales de casa, tardarías: {eta.toFixed(0)} min
+              </span>
+            ) : (
+              <span className="text-[11px] text-gray-300">Tiempo no disponible</span>
+            )}
+          </div>
+        </div>
+
+        <button
+          onClick={onRemove}
+          className="p-1.5 rounded-lg hover:bg-red-50 transition-colors flex-shrink-0 -mt-0.5"
+          title="Eliminar evento"
+        >
+          <X size={13} className="text-gray-300 hover:text-red-400" />
+        </button>
+      </div>
+
+      <button
+        onClick={onOpenRoute}
+        disabled={loadingRoute}
+        className="w-full mt-3 border border-blue-200 text-blue-600 py-2.5 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 hover:bg-blue-50 active:scale-[0.98] transition-all disabled:opacity-50"
+      >
+        {loadingRoute ? (
+          <>
+            <div className="w-3 h-3 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+            Calculando...
+          </>
+        ) : (
+          <>
+            <Navigation size={13} />
+            Calcular ruta
+          </>
+        )}
+      </button>
     </div>
   )
 }

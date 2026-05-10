@@ -47,11 +47,12 @@ export default function Route() {
   const navState = useLocation().state
   const { weatherOverride, settings } = useSettings()
 
-  const [origin, setOrigin] = useState('Calle Valderrodrigo 31, Madrid')
+  const [origin, setOrigin] = useState(() => settings?.homeAddress || 'Calle Valderrodrigo 31, Madrid')
   const [destination, setDestination] = useState('')
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10))
   const [time, setTime] = useState('09:00')
   const [mode, setMode] = useState('osm')
+  const [savedDatetime, setSavedDatetime] = useState(null)
   const [accidente, setAccidente] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -65,9 +66,34 @@ export default function Route() {
       setOrigin(navState.origin ?? origin)
       setDestination(navState.destination ?? '')
       setMode(navState.mode ?? 'osm')
+      setSavedDatetime(navState.datetime ?? null)
       setShowForm(false)
     }
   }, [navState])
+
+  const handleToggleMode = async (newMode) => {
+    if (newMode === mode || loading) return
+    setMode(newMode)
+    setLoading(true)
+    setError(null)
+    try {
+      const dt = savedDatetime ?? `${date}T${time}:00`
+      const res = await predictETA({
+        origin,
+        destination,
+        datetime: dt,
+        mode: newMode,
+        accidente,
+        weatherOverride,
+        useOsmSpeedLimits: settings.useOsmSpeedLimits,
+      })
+      setResult(res)
+    } catch (e) {
+      setError(e.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleSearch = async () => {
     if (!origin.trim() || !destination.trim()) {
@@ -329,6 +355,38 @@ export default function Route() {
             </div>
 
             <div className="px-4 py-4 space-y-3">
+
+              {/* Toggle modo vista */}
+              <div className="flex bg-gray-100 rounded-xl p-1">
+                <button
+                  onClick={() => handleToggleMode('osm')}
+                  disabled={loading}
+                  className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all disabled:opacity-60 ${mode === 'osm' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
+                >
+                  🛣️ Red Vial (OSM)
+                </button>
+                <button
+                  onClick={() => handleToggleMode('sensors')}
+                  disabled={loading}
+                  className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all disabled:opacity-60 ${mode === 'sensors' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
+                >
+                  📡 Sensores
+                </button>
+              </div>
+
+              {loading && (
+                <div className="bg-blue-50 rounded-xl px-4 py-3 flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin flex-shrink-0" />
+                  <span className="text-xs text-blue-600 font-medium">Recalculando ruta en modo {mode === 'osm' ? 'Red Vial' : 'Sensores'}...</span>
+                </div>
+              )}
+
+              {error && (
+                <div className="bg-red-50 rounded-xl px-4 py-3 flex items-center gap-2">
+                  <AlertTriangle size={14} className="text-red-400 flex-shrink-0" />
+                  <span className="text-xs text-red-600">{error}</span>
+                </div>
+              )}
 
               {/* Ruta info */}
               <div className="bg-white rounded-2xl shadow-sm p-3 flex items-center gap-2">
