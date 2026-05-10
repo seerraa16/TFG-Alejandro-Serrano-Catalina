@@ -40,7 +40,7 @@ const MEETINGS = [
 
 export default function Planner() {
   const navigate = useNavigate()
-  const { weatherOverride } = useSettings()
+  const { weatherOverride, settings } = useSettings()
 
   const [origin, setOrigin] = useState(HOME)
   const [destination, setDestination] = useState('')
@@ -69,6 +69,7 @@ export default function Planner() {
               datetime: dt,
               mode: 'osm',
               weatherOverride,
+              useOsmSpeedLimits: settings.useOsmSpeedLimits, // [OSM-SPEED]
             })
             results[m.id] = res.eta_minutes
           } catch {
@@ -105,6 +106,7 @@ export default function Planner() {
         mode,
         accidente,
         weatherOverride,
+        useOsmSpeedLimits: settings.useOsmSpeedLimits, // [OSM-SPEED]
       })
       navigate('/route', {
         state: { result, origin: HOME, destination: meeting.destination, mode },
@@ -132,6 +134,7 @@ export default function Planner() {
         mode,
         accidente,
         weatherOverride,
+        useOsmSpeedLimits: settings.useOsmSpeedLimits, // [OSM-SPEED]
       })
       navigate('/route', { state: { result, origin, destination, dt, mode } })
     } catch (e) {

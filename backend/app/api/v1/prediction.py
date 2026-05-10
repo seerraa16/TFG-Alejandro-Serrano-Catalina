@@ -164,6 +164,7 @@ def post_predict(req: PredictRequest) -> PredictResponse:
             mode=req.mode,
             weather_override=req.weather_override,
             accidente=req.accidente,
+            use_osm_speed_limits=req.use_osm_speed_limits,  # [OSM-SPEED]
         )
     except PredictionError as e:
         elapsed_ms = int((time.perf_counter() - t0) * 1000)

@@ -58,6 +58,14 @@ class PredictRequest(BaseModel):
         False,
         description="Marca todos los sensores como afectados por incidente reciente.",
     )
+    use_osm_speed_limits: bool = Field(  # [OSM-SPEED]
+        False,
+        description=(
+            "Usa límites de velocidad reales de OSM como v_libre en BPR "
+            "y Dijkstra por tiempo mínimo (solo modo sensors). "
+            "Requiere cargar el grafo OSM la primera vez (~1-2 min)."
+        ),
+    )
 
 
 # ---------------------------------------------------------------------------

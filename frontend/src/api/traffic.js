@@ -7,9 +7,11 @@ export async function predictETA({
   mode = 'osm',
   accidente = false,
   weatherOverride = null,
+  useOsmSpeedLimits = false, // [OSM-SPEED]
 }) {
   const body = { origin, destination, datetime, mode, accidente }
   if (weatherOverride !== null) body.weather_override = weatherOverride
+  if (useOsmSpeedLimits) body.use_osm_speed_limits = true // [OSM-SPEED]
 
   const res = await fetch(`${BASE_URL}/predict`, {
     method: 'POST',

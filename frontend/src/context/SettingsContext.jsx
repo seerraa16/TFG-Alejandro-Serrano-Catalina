@@ -9,6 +9,7 @@ const DEFAULTS = {
   proactiveAlerts: true,
   walkSpeed: 5.2,
   maxSpeed: 120,
+  useOsmSpeedLimits: false, // [OSM-SPEED]
 }
 
 function load() {

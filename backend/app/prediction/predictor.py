@@ -92,6 +92,7 @@ def predict_eta(
     mode: RouteMode = "osm",
     weather_override: dict | None = None,
     accidente: bool = False,
+    use_osm_speed_limits: bool = False,  # [OSM-SPEED]
 ) -> InferenceResult:
     """Calcula ETA completo entre dos puntos para una fecha-hora dada.
 
@@ -132,7 +133,7 @@ def predict_eta(
     logger.info("predict_eta: %r → %r @ %s (mode=%s)", origen, destino, ts, mode)
 
     # 1) Routing -----------------------------------------------------------
-    route = route_by_address(origen, destino, mode=mode)
+    route = route_by_address(origen, destino, mode=mode, use_time_weight=use_osm_speed_limits)  # [OSM-SPEED]
     if route is None:
         raise PredictionError(
             f"No se encontró ruta {origen!r} → {destino!r} en modo {mode!r}"
@@ -178,7 +179,12 @@ def predict_eta(
 
     # 4) ETA --------------------------------------------------------------
     tipo_elem_int = get_tipo_elem_int()
-    eta = compute_eta(sensor_ids, distancias_m, predictions_df, tipo_elem_int)
+    # [OSM-SPEED] velocidades libres reales por sensor desde OSM
+    v_libre_per_sensor = None
+    if use_osm_speed_limits:
+        from app.routing.speed_limits import get_sensor_maxspeeds
+        v_libre_per_sensor = get_sensor_maxspeeds()
+    eta = compute_eta(sensor_ids, distancias_m, predictions_df, tipo_elem_int, v_libre_per_sensor)
     if "error" in eta:
         raise PredictionError(f"compute_eta devolvió error: {eta['error']}")
 

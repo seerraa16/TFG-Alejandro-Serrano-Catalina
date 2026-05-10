@@ -60,12 +60,18 @@ def find_nearest_sensor_candidates(
 # ---------------------------------------------------------------------------
 # Dijkstra sobre el grafo de sensores
 # ---------------------------------------------------------------------------
-def find_route(sensor_origen: int, sensor_destino: int) -> dict[str, Any]:
+def find_route(
+    sensor_origen: int,
+    sensor_destino: int,
+    use_time_weight: bool = False,  # [OSM-SPEED]
+) -> dict[str, Any]:
     """Camino más corto en el grafo de sensores entre dos sensor_id.
 
     Args:
         sensor_origen: sensor_id de inicio.
         sensor_destino: sensor_id de destino.
+        use_time_weight: si True usa tiempo estimado (dist/maxspeed) como
+            peso en vez de distancia, buscando la ruta más rápida. [OSM-SPEED]
 
     Returns:
         Dict con:
@@ -86,8 +92,22 @@ def find_route(sensor_origen: int, sensor_destino: int) -> dict[str, Any]:
     if sensor_destino not in G.nodes:
         raise ValueError(f"Sensor destino {sensor_destino!r} no está en el grafo")
 
+    # [OSM-SPEED] Dijkstra por tiempo mínimo en lugar de distancia mínima
+    if use_time_weight:
+        from app.routing.speed_limits import get_sensor_maxspeeds
+        _maxspeeds = get_sensor_maxspeeds()
+
+        def _time_w(u: int, v: int, data: dict) -> float:
+            dist = data.get("weight", float("inf"))
+            speed_kmh = (_maxspeeds.get(u, 70.0) + _maxspeeds.get(v, 70.0)) / 2.0
+            return dist / (speed_kmh / 3.6) if speed_kmh > 0 else float("inf")
+
+        _weight_arg = _time_w
+    else:
+        _weight_arg = "weight"
+
     try:
-        ruta = nx.shortest_path(G, sensor_origen, sensor_destino, weight="weight")
+        ruta = nx.dijkstra_path(G, sensor_origen, sensor_destino, weight=_weight_arg)
     except nx.NetworkXNoPath as e:
         raise ValueError(
             f"No hay ruta dirigida {sensor_origen!r} → {sensor_destino!r}"
@@ -125,6 +145,7 @@ def route_by_coords(
     lat_d: float,
     lon_d: float,
     k_fallback: int = 10,
+    use_time_weight: bool = False,  # [OSM-SPEED]
 ) -> dict[str, Any] | None:
     """Calcula la ruta entre dos coordenadas usando el grafo de sensores.
 
@@ -160,7 +181,7 @@ def route_by_coords(
         sa, sb = ra["id"], rb["id"]
         if not nx.has_path(G, sa, sb):
             continue
-        res = find_route(sa, sb)
+        res = find_route(sa, sb, use_time_weight=use_time_weight)  # [OSM-SPEED]
         res.update({
             "coord_origen": (lat_o, lon_o),
             "coord_destino": (lat_d, lon_d),

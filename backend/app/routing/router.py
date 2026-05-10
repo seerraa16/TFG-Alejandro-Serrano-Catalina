@@ -35,6 +35,7 @@ def route_by_address(
     origen: str,
     destino: str,
     mode: RouteMode = "osm",
+    use_time_weight: bool = False,  # [OSM-SPEED] solo aplica cuando mode="sensors"
 ) -> dict[str, Any] | None:
     """Calcula una ruta a partir de dos direcciones en texto libre.
 
@@ -82,7 +83,7 @@ def route_by_address(
         ids = sens["id"].tolist()
         dists = [round(sens_cum[i + 1] - sens_cum[i], 1) for i in range(len(ids) - 1)]
     else:
-        res = route_by_coords(lat_o, lon_o, lat_d, lon_d)
+        res = route_by_coords(lat_o, lon_o, lat_d, lon_d, use_time_weight=use_time_weight)  # [OSM-SPEED]
         if res is None:
             return None
         ids = list(res["ruta"])

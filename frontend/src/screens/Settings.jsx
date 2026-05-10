@@ -95,6 +95,14 @@ export default function Settings() {
             value={settings.localEvents}
             onChange={v => updateSetting('localEvents', v)}
           />
+          {/* [OSM-SPEED] toggle — para eliminar: quitar este bloque */}
+          <SettingRow
+            label="Velocidades máximas reales (OSM)"
+            desc="Usa los límites de velocidad del mapa en lugar de 50/100 km/h fijos"
+            value={settings.useOsmSpeedLimits}
+            onChange={v => updateSetting('useOsmSpeedLimits', v)}
+            badge="API"
+          />
         </div>
 
         {/* Estado actual del modelo */}
@@ -111,6 +119,13 @@ export default function Settings() {
               <span className="text-xs text-gray-600">Modo por defecto</span>
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
                 OSM (red vial)
+              </span>
+            </div>
+            {/* [OSM-SPEED] estado del toggle — para eliminar: quitar este bloque */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-gray-600">Velocidad libre</span>
+              <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${settings.useOsmSpeedLimits ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                {settings.useOsmSpeedLimits ? '✓ OSM maxspeed' : '✗ 50/100 km/h fijos'}
               </span>
             </div>
             <div className="flex items-center justify-between">
