@@ -29,7 +29,7 @@ function subMinutes(timeStr, mins) {
 export default function Planner() {
   const navigate = useNavigate()
   const { weatherOverride, settings } = useSettings()
-  const { events, addEvent, removeEvent } = useEvents()
+  const { events, addEvent, removeEvent, connectGoogle, isGoogleConnected, googleLoading, googleError } = useEvents()
 
   const HOME = settings.homeAddress || 'Calle Valderrodrigo 31, Madrid'
 
@@ -67,7 +67,8 @@ export default function Planner() {
               useOsmSpeedLimits: settings.useOsmSpeedLimits,
             })
             results[m.id] = res.eta_minutes
-          } catch {
+          } catch (err) {
+            console.error(`[ETA] Fallo para "${m.title}" → dest: "${m.destination}"`, err)
             results[m.id] = null
           }
         })
@@ -139,17 +140,49 @@ export default function Planner() {
           <div className="flex-1 min-w-0">
             <p className="font-bold text-gray-900 text-sm leading-tight">Planificador de Calendario</p>
             <div className="flex items-center gap-1 mt-0.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-              <p className="text-[11px] text-gray-400 leading-tight">Google Calendar · Conectado</p>
+              <div className={`w-1.5 h-1.5 rounded-full ${isGoogleConnected ? 'bg-green-500' : 'bg-gray-300'}`} />
+              <p className="text-[11px] text-gray-400 leading-tight">
+                {isGoogleConnected ? 'Google Calendar · Conectado' : 'Google Calendar · No conectado'}
+              </p>
             </div>
           </div>
-          <button className="p-2 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors flex-shrink-0">
-            <RefreshCw size={15} className="text-gray-500" />
+          <button
+            onClick={connectGoogle}
+            disabled={googleLoading}
+            className="p-2 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors flex-shrink-0 disabled:opacity-50"
+            title={isGoogleConnected ? 'Actualizar eventos de Google' : 'Conectar Google Calendar'}
+          >
+            <RefreshCw size={15} className={`text-gray-500 ${googleLoading ? 'animate-spin' : ''}`} />
           </button>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3 scrollbar-hide pb-4">
+
+        {/* Banner error Google */}
+        {googleError && (
+          <div className="bg-red-50 border border-red-100 rounded-2xl px-4 py-3 text-xs text-red-600">
+            {googleError}
+          </div>
+        )}
+
+        {/* Banner conectar Google Calendar */}
+        {!isGoogleConnected && (
+          <button
+            onClick={connectGoogle}
+            disabled={googleLoading}
+            className="w-full bg-white border border-gray-200 py-3.5 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 hover:bg-gray-50 active:scale-[0.98] transition-all disabled:opacity-50"
+          >
+            {googleLoading ? (
+              <Loader size={16} className="animate-spin text-gray-400" />
+            ) : (
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-4 h-4" />
+            )}
+            <span className="text-gray-700">
+              {googleLoading ? 'Importando eventos...' : 'Importar desde Google Calendar'}
+            </span>
+          </button>
+        )}
 
         {/* Crear evento */}
         <button
@@ -280,8 +313,11 @@ export default function Planner() {
 }
 
 function EventCard({ event, eta, etaLoading, loadingRoute, onOpenRoute, onRemove }) {
+  const isGoogle = event.status === 'GOOGLE'
+  const noLocation = isGoogle && !event.hasLocation
+
   return (
-    <div className="border border-gray-100 rounded-xl p-3 hover:border-blue-100 transition-colors">
+    <div className={`border rounded-xl p-3 transition-colors ${isGoogle ? 'border-blue-100 bg-blue-50/30' : 'border-gray-100 hover:border-blue-100'}`}>
       <div className="flex gap-3 items-start">
         {/* Day badge */}
         <div className="bg-blue-600 text-white rounded-xl px-2.5 py-1.5 text-center flex-shrink-0 min-w-[46px]">
@@ -292,11 +328,16 @@ function EventCard({ event, eta, etaLoading, loadingRoute, onOpenRoute, onRemove
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-sm font-semibold text-gray-800">{event.title}</span>
-            {event.status && (
+            {isGoogle ? (
+              <span className="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-semibold flex items-center gap-1">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" className="w-2.5 h-2.5" />
+                Google
+              </span>
+            ) : event.status ? (
               <span className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold">
                 {event.status}
               </span>
-            )}
+            ) : null}
           </div>
 
           <div className="flex items-center gap-1 text-xs text-blue-500 mt-1">
@@ -310,7 +351,9 @@ function EventCard({ event, eta, etaLoading, loadingRoute, onOpenRoute, onRemove
           </div>
 
           <div className="mt-1.5">
-            {etaLoading ? (
+            {noLocation ? (
+              <span className="text-[11px] text-gray-400">Sin ubicación — no se puede calcular ruta</span>
+            ) : etaLoading ? (
               <span className="text-[11px] text-gray-400 flex items-center gap-1">
                 <Loader size={10} className="animate-spin" />
                 Calculando tiempo...
@@ -325,32 +368,36 @@ function EventCard({ event, eta, etaLoading, loadingRoute, onOpenRoute, onRemove
           </div>
         </div>
 
-        <button
-          onClick={onRemove}
-          className="p-1.5 rounded-lg hover:bg-red-50 transition-colors flex-shrink-0 -mt-0.5"
-          title="Eliminar evento"
-        >
-          <X size={13} className="text-gray-300 hover:text-red-400" />
-        </button>
+        {!isGoogle && (
+          <button
+            onClick={onRemove}
+            className="p-1.5 rounded-lg hover:bg-red-50 transition-colors flex-shrink-0 -mt-0.5"
+            title="Eliminar evento"
+          >
+            <X size={13} className="text-gray-300 hover:text-red-400" />
+          </button>
+        )}
       </div>
 
-      <button
-        onClick={onOpenRoute}
-        disabled={loadingRoute}
-        className="w-full mt-3 border border-blue-200 text-blue-600 py-2.5 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 hover:bg-blue-50 active:scale-[0.98] transition-all disabled:opacity-50"
-      >
-        {loadingRoute ? (
-          <>
-            <div className="w-3 h-3 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
-            Calculando...
-          </>
-        ) : (
-          <>
-            <Navigation size={13} />
-            Calcular ruta
-          </>
-        )}
-      </button>
+      {!noLocation && (
+        <button
+          onClick={onOpenRoute}
+          disabled={loadingRoute}
+          className="w-full mt-3 border border-blue-200 text-blue-600 py-2.5 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 hover:bg-blue-50 active:scale-[0.98] transition-all disabled:opacity-50"
+        >
+          {loadingRoute ? (
+            <>
+              <div className="w-3 h-3 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+              Calculando...
+            </>
+          ) : (
+            <>
+              <Navigation size={13} />
+              Calcular ruta
+            </>
+          )}
+        </button>
+      )}
     </div>
   )
 }
