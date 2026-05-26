@@ -26,6 +26,9 @@ tensorflow
 httpx
 requests
 
+# --- IA / LLM ---
+ollama
+
 # --- Utilidades ---
 python-dotenv
 joblib

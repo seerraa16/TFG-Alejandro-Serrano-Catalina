@@ -44,6 +44,9 @@ class EtaResult(TypedDict, total=False):
     tiempo_total_min: float
     distancia_total_m: float
     velocidad_media_efectiva_kmh: float | None
+    semaforos_count: int
+    semaforos_delay_s: float
+    semaforos_delay_min: float
     error: str
 
 
@@ -137,6 +140,9 @@ def compute_eta(
     predictions_df: pd.DataFrame | None,
     tipo_elem_int: Mapping[int, int],
     v_libre_per_sensor: dict[int, float] | None = None,  # [OSM-SPEED]
+    n_semaforos: int = 0,
+    hour: int = 12,
+    use_traffic_signals: bool = True,
 ) -> EtaResult:
     """Calcula ETA total y tiempos por tramo."""
 
@@ -221,6 +227,15 @@ def compute_eta(
     # ---------------------------------------------------------
     dist_total = float(sum(distancias_m))
 
+    # ---------------------------------------------------------
+    # Demora por semáforos
+    # ---------------------------------------------------------
+    semaforos_delay_s = 0.0
+    if use_traffic_signals and n_semaforos > 0:
+        from app.routing.traffic_signals import signal_delay_per_light
+        semaforos_delay_s = round(n_semaforos * signal_delay_per_light(hour), 1)
+        t_total += semaforos_delay_s
+
     return {
         "tramos": tramos,
         "tiempo_total_s": round(t_total, 1),
@@ -231,4 +246,7 @@ def compute_eta(
             if t_total > 0
             else None
         ),
+        "semaforos_count": n_semaforos,
+        "semaforos_delay_s": semaforos_delay_s,
+        "semaforos_delay_min": round(semaforos_delay_s / 60, 2),
     }

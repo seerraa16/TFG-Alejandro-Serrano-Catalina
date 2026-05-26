@@ -27,6 +27,11 @@ const destIcon = L.divIcon({
   iconSize: [16, 16], iconAnchor: [8, 8], className: '',
 })
 
+const signalIcon = L.divIcon({
+  html: '<div style="font-size:14px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))">🚦</div>',
+  iconSize: [16, 16], iconAnchor: [8, 14], className: '',
+})
+
 function sensorColor(carga) {
   const p = carga <= 1.0 ? carga * 100 : carga
   if (p < 33) return { hex: '#16a34a', bg: 'bg-green-100', text: 'text-green-700', label: 'Fluido' }
@@ -86,6 +91,7 @@ export default function Route() {
         accidente,
         weatherOverride,
         useOsmSpeedLimits: settings.useOsmSpeedLimits,
+        useTrafficSignals: settings.useTrafficSignals,
       })
       setResult(res)
     } catch (e) {
@@ -111,6 +117,8 @@ export default function Route() {
         mode,
         accidente,
         weatherOverride,
+        useOsmSpeedLimits: settings.useOsmSpeedLimits,
+        useTrafficSignals: settings.useTrafficSignals,
       })
       setResult(res)
       setShowForm(false)
@@ -126,6 +134,9 @@ export default function Route() {
   const sensors = result?.sensor_predictions ?? []
   const weather = result?.weather
   const rs = result?.route_summary
+  const signalPositions = result?.traffic_signals_positions ?? []
+  const signalCount = result?.traffic_signals_count ?? 0
+  const signalDelayMin = result?.traffic_signals_delay_min ?? 0
 
   const avgCarga = sensors.length > 0
     ? sensors.reduce((s, p) => s + p.carga, 0) / sensors.length
@@ -133,41 +144,41 @@ export default function Route() {
   const traffic = sensorColor(avgCarga)
 
   return (
-    <div className="flex flex-col h-full bg-dots">
+    <div className="flex flex-col h-full" style={{ background: '#f8fafc' }}>
       <Header />
 
       <div className="flex-1 overflow-y-auto scrollbar-hide">
 
         {/* Formulario de búsqueda */}
         {showForm ? (
-          <div className="px-4 py-3 space-y-3">
+          <div className="px-4 py-4 space-y-3">
 
             {/* Origen / Destino */}
-            <div className="bg-white rounded-2xl shadow-sm p-4">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4">
               <div className="flex gap-3 items-stretch">
                 <div className="flex flex-col items-center pt-5 pb-2 flex-shrink-0">
-                  <div className="w-3 h-3 rounded-full bg-blue-600" />
+                  <div className="w-3 h-3 rounded-full bg-blue-600 shadow-sm shadow-blue-300" />
                   <div className="w-px flex-1 bg-gray-200 my-1.5" style={{ minHeight: 20 }} />
-                  <div className="w-3 h-3 rounded-full border-2 border-gray-400" />
+                  <div className="w-3 h-3 rounded-full border-2 border-gray-300" />
                 </div>
                 <div className="flex-1 min-w-0 space-y-1">
                   <div>
-                    <label className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Origen</label>
+                    <label className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Origen</label>
                     <input
                       type="text"
                       value={origin}
                       onChange={e => setOrigin(e.target.value)}
-                      className="w-full text-sm text-gray-800 py-1 focus:outline-none"
+                      className="w-full text-sm text-gray-900 font-medium py-1 focus:outline-none"
                     />
                   </div>
                   <div className="border-t border-gray-100" />
                   <div>
-                    <label className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Destino</label>
+                    <label className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Destino</label>
                     <input
                       type="text"
                       value={destination}
                       onChange={e => setDestination(e.target.value)}
-                      className="w-full text-sm text-gray-800 py-1 focus:outline-none"
+                      className="w-full text-sm text-gray-900 font-medium py-1 focus:outline-none placeholder-gray-300"
                       placeholder="¿A dónde vas?"
                     />
                   </div>
@@ -176,25 +187,27 @@ export default function Route() {
             </div>
 
             {/* Fecha y hora */}
-            <div className="bg-white rounded-2xl shadow-sm p-4">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4">
               <div className="flex items-center gap-2 mb-3">
-                <Clock size={15} className="text-blue-600" />
-                <span className="font-semibold text-gray-800 text-sm">Hora de salida</span>
+                <div className="w-7 h-7 bg-blue-50 rounded-xl flex items-center justify-center">
+                  <Clock size={13} className="text-blue-600" />
+                </div>
+                <span className="font-semibold text-gray-900 text-sm">Hora de salida</span>
               </div>
               <div className="flex gap-4">
                 <div className="flex-1">
-                  <p className="text-[10px] text-gray-400 mb-1.5">Fecha</p>
+                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest mb-1.5">Fecha</p>
                   <div className="flex items-center gap-1.5">
-                    <Calendar size={13} className="text-gray-400" />
+                    <Calendar size={12} className="text-gray-300" />
                     <input type="date" value={date} onChange={e => setDate(e.target.value)}
                       className="text-sm text-gray-700 focus:outline-none w-full" />
                   </div>
                 </div>
                 <div className="w-px bg-gray-100" />
                 <div className="flex-1">
-                  <p className="text-[10px] text-gray-400 mb-1.5">Hora</p>
+                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest mb-1.5">Hora</p>
                   <div className="flex items-center gap-1.5">
-                    <Clock size={13} className="text-gray-400" />
+                    <Clock size={12} className="text-gray-300" />
                     <input type="time" value={time} onChange={e => setTime(e.target.value)}
                       className="text-sm text-gray-700 focus:outline-none w-full" />
                   </div>
@@ -202,11 +215,13 @@ export default function Route() {
               </div>
             </div>
 
-            {/* Modo grafo */}
-            <div className="bg-white rounded-2xl shadow-sm p-4">
+            {/* Modo de ruta */}
+            <div className="bg-white rounded-2xl border border-gray-100 p-4">
               <div className="flex items-center gap-2 mb-3">
-                <Layers size={15} className="text-blue-600" />
-                <span className="font-semibold text-gray-800 text-sm">Modo de Ruta</span>
+                <div className="w-7 h-7 bg-blue-50 rounded-xl flex items-center justify-center">
+                  <Layers size={13} className="text-blue-600" />
+                </div>
+                <span className="font-semibold text-gray-900 text-sm">Modo de ruta</span>
               </div>
               <div className="flex bg-gray-100 rounded-xl p-1">
                 <button onClick={() => setMode('osm')}
@@ -218,15 +233,18 @@ export default function Route() {
                   📡 Sensores
                 </button>
               </div>
-              <p className="text-[11px] text-gray-400 mt-2">
+              <p className="text-xs text-gray-400 mt-2.5 leading-relaxed">
                 {mode === 'osm' ? 'Ruta real por la red vial de Madrid (recomendado).' : 'Dijkstra sobre el grafo de sensores DGT.'}
               </p>
             </div>
 
-            {/* Opciones extra */}
-            <div className="bg-white rounded-2xl shadow-sm p-4 flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-800">Simular incidente</p>
+            {/* Simular incidente */}
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 flex items-center gap-3">
+              <div className="w-9 h-9 bg-amber-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                <AlertTriangle size={16} className="text-amber-500" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-gray-900">Simular incidente</p>
                 <p className="text-xs text-gray-400 mt-0.5">Penaliza todos los sensores de la ruta</p>
               </div>
               <button
@@ -237,16 +255,15 @@ export default function Route() {
               </button>
             </div>
 
-            {/* Info settings activos */}
             {!settings.weatherData && (
-              <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 flex items-center gap-2">
+              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-3.5 flex items-center gap-2">
                 <CloudRain size={14} className="text-blue-400 flex-shrink-0" />
-                <span className="text-xs text-blue-600">Datos meteorológicos desactivados en ajustes — usando condiciones neutras.</span>
+                <span className="text-xs text-blue-600">Meteorología desactivada — usando condiciones neutras.</span>
               </div>
             )}
 
             {error && (
-              <div className="bg-red-50 border border-red-100 rounded-xl p-3 flex items-center gap-2">
+              <div className="bg-red-50 border border-red-100 rounded-2xl p-3.5 flex items-center gap-2">
                 <AlertTriangle size={14} className="text-red-400 flex-shrink-0" />
                 <span className="text-xs text-red-600">{error}</span>
               </div>
@@ -256,7 +273,7 @@ export default function Route() {
             <button
               onClick={handleSearch}
               disabled={loading || !destination.trim()}
-              className="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98] transition-all shadow-md shadow-blue-200"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98] transition-all shadow-md shadow-blue-100"
             >
               {loading ? (
                 <>
@@ -265,7 +282,7 @@ export default function Route() {
                 </>
               ) : (
                 <>
-                  <Search size={17} />
+                  <Search size={16} strokeWidth={2.5} />
                   Buscar ruta
                 </>
               )}
@@ -311,6 +328,18 @@ export default function Route() {
                       </CircleMarker>
                     )
                   })}
+
+                  {/* Semáforos */}
+                  {signalPositions.map((pos, i) => (
+                    <Marker key={`sig-${i}`} position={pos} icon={signalIcon}>
+                      <Popup>
+                        <div className="text-xs">
+                          <b>🚦 Semáforo #{i + 1}</b><br />
+                          Demora estimada: ~{Math.round(signalDelayMin / signalCount * 60 || 0)} s
+                        </div>
+                      </Popup>
+                    </Marker>
+                  ))}
 
                   {geometry.length > 0 && (
                     <Marker position={geometry[0]} icon={originIcon}>
@@ -409,6 +438,23 @@ export default function Route() {
                   <span className="text-2xl text-gray-400 ml-1">min</span>
                 </p>
                 <p className="text-xs text-gray-400 mt-1.5">± 2 min según condiciones en tiempo real</p>
+
+                {signalCount > 0 && (
+                  <div className="mt-3 pt-3 border-t border-gray-50">
+                    <div className="flex items-center justify-between text-xs mb-1.5">
+                      <span className="text-gray-400">🚗 Tiempo de circulación</span>
+                      <span className="font-semibold text-gray-700">
+                        {(result.eta_minutes - signalDelayMin).toFixed(1)} min
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-gray-400">🚦 {signalCount} semáforos</span>
+                      <span className="font-semibold text-amber-600">
+                        +{signalDelayMin.toFixed(1)} min
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Stats */}
@@ -437,7 +483,7 @@ export default function Route() {
                 {rs && (
                   <div className="mt-3 pt-3 border-t border-gray-50 flex justify-between text-[11px] text-gray-400">
                     <span>Modo: <b className="text-gray-600">{rs.mode.toUpperCase()}</b></span>
-                    <span>Skipped: <b className="text-gray-600">{rs.n_sensors_skipped}</b></span>
+                    <span>Omitidos: <b className="text-gray-600">{rs.n_sensors_skipped}</b></span>
                     <span>Tiempo: <b className="text-gray-600">{(result.eta_seconds / 60).toFixed(0)} min</b></span>
                   </div>
                 )}

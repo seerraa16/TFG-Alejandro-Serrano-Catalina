@@ -93,6 +93,7 @@ def predict_eta(
     weather_override: dict | None = None,
     accidente: bool = False,
     use_osm_speed_limits: bool = False,  # [OSM-SPEED]
+    use_traffic_signals: bool = True,
 ) -> InferenceResult:
     """Calcula ETA completo entre dos puntos para una fecha-hora dada.
 
@@ -184,7 +185,17 @@ def predict_eta(
     if use_osm_speed_limits:
         from app.routing.speed_limits import get_sensor_maxspeeds
         v_libre_per_sensor = get_sensor_maxspeeds()
-    eta = compute_eta(sensor_ids, distancias_m, predictions_df, tipo_elem_int, v_libre_per_sensor)
+    # Semáforos: solo disponibles en modo OSM (el raw de sensors no tiene ruta_osm)
+    n_semaforos = int(route["raw"].get("n_semaforos", 0)) if mode == "osm" else 0
+    semaforos_positions: list[tuple[float, float]] = (
+        list(route["raw"].get("semaforos_positions", [])) if mode == "osm" else []
+    )
+    eta = compute_eta(
+        sensor_ids, distancias_m, predictions_df, tipo_elem_int, v_libre_per_sensor,
+        n_semaforos=n_semaforos,
+        hour=ts.hour,
+        use_traffic_signals=use_traffic_signals,
+    )
     if "error" in eta:
         raise PredictionError(f"compute_eta devolvió error: {eta['error']}")
 
@@ -222,4 +233,7 @@ def predict_eta(
         "route_summary": summary,
         "info": info,
         "geometry": geometry,
+        "semaforos_count": eta.get("semaforos_count", 0),
+        "semaforos_delay_min": eta.get("semaforos_delay_min", 0.0),
+        "semaforos_positions": semaforos_positions,
     }

@@ -15,14 +15,27 @@ Documentación interactiva:
 """
 
 import logging
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.v1.agent import router as agent_router
 from app.api.v1.prediction import router as prediction_router
 from app.core.config import settings
 from app.models.model_loader import is_loaded, load_model
+
+# Orígenes permitidos para CORS. En desarrollo se aceptan los puertos locales
+# habituales. Para despliegue en producción, define la variable de entorno
+# ALLOWED_ORIGINS con la URL real del frontend (ej. https://mi-app.com).
+_raw_origins = os.getenv(
+    "ALLOWED_ORIGINS",
+    "http://localhost:5173,http://localhost:5174,http://localhost:5175,"
+    "http://localhost:5176,http://localhost:3000,"
+    "http://127.0.0.1:5173,http://127.0.0.1:5174,http://127.0.0.1:5175",
+)
+ALLOWED_ORIGINS: list[str] = [o.strip() for o in _raw_origins.split(",") if o.strip()]
 
 # Logging básico para toda la app. Los módulos usan logging.getLogger(__name__).
 logging.basicConfig(
@@ -37,7 +50,14 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     """Ciclo de vida de la app: carga modelo al arrancar, libera al salir."""
     logger.info("Arrancando %s v%s", settings.APP_NAME, settings.APP_VERSION)
-    load_model()
+    ok = load_model()
+    if not ok:
+        logger.warning(
+            "El modelo NO se cargó correctamente. "
+            "Los endpoints /predict estarán inoperativos hasta que se resuelva. "
+            "Comprueba que existe: %s",
+            settings.MODEL_LSTM,
+        )
     yield
     logger.info("Cerrando aplicación.")
 
@@ -49,18 +69,16 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS: permite que el frontend (que corre en otro dominio/puerto) llame a esta API.
-# Para desarrollo se acepta cualquier origen. Antes de desplegar a producción
-# restringe `allow_origins` a la URL real del frontend.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
 )
 
 app.include_router(prediction_router)
+app.include_router(agent_router)
 
 
 @app.get("/debug/bpr")

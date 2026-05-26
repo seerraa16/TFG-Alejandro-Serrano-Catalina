@@ -1,0 +1,67 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Entornos virtuales ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Configuración local ---
+.env
+.env.local
+*.local
+
+# --- IDE / editores ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- Tests / coverage ---
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# --- Node ---
+node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/node_modules/
+
+# --- Modelos entrenados (binarios pesados) ---
+outputs/*.keras
+outputs/*.pt
+outputs/*.pth
+outputs/*.h5
+outputs/*.pkl
+outputs/*.joblib
+# Mantener los inferencia/ escalers si se quieren versionar
+# !outputs/inferencia/
+
+# --- Caché de geocodificación (Nominatim) ---
+# Estos archivos JSON son grandes y se regeneran automáticamente
+cache/
+backend/cache/
+
+# --- Logs ---
+logs/
+*.log
+
+# --- Jupyter checkpoints ---
+.ipynb_checkpoints/
+
+# --- Archivos temporales ---
+*.tmp
+*.bak

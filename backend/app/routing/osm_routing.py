@@ -13,6 +13,7 @@ from typing import Any, Iterable
 import networkx as nx
 
 from app.routing.graph_loader import get_osm_graph, get_sensors_df
+from app.routing.traffic_signals import get_signal_positions
 
 logger = logging.getLogger(__name__)
 
@@ -108,6 +109,9 @@ def route_by_coords_osm(
     sens_route["pos_ruta"] = sens_route["osm_node"].map(pos_in_route)
     sens_route = sens_route.sort_values("pos_ruta").reset_index(drop=True)
 
+    semaforos_positions = get_signal_positions(ruta_osm, g_osm)
+    logger.debug("Semáforos detectados en ruta OSM: %d", len(semaforos_positions))
+
     return {
         "coord_origen": (lat_o, lon_o),
         "coord_destino": (lat_d, lon_d),
@@ -119,4 +123,6 @@ def route_by_coords_osm(
         "sensores_en_ruta": sens_route,
         "n_sensores": len(sens_route),
         "n_nodos_osm": len(ruta_osm),
+        "n_semaforos": len(semaforos_positions),
+        "semaforos_positions": semaforos_positions,
     }

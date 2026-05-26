@@ -66,6 +66,14 @@ class PredictRequest(BaseModel):
             "Requiere cargar el grafo OSM la primera vez (~1-2 min)."
         ),
     )
+    use_traffic_signals: bool = Field(
+        True,
+        description=(
+            "Incluye demora estimada por semáforos en el ETA. "
+            "La demora varía según la hora: punta (35 s/semáforo), "
+            "valle (22 s) y noche (15 s). Solo aplica en modo OSM."
+        ),
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -118,6 +126,19 @@ class PredictResponse(BaseModel):
     geometry: list[list[float]] = Field(
         default_factory=list,
         description="Polilínea de la ruta: lista de [lat, lon].",
+    )
+
+    traffic_signals_count: int = Field(
+        0,
+        description="Semáforos detectados en la ruta OSM (0 en modo sensors).",
+    )
+    traffic_signals_delay_min: float = Field(
+        0.0,
+        description="Tiempo añadido al ETA por demora en semáforos (minutos).",
+    )
+    traffic_signals_positions: list[list[float]] = Field(
+        default_factory=list,
+        description="Coordenadas [lat, lon] de cada semáforo detectado.",
     )
 
     elapsed_ms: int = Field(description="Tiempo de ejecución en el servidor (ms).")

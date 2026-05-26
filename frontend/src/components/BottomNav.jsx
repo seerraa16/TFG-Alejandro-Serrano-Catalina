@@ -1,11 +1,11 @@
 import { useNavigate, useLocation } from 'react-router-dom'
-import { MapPin, History, Route, Settings } from 'lucide-react'
+import { CalendarDays, Bot, Route, Settings } from 'lucide-react'
 
 const TABS = [
-  { id: 'planner', path: '/', icon: MapPin, label: 'PLANNER' },
-  { id: 'history', path: '/history', icon: History, label: 'HISTORY' },
-  { id: 'route', path: '/route', icon: Route, label: 'RUTA' },
-  { id: 'settings', path: '/settings', icon: Settings, label: 'SETTINGS' },
+  { id: 'planner', path: '/', icon: CalendarDays, label: 'Calendario' },
+  { id: 'history', path: '/history', icon: Bot, label: 'Agente' },
+  { id: 'route', path: '/route', icon: Route, label: 'Ruta' },
+  { id: 'settings', path: '/settings', icon: Settings, label: 'Ajustes' },
 ]
 
 export default function BottomNav() {
@@ -18,7 +18,7 @@ export default function BottomNav() {
   }
 
   return (
-    <nav className="bg-white border-t border-gray-100 flex-shrink-0">
+    <nav className="bg-white border-t border-gray-100 flex-shrink-0 pb-safe">
       <div className="flex">
         {TABS.map((tab) => {
           const Icon = tab.icon
@@ -27,10 +27,17 @@ export default function BottomNav() {
             <button
               key={tab.id}
               onClick={() => navigate(tab.path)}
-              className={`flex-1 py-2.5 flex flex-col items-center gap-0.5 transition-colors ${active ? 'text-blue-600' : 'text-gray-400'}`}
+              className="flex-1 pt-2 pb-2.5 flex flex-col items-center gap-1 transition-colors relative"
             >
-              <Icon size={20} strokeWidth={active ? 2.5 : 1.5} />
-              <span className={`text-[9px] font-semibold tracking-wider ${active ? 'text-blue-600' : 'text-gray-400'}`}>
+              {active && (
+                <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-blue-600 rounded-full" />
+              )}
+              <Icon
+                size={20}
+                strokeWidth={active ? 2.5 : 1.8}
+                className={active ? 'text-blue-600' : 'text-gray-400'}
+              />
+              <span className={`text-[10px] font-medium ${active ? 'text-blue-600' : 'text-gray-400'}`}>
                 {tab.label}
               </span>
             </button>

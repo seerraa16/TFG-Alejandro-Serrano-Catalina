@@ -165,6 +165,7 @@ def post_predict(req: PredictRequest) -> PredictResponse:
             weather_override=req.weather_override,
             accidente=req.accidente,
             use_osm_speed_limits=req.use_osm_speed_limits,  # [OSM-SPEED]
+            use_traffic_signals=req.use_traffic_signals,
         )
     except PredictionError as e:
         elapsed_ms = int((time.perf_counter() - t0) * 1000)
@@ -232,6 +233,11 @@ def post_predict(req: PredictRequest) -> PredictResponse:
         ],
         weather=WeatherOut(**result["weather"]),
         geometry=[[pt[0], pt[1]] for pt in result.get("geometry", [])],
+        traffic_signals_count=result.get("semaforos_count", 0),
+        traffic_signals_delay_min=result.get("semaforos_delay_min", 0.0),
+        traffic_signals_positions=[
+            [p[0], p[1]] for p in result.get("semaforos_positions", [])
+        ],
         elapsed_ms=elapsed_ms,
         requested_datetime=req.datetime,
     )
