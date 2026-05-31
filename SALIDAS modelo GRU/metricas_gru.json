@@ -1,0 +1,44 @@
+{
+  "model_name": "gru_stacked",
+  "targets": {
+    "intensidad_trafico": {
+      "mae": 46.982956,
+      "rmse": 110.917938,
+      "r2": 0.960639
+    },
+    "ocupacion": {
+      "mae": 1.664838,
+      "rmse": 3.950137,
+      "r2": 0.780527
+    },
+    "carga": {
+      "mae": 2.443223,
+      "rmse": 4.14134,
+      "r2": 0.936477
+    }
+  },
+  "mean_mae": 17.030339,
+  "mean_rmse": 39.669805,
+  "epochs_trained": 22,
+  "stopped_early": true,
+  "config": {
+    "seq_len": 12,
+    "n_features": 22,
+    "batch_size": 1024,
+    "epochs_max": 100,
+    "learning_rate": 5e-05,
+    "weight_decay": 0.0001,
+    "loss": "Huber(delta=1.0)",
+    "architecture": "GRU(128) -> Dropout(0.3) -> GRU(64) -> Dropout(0.3) -> Dense(64) -> Dense(32) -> Dense(3)",
+    "dropout": 0.4,
+    "early_stopping_patience": 15,
+    "reduce_lr_patience": 4,
+    "reduce_lr_factor": 0.5,
+    "reduce_lr_min_lr": 1e-07
+  },
+  "checkpoints": {
+    "best": "SALIDAS modelo GRU/gru_best.pt",
+    "last": "SALIDAS modelo GRU/gru_last.pt",
+    "state": "SALIDAS modelo GRU/gru_state.json"
+  }
+}
