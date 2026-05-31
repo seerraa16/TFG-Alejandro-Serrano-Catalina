@@ -1,0 +1,43 @@
+{
+  "model_name": "bigru_bidirectional",
+  "targets": {
+    "intensidad_trafico": {
+      "mae": 40.451653,
+      "rmse": 100.930602,
+      "r2": 0.967333
+    },
+    "ocupacion": {
+      "mae": 1.574083,
+      "rmse": 3.817752,
+      "r2": 0.795102
+    },
+    "carga": {
+      "mae": 2.212023,
+      "rmse": 3.838363,
+      "r2": 0.945496
+    }
+  },
+  "mean_mae": 14.74592,
+  "mean_rmse": 36.195572,
+  "epochs_trained": 35,
+  "stopped_early": true,
+  "config": {
+    "seq_len": 12,
+    "n_features": 22,
+    "batch_size": 1024,
+    "epochs_max": 100,
+    "learning_rate": 0.0001,
+    "loss": "Huber(delta=1.0)",
+    "architecture": "GRU(128,bi) -> Dropout(0.3) -> GRU(64,bi) -> Dropout(0.3) -> Dense(64) -> Dense(32) -> Dense(3)",
+    "dropout": 0.3,
+    "early_stopping_patience": 15,
+    "reduce_lr_patience": 7,
+    "reduce_lr_factor": 0.5,
+    "reduce_lr_min_lr": 1e-07
+  },
+  "checkpoints": {
+    "best": "SALIDAS modelo BiGRU/bigru_best.pt",
+    "last": "SALIDAS modelo BiGRU/bigru_last.pt",
+    "state": "SALIDAS modelo BiGRU/bigru_state.json"
+  }
+}
