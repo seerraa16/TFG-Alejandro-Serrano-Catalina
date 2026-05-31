@@ -1,0 +1,44 @@
+{
+  "model_name": "transformer_encoder",
+  "targets": {
+    "intensidad_trafico": {
+      "mae": 45.931854,
+      "rmse": 111.106377,
+      "r2": 0.960519
+    },
+    "ocupacion": {
+      "mae": 1.701702,
+      "rmse": 3.99487,
+      "r2": 0.775541
+    },
+    "carga": {
+      "mae": 2.449017,
+      "rmse": 4.153642,
+      "r2": 0.936111
+    }
+  },
+  "mean_mae": 16.694191,
+  "mean_rmse": 39.75163,
+  "epochs_trained": 19,
+  "stopped_early": true,
+  "config": {
+    "seq_len": 12,
+    "n_features": 22,
+    "batch_size": 1024,
+    "epochs_max": 100,
+    "learning_rate": 5e-05,
+    "weight_decay": 0.0001,
+    "loss": "Huber(delta=1.0)",
+    "architecture": "Linear(22->64)+PosEmb -> TransformerEncoder x3 (d_model=64, nhead=4, ff=128) -> LayerNorm -> meanpool -> Dense(64) -> Dense(32) -> Dense(3)",
+    "dropout": 0.4,
+    "early_stopping_patience": 15,
+    "reduce_lr_patience": 4,
+    "reduce_lr_factor": 0.5,
+    "reduce_lr_min_lr": 1e-07
+  },
+  "checkpoints": {
+    "best": "SALIDAS modelo Transformer/transformer_best.pt",
+    "last": "SALIDAS modelo Transformer/transformer_last.pt",
+    "state": "SALIDAS modelo Transformer/transformer_state.json"
+  }
+}
