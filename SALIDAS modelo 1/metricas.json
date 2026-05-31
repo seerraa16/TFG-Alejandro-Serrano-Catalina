@@ -1,0 +1,154 @@
+{
+  "model_name": "lstm_original",
+  "source_files": {
+    "model_weights": "lstm_last.keras",
+    "training_history": "history_training.json",
+    "notebook": "MMMModel.ipynb"
+  },
+  "architecture": {
+    "type": "LSTM apilada (stacked)",
+    "input_shape": [
+      4,
+      22
+    ],
+    "sequence_length": 4,
+    "n_features": 22,
+    "n_targets": 3,
+    "targets": [
+      "intensidad_trafico",
+      "ocupacion",
+      "carga"
+    ],
+    "layers": [
+      {
+        "name": "seq_input",
+        "type": "Input",
+        "shape": [
+          4,
+          22
+        ]
+      },
+      {
+        "name": "lstm_1",
+        "type": "LSTM",
+        "units": 128,
+        "return_sequences": true
+      },
+      {
+        "name": "drop_1",
+        "type": "Dropout",
+        "rate": 0.2
+      },
+      {
+        "name": "lstm_2",
+        "type": "LSTM",
+        "units": 64,
+        "return_sequences": false
+      },
+      {
+        "name": "drop_2",
+        "type": "Dropout",
+        "rate": 0.2
+      },
+      {
+        "name": "dense_hidden",
+        "type": "Dense",
+        "units": 32,
+        "activation": "relu"
+      },
+      {
+        "name": "output",
+        "type": "Dense",
+        "units": 3,
+        "activation": "linear",
+        "dtype": "float32"
+      }
+    ],
+    "total_trainable_params": 128899,
+    "dtype_policy": "mixed_float16",
+    "optimizer": {
+      "name": "Adam",
+      "learning_rate": 0.0003
+    },
+    "loss": "mse",
+    "metrics": [
+      "mae",
+      "rmse",
+      "r2"
+    ]
+  },
+  "training_config": {
+    "batch_size": 4096,
+    "epochs_planned": 50,
+    "epochs_trained": 42,
+    "stopped_early": true,
+    "callbacks": {
+      "EarlyStopping": {
+        "monitor": "val_loss",
+        "patience": 10,
+        "restore_best_weights": true
+      },
+      "ReduceLROnPlateau": {
+        "monitor": "val_loss",
+        "factor": 0.5,
+        "patience": 5,
+        "min_lr": 1e-06
+      },
+      "ModelCheckpoint_best": "outputs/lstm_best.keras (save_best_only=True)",
+      "ModelCheckpoint_last": "outputs/lstm_last.keras (save_best_only=False)"
+    },
+    "best_epoch_by_val_loss": 32
+  },
+  "test_metrics_by_target": {
+    "intensidad_trafico": {
+      "mae": 43.343327,
+      "rmse": 106.973283,
+      "r2": 0.962314
+    },
+    "ocupacion": {
+      "mae": 1.683834,
+      "rmse": 3.915245,
+      "r2": 0.783881
+    },
+    "carga": {
+      "mae": 2.488426,
+      "rmse": 4.278711,
+      "r2": 0.932262
+    }
+  },
+  "test_metrics_aggregate": {
+    "mean_mae": 15.838529,
+    "mean_rmse": 38.38908
+  },
+  "training_history_summary": {
+    "n_epochs_logged": 42,
+    "final_epoch": {
+      "loss": 0.10308732837438583,
+      "mae": 0.14017167687416077,
+      "rmse": 0.32107216119766235,
+      "r2": 0.8969173431396484,
+      "val_loss": 0.10717091709375381,
+      "val_mae": 0.14468282461166382,
+      "val_rmse": 0.32736968994140625,
+      "val_r2": 0.8955512046813965,
+      "learning_rate": 9.375000445288606e-06
+    },
+    "best": {
+      "epoch": 32,
+      "val_loss": 0.10662702471017838,
+      "val_mae": 0.1444414258003235,
+      "val_rmse": 0.32653793692588806,
+      "val_r2": 0.8961247801780701
+    },
+    "learning_rate_schedule": {
+      "initial": 0.0003000000142492354,
+      "final": 9.375000445288606e-06,
+      "reductions_detected": 5
+    }
+  },
+  "rmse_mae_ratio_by_target": {
+    "intensidad_trafico": 2.468,
+    "ocupacion": 2.325,
+    "carga": 1.719
+  }
+}

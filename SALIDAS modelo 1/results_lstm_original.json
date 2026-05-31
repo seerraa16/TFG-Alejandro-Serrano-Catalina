@@ -1,0 +1,24 @@
+{
+  "model_name": "lstm_original",
+  "targets": {
+    "intensidad_trafico": {
+      "mae": 43.343327,
+      "rmse": 106.973283,
+      "r2": 0.962314
+    },
+    "ocupacion": {
+      "mae": 1.683834,
+      "rmse": 3.915245,
+      "r2": 0.783881
+    },
+    "carga": {
+      "mae": 2.488426,
+      "rmse": 4.278711,
+      "r2": 0.932262
+    }
+  },
+  "mean_mae": 15.838529,
+  "mean_rmse": 38.38908,
+  "epochs_trained": 42,
+  "stopped_early": true
+}
