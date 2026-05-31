@@ -1,0 +1,43 @@
+{
+  "model_name": "lstm_v2_bilstm",
+  "targets": {
+    "intensidad_trafico": {
+      "mae": 39.43515,
+      "rmse": 100.405496,
+      "r2": 0.96766
+    },
+    "ocupacion": {
+      "mae": 1.556056,
+      "rmse": 3.799154,
+      "r2": 0.797048
+    },
+    "carga": {
+      "mae": 2.197884,
+      "rmse": 3.836405,
+      "r2": 0.945535
+    }
+  },
+  "mean_mae": 14.396364,
+  "mean_rmse": 36.013685,
+  "epochs_trained": 57,
+  "stopped_early": true,
+  "config": {
+    "seq_len": 12,
+    "n_features": 22,
+    "batch_size": 1024,
+    "epochs_max": 100,
+    "learning_rate": 0.0001,
+    "loss": "Huber(delta=1.0)",
+    "architecture": "Bidirectional(LSTM(128)) \u2192 Dropout(0.3) \u2192 Bidirectional(LSTM(64)) \u2192 Dropout(0.3) \u2192 Dense(64) \u2192 Dense(32) \u2192 Dense(3)",
+    "dropout": 0.3,
+    "early_stopping_patience": 15,
+    "reduce_lr_patience": 7,
+    "reduce_lr_factor": 0.5,
+    "reduce_lr_min_lr": 1e-07
+  },
+  "checkpoints": {
+    "best": "outputs/lstm_v2_best.pt",
+    "last": "outputs/lstm_v2_last.pt",
+    "state": "outputs/lstm_v2_state.json"
+  }
+}
