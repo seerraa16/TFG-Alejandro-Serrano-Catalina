@@ -1,0 +1,171 @@
+{
+  "model_name": "ensemble_mean_top-2",
+  "strategy": "Mean top-2",
+  "members": [
+    "BiLSTM v2",
+    "BiGRU"
+  ],
+  "targets": {
+    "intensidad_trafico": {
+      "mae": 39.315384,
+      "rmse": 99.205275,
+      "r2": 0.968449
+    },
+    "ocupacion": {
+      "mae": 1.555968,
+      "rmse": 3.779625,
+      "r2": 0.799158
+    },
+    "carga": {
+      "mae": 2.184697,
+      "rmse": 3.801863,
+      "r2": 0.946534
+    }
+  },
+  "mean_mae": 14.352016,
+  "mean_rmse": 35.595588,
+  "all_ensembles": {
+    "Mean top-2": {
+      "intensidad_trafico": {
+        "mae": 39.315384,
+        "rmse": 99.205275
+      },
+      "ocupacion": {
+        "mae": 1.555968,
+        "rmse": 3.779625
+      },
+      "carga": {
+        "mae": 2.184697,
+        "rmse": 3.801863
+      }
+    },
+    "Mean top-3": {
+      "intensidad_trafico": {
+        "mae": 40.237396,
+        "rmse": 96.462909
+      },
+      "ocupacion": {
+        "mae": 1.580134,
+        "rmse": 3.7827
+      },
+      "carga": {
+        "mae": 2.219282,
+        "rmse": 3.817217
+      }
+    },
+    "Mean all 5": {
+      "intensidad_trafico": {
+        "mae": 40.93557,
+        "rmse": 96.510924
+      },
+      "ocupacion": {
+        "mae": 1.599044,
+        "rmse": 3.809191
+      },
+      "carga": {
+        "mae": 2.255788,
+        "rmse": 3.869984
+      }
+    },
+    "Weighted all 5": {
+      "intensidad_trafico": {
+        "mae": 40.75153,
+        "rmse": 96.210737
+      },
+      "ocupacion": {
+        "mae": 1.595334,
+        "rmse": 3.803872
+      },
+      "carga": {
+        "mae": 2.248268,
+        "rmse": 3.860869
+      }
+    },
+    "Median all 5": {
+      "intensidad_trafico": {
+        "mae": 40.608749,
+        "rmse": 96.887403
+      },
+      "ocupacion": {
+        "mae": 1.588448,
+        "rmse": 3.830122
+      },
+      "carga": {
+        "mae": 2.252647,
+        "rmse": 3.883312
+      }
+    }
+  },
+  "individuals": {
+    "BiLSTM v2": {
+      "intensidad_trafico": {
+        "mae": 39.435074,
+        "rmse": 100.405521
+      },
+      "ocupacion": {
+        "mae": 1.556057,
+        "rmse": 3.799154
+      },
+      "carga": {
+        "mae": 2.197884,
+        "rmse": 3.836406
+      }
+    },
+    "GRU": {
+      "intensidad_trafico": {
+        "mae": 46.982952,
+        "rmse": 110.917934
+      },
+      "ocupacion": {
+        "mae": 1.664838,
+        "rmse": 3.950137
+      },
+      "carga": {
+        "mae": 2.443223,
+        "rmse": 4.14134
+      }
+    },
+    "Transformer": {
+      "intensidad_trafico": {
+        "mae": 45.931854,
+        "rmse": 111.106377
+      },
+      "ocupacion": {
+        "mae": 1.701702,
+        "rmse": 3.99487
+      },
+      "carga": {
+        "mae": 2.449017,
+        "rmse": 4.153642
+      }
+    },
+    "BiGRU": {
+      "intensidad_trafico": {
+        "mae": 40.451679,
+        "rmse": 100.930587
+      },
+      "ocupacion": {
+        "mae": 1.574083,
+        "rmse": 3.817751
+      },
+      "carga": {
+        "mae": 2.212023,
+        "rmse": 3.838362
+      }
+    },
+    "Transf.Grande": {
+      "intensidad_trafico": {
+        "mae": 45.530285,
+        "rmse": 102.205049
+      },
+      "ocupacion": {
+        "mae": 1.667951,
+        "rmse": 3.880196
+      },
+      "carga": {
+        "mae": 2.433798,
+        "rmse": 4.003982
+      }
+    }
+  }
+}
