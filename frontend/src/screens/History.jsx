@@ -31,11 +31,11 @@ function saveMessages(msgs) {
 
 function TypingIndicator() {
   return (
-    <div className="flex items-end gap-2">
-      <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
-        <Zap size={13} className="text-white" strokeWidth={2.5} />
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8 }}>
+      <div style={{ width: 26, height: 26, borderRadius: 8, flexShrink: 0, background: 'linear-gradient(135deg, oklch(0.6 0.22 262), oklch(0.45 0.22 262))', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 6px -2px oklch(0.5 0.22 262 / 0.5)' }}>
+        <Zap size={12} color="#fff" strokeWidth={2.5} />
       </div>
-      <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-1.5 shadow-sm">
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '14px 14px 14px 4px', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 5, boxShadow: 'var(--shadow-sm)' }}>
         <span className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce [animation-delay:0ms]" />
         <span className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce [animation-delay:150ms]" />
         <span className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce [animation-delay:300ms]" />
@@ -57,8 +57,8 @@ function MessageBubble({ msg, onVerMapa, mapLoading }) {
 
   if (isUser) {
     return (
-      <div className="flex justify-end">
-        <div className="max-w-[78%] bg-gray-900 text-white px-4 py-3 rounded-2xl rounded-br-sm text-sm leading-relaxed shadow-sm">
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <div style={{ maxWidth: '80%', background: 'var(--ink)', color: '#fff', padding: '10px 14px', borderRadius: '14px 14px 4px 14px', fontSize: 13, lineHeight: 1.45, boxShadow: 'var(--shadow-sm)' }}>
           {msg.content}
         </div>
       </div>
@@ -67,20 +67,20 @@ function MessageBubble({ msg, onVerMapa, mapLoading }) {
 
   if (isError) {
     return (
-      <div className="flex items-start gap-2">
-        <div className="w-7 h-7 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-          <WifiOff size={13} className="text-white" strokeWidth={2.5} />
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+        <div style={{ width: 26, height: 26, borderRadius: 8, background: 'var(--warn)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
+          <WifiOff size={12} color="#fff" strokeWidth={2.5} />
         </div>
-        <div className="flex-1 min-w-0">
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm">
-            <p className="text-sm font-semibold text-amber-800 mb-1">Agente no disponible</p>
-            <p className="text-xs text-amber-700 leading-relaxed">
-              El asistente de IA necesita Ollama ejecutándose en tu máquina.
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ background: 'oklch(0.97 0.04 60)', border: '1px solid oklch(0.9 0.07 60)', borderRadius: '14px 14px 14px 4px', padding: '12px 14px', boxShadow: 'var(--shadow-sm)' }}>
+            <p style={{ fontSize: 13, fontWeight: 600, color: 'oklch(0.4 0.1 60)', marginBottom: 4, marginTop: 0 }}>Agente no disponible</p>
+            <p style={{ fontSize: 12, color: 'oklch(0.5 0.1 60)', lineHeight: 1.5, margin: 0 }}>
+              El asistente necesita Ollama ejecutándose en tu máquina.
             </p>
-            <code className="block mt-2 text-xs bg-amber-100 text-amber-900 px-2 py-1 rounded font-mono">
+            <code style={{ display: 'block', marginTop: 8, fontSize: 11.5, background: 'oklch(0.93 0.06 60)', color: 'oklch(0.35 0.1 60)', padding: '4px 8px', borderRadius: 6, fontFamily: "'JetBrains Mono', monospace" }}>
               ollama serve
             </code>
-            <p className="text-[10px] text-amber-500 mt-2">
+            <p style={{ fontSize: 10.5, color: 'oklch(0.6 0.1 60)', marginTop: 8, marginBottom: 0 }}>
               Una vez iniciado, vuelve a enviar tu pregunta.
             </p>
           </div>
@@ -90,37 +90,38 @@ function MessageBubble({ msg, onVerMapa, mapLoading }) {
   }
 
   return (
-    <div className="flex items-start gap-2">
-      <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
-        <Zap size={13} className="text-white" strokeWidth={2.5} />
+    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+      <div style={{ width: 26, height: 26, borderRadius: 8, flexShrink: 0, marginTop: 2, background: 'linear-gradient(135deg, oklch(0.6 0.22 262), oklch(0.45 0.22 262))', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 6px -2px oklch(0.5 0.22 262 / 0.5)' }}>
+        <Zap size={12} color="#fff" strokeWidth={2.5} />
       </div>
-      <div className="flex-1 min-w-0 space-y-2">
-        <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm text-sm text-gray-800 leading-relaxed">
+      <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '14px 14px 14px 4px', padding: '12px 14px', boxShadow: 'var(--shadow-sm)', fontSize: 13.5, color: 'var(--ink-2)', lineHeight: 1.55 }}>
           {msg.content}
 
           {msg.eta_minutes && (
-            <div className="mt-3 pt-3 border-t border-gray-100 space-y-2">
-              {/* Origen → Destino */}
+            <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid var(--border-soft)' }}>
               {msg.origin && msg.destination && (
-                <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                  <MapPin size={11} className="text-green-500 flex-shrink-0" />
-                  <span className="truncate">{msg.origin}</span>
-                  <span className="text-gray-300 flex-shrink-0">→</span>
-                  <MapPin size={11} className="text-red-500 flex-shrink-0" />
-                  <span className="truncate">{msg.destination}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11.5, color: 'var(--ink-3)', marginBottom: 10, flexWrap: 'wrap' }}>
+                  <MapPin size={11} style={{ color: 'var(--success)', flexShrink: 0 }} />
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 120 }}>{msg.origin}</span>
+                  <span style={{ color: 'var(--ink-4)', flexShrink: 0 }}>→</span>
+                  <MapPin size={11} style={{ color: 'var(--danger)', flexShrink: 0 }} />
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 120 }}>{msg.destination}</span>
                 </div>
               )}
-              {/* ETA + hora de salida */}
-              <div className="flex gap-4">
+              <div style={{ display: 'flex', gap: 20, background: 'linear-gradient(135deg, oklch(0.28 0.04 262), oklch(0.16 0.03 258))', borderRadius: 12, padding: '10px 14px' }}>
                 <div>
-                  <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Duración</p>
-                  <p className="text-base font-bold text-gray-900 mt-0.5">{Number(msg.eta_minutes).toFixed(0)} min</p>
+                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.5)', margin: 0 }}>DURACIÓN</p>
+                  <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: '#fff', margin: '2px 0 0', lineHeight: 1 }}>{Number(msg.eta_minutes).toFixed(0)}<span style={{ fontSize: 11, fontFamily: "'JetBrains Mono', monospace", opacity: 0.7, marginLeft: 3 }}>min</span></p>
                 </div>
                 {msg.departure_time && (
-                  <div>
-                    <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Salir a las</p>
-                    <p className="text-base font-bold text-blue-600 mt-0.5">{msg.departure_time}</p>
-                  </div>
+                  <>
+                    <div style={{ width: 1, background: 'rgba(255,255,255,0.15)' }} />
+                    <div>
+                      <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.5)', margin: 0 }}>SALIR</p>
+                      <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: '#fff', margin: '2px 0 0', lineHeight: 1 }}>{msg.departure_time}</p>
+                    </div>
+                  </>
                 )}
               </div>
             </div>
@@ -131,12 +132,9 @@ function MessageBubble({ msg, onVerMapa, mapLoading }) {
           <button
             onClick={() => onVerMapa(msg)}
             disabled={mapLoading}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-100 px-3 py-1.5 rounded-full active:scale-95 transition-all disabled:opacity-50"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 500, color: 'var(--primary)', background: 'var(--primary-tint)', border: 'none', padding: '6px 12px', borderRadius: 999, cursor: 'pointer', fontFamily: 'inherit', opacity: mapLoading ? 0.5 : 1 }}
           >
-            {mapLoading
-              ? <Loader2 size={11} className="animate-spin" />
-              : <Map size={11} />
-            }
+            {mapLoading ? <Loader2 size={11} className="animate-spin" /> : <Map size={11} />}
             Ver en mapa
           </button>
         )}
@@ -228,15 +226,18 @@ export default function AgentScreen() {
   const isEmpty = messages.length === 0
 
   return (
-    <div className="flex flex-col h-full" style={{ background: '#f8fafc' }}>
+    <div className="flex flex-col h-full" style={{ background: 'var(--bg)' }}>
       <Header />
 
       {!isEmpty && (
-        <div className="flex items-center justify-between px-4 py-2 bg-white border-b border-gray-100 flex-shrink-0">
-          <span className="text-xs text-gray-400">{messages.length} mensajes</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 16px', background: 'var(--surface)', borderBottom: '1px solid var(--border-soft)', flexShrink: 0 }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 12, color: 'var(--ink-3)' }}>
+            <span style={{ width: 6, height: 6, borderRadius: 999, background: 'var(--primary)', boxShadow: '0 0 0 3px oklch(0.5 0.22 262 / 0.18)' }} />
+            {messages.length} mensajes en memoria
+          </span>
           <button
             onClick={handleClearHistory}
-            className="flex items-center gap-1 text-xs text-gray-400 hover:text-red-400 transition-colors"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 5, background: 'transparent', border: '1px solid var(--border)', borderRadius: 999, padding: '4px 9px', fontSize: 11.5, color: 'var(--ink-2)', cursor: 'pointer', fontFamily: 'inherit' }}
           >
             <Trash2 size={11} />
             Limpiar
@@ -246,26 +247,36 @@ export default function AgentScreen() {
 
       <div className="flex-1 overflow-y-auto px-4 py-4 scrollbar-hide">
         {isEmpty ? (
-          <div className="flex flex-col h-full">
-            <div className="flex-1 flex flex-col items-center justify-center text-center px-4 gap-5">
-              <div className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-200">
-                <Zap size={26} className="text-white" strokeWidth={2.5} />
+          <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px', gap: 16 }}>
+              <div style={{
+                width: 52, height: 52, borderRadius: 14, flexShrink: 0,
+                background: 'linear-gradient(135deg, oklch(0.6 0.22 262), oklch(0.45 0.22 262))',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: '0 8px 24px -6px oklch(0.5 0.22 262 / 0.5)',
+              }}>
+                <Zap size={22} color="#fff" strokeWidth={2.5} />
               </div>
               <div>
-                <p className="text-lg font-bold text-gray-900">Asistente de tráfico</p>
-                <p className="text-sm text-gray-400 mt-1.5 leading-relaxed max-w-[240px]">
-                  Pregúntame cuándo salir, cuánto tardarás o cómo está el tráfico.
+                <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-3)', marginBottom: 8 }}>
+                  Asistente · Madrid
+                </p>
+                <h1 style={{ fontWeight: 600, fontSize: 22, color: 'var(--ink)', letterSpacing: '-0.025em', margin: 0, lineHeight: 1.3 }}>
+                  Pregúntale al tráfico
+                </h1>
+                <p style={{ fontSize: 13.5, color: 'var(--ink-2)', marginTop: 8, lineHeight: 1.5, maxWidth: 240 }}>
+                  Cuándo salir, cuánto tardarás o cómo está el tráfico.
                 </p>
               </div>
             </div>
 
-            <div className="space-y-2 pb-2">
-              <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">Sugerencias</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, paddingBottom: 8 }}>
+              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, color: 'var(--ink-3)', letterSpacing: '0.12em', textTransform: 'uppercase', margin: 0 }}>Sugerencias</p>
               {SUGGESTIONS.map((s, i) => (
                 <button
                   key={i}
                   onClick={() => sendMessage(s)}
-                  className="w-full text-left bg-white border border-gray-100 rounded-xl px-4 py-3 text-sm text-gray-700 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 transition-all active:scale-[0.98]"
+                  style={{ width: '100%', textAlign: 'left', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px', fontSize: 13, color: 'var(--ink-2)', cursor: 'pointer', fontFamily: 'inherit', boxShadow: 'var(--shadow-sm)' }}
                 >
                   {s}
                 </button>
@@ -288,11 +299,11 @@ export default function AgentScreen() {
         )}
       </div>
 
-      {/* Input */}
-      <div className="px-4 py-3 bg-white border-t border-gray-100 flex-shrink-0">
+      {/* Compositor */}
+      <div style={{ padding: '8px 12px 12px', background: 'linear-gradient(180deg, transparent, var(--bg) 35%)', borderTop: '1px solid var(--border-soft)', flexShrink: 0 }}>
         <form
           onSubmit={e => { e.preventDefault(); sendMessage(input) }}
-          className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2 focus-within:border-blue-300 focus-within:bg-white transition-all"
+          style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '6px 6px 6px 14px', boxShadow: 'var(--shadow-md)' }}
         >
           <input
             ref={inputRef}
@@ -301,17 +312,22 @@ export default function AgentScreen() {
             onChange={e => setInput(e.target.value)}
             placeholder="Pregunta sobre tu trayecto…"
             disabled={loading}
-            className="flex-1 bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-none disabled:opacity-60"
+            style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'inherit', fontSize: 14, color: 'var(--ink)', padding: '8px 0' }}
           />
           <button
             type="submit"
             disabled={!input.trim() || loading}
-            className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white hover:bg-blue-700 disabled:opacity-30 transition-all active:scale-95 flex-shrink-0"
+            style={{
+              width: 36, height: 36, borderRadius: 10, border: 'none',
+              background: 'var(--primary)', color: '#fff',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', flexShrink: 0,
+              opacity: (!input.trim() || loading) ? 0.4 : 1,
+              boxShadow: '0 4px 10px -3px oklch(0.5 0.22 262 / 0.55)',
+              transition: 'opacity 120ms',
+            }}
           >
-            {loading
-              ? <Loader2 size={14} className="animate-spin" />
-              : <Send size={14} strokeWidth={2.5} />
-            }
+            {loading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} strokeWidth={2.5} />}
           </button>
         </form>
       </div>

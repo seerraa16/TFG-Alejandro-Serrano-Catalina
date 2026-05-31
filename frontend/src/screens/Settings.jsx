@@ -9,32 +9,39 @@ import {
 function Toggle({ value, onChange }) {
   return (
     <button
+      type="button"
       onClick={() => onChange(!value)}
-      className={`relative w-11 h-6 rounded-full transition-colors flex-shrink-0 ${value ? 'bg-blue-600' : 'bg-gray-200'}`}
+      style={{ width: 44, height: 26, borderRadius: 999, border: 'none', cursor: 'pointer', position: 'relative', padding: 0, flexShrink: 0,
+        transition: 'background 200ms',
+        background: value ? 'var(--primary)' : '#D1D5DB',
+        boxShadow: 'none' }}
     >
-      <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${value ? 'translate-x-5' : ''}`} />
+      <span style={{ position: 'absolute', top: 3, left: 3, width: 20, height: 20, borderRadius: 999, background: '#fff',
+        transition: 'transform 200ms cubic-bezier(.2,.7,.2,1)',
+        transform: value ? 'translateX(18px)' : 'translateX(0)',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.25)' }} />
     </button>
   )
 }
 
 function SettingRow({ icon: Icon, label, desc, value, onChange, badge = null }) {
   return (
-    <div className="flex items-center gap-3 py-3.5 border-b border-gray-50 last:border-0">
+    <div style={{ display: 'flex', alignItems: 'center', gap: 11, padding: '12px 14px', borderBottom: '1px solid var(--border-soft)' }} className="last:border-0">
       {Icon && (
-        <div className="w-8 h-8 bg-gray-50 rounded-xl flex items-center justify-center flex-shrink-0">
-          <Icon size={15} className="text-gray-400" />
+        <div style={{ width: 28, height: 28, borderRadius: 8, background: 'var(--bg-2)', color: 'var(--ink-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <Icon size={14} />
         </div>
       )}
-      <div className="flex-1 min-w-0 pr-2">
-        <div className="flex items-center gap-2">
-          <p className="text-sm font-medium text-gray-800">{label}</p>
+      <div style={{ flex: 1, minWidth: 0, paddingRight: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+          <p style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--ink)', letterSpacing: '-0.005em', lineHeight: 1.3, margin: 0 }}>{label}</p>
           {badge && (
-            <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold ${badge === 'API' ? 'bg-blue-100 text-blue-600' : 'bg-amber-100 text-amber-600'}`}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, letterSpacing: '0.1em', color: badge === 'API' ? 'var(--primary)' : '#92400e', background: badge === 'API' ? 'var(--primary-tint)' : '#fef3c7', padding: '1px 5px', borderRadius: 4, fontWeight: 600 }}>
               {badge}
             </span>
           )}
         </div>
-        {desc && <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{desc}</p>}
+        {desc && <p style={{ fontSize: 11.5, color: 'var(--ink-3)', marginTop: 3, lineHeight: 1.35, marginBottom: 0 }}>{desc}</p>}
       </div>
       <Toggle value={value} onChange={onChange} />
     </div>
@@ -42,17 +49,19 @@ function SettingRow({ icon: Icon, label, desc, value, onChange, badge = null }) 
 }
 
 function SliderRow({ label, value, onChange, min, max, step = 0.1, unit }) {
+  const pct = ((value - min) / (max - min)) * 100
   return (
-    <div className="py-3.5 border-b border-gray-50 last:border-0">
-      <div className="flex items-center justify-between mb-2.5">
-        <span className="text-sm font-medium text-gray-800">{label}</span>
-        <span className="text-sm font-bold text-blue-600">{value} {unit}</span>
+    <div style={{ padding: '12px 0', borderBottom: '1px solid var(--border-soft)' }} className="last:border-0">
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+        <span style={{ fontSize: 13.5, fontWeight: 500, color: 'var(--ink)' }}>{label}</span>
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: 'var(--primary)', fontWeight: 600 }}>{value} <span style={{ opacity: 0.6 }}>{unit}</span></span>
       </div>
-      <input
-        type="range" min={min} max={max} step={step} value={value}
-        onChange={e => onChange(Number(e.target.value))}
-        className="w-full accent-blue-600"
-      />
+      <div style={{ position: 'relative', height: 6, background: '#e4e4e7', borderRadius: 999 }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: `${pct}%`, background: 'var(--primary)', borderRadius: 999 }} />
+        <div style={{ position: 'absolute', top: -6, left: `calc(${pct}% - 9px)`, width: 18, height: 18, borderRadius: 999, background: '#fff', border: '2px solid var(--primary)', boxShadow: '0 1px 4px rgba(0,0,0,0.15)', pointerEvents: 'none' }} />
+        <input type="range" min={min} max={max} step={step} value={value} onChange={e => onChange(Number(e.target.value))}
+          style={{ position: 'absolute', top: -6, left: 0, right: 0, width: '100%', height: 18, appearance: 'none', WebkitAppearance: 'none', background: 'transparent', opacity: 0, cursor: 'pointer' }} />
+      </div>
     </div>
   )
 }
@@ -61,45 +70,59 @@ export default function Settings() {
   const { settings, updateSetting } = useSettings()
 
   return (
-    <div className="flex flex-col h-full" style={{ background: '#f8fafc' }}>
+    <div className="flex flex-col h-full" style={{ background: 'var(--bg)' }}>
       <Header />
 
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 scrollbar-hide">
+      <div className="flex-1 overflow-y-auto scrollbar-hide">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: '16px 16px' }}>
+
+        {/* Eyebrow + título */}
+        <div style={{ padding: '4px 2px 0' }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-3)', marginBottom: 6 }}>Cuenta · Ajustes</div>
+          <h1 style={{ fontFamily: 'inherit', fontWeight: 600, fontSize: 24, letterSpacing: '-0.025em', lineHeight: 1.3, color: 'var(--ink)', margin: 0 }}>Tu configuración</h1>
+        </div>
 
         {/* Banner API */}
-        <div className="bg-blue-50 border border-blue-100 rounded-2xl px-4 py-3 flex items-start gap-2.5">
-          <Info size={14} className="text-blue-400 flex-shrink-0 mt-0.5" />
-          <p className="text-xs text-blue-600 leading-relaxed">
+        <div style={{ display: 'flex', gap: 9, alignItems: 'flex-start', background: 'var(--primary-tint)', color: 'var(--ink-2)', padding: '11px 12px', borderRadius: 12, fontSize: 12.5, lineHeight: 1.4, border: '1px solid var(--primary-tint-2)' }}>
+          <Info size={14} style={{ color: 'var(--primary)', flexShrink: 0, marginTop: 1 }} />
+          <p style={{ margin: 0 }}>
             Los ajustes con{' '}
-            <span className="text-[9px] bg-blue-200 text-blue-700 px-1.5 py-0.5 rounded font-bold">API</span>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.1em', color: 'var(--primary)', background: '#fff', padding: '1px 5px', borderRadius: 4, fontWeight: 600, border: '1px solid var(--primary-tint-2)' }}>API</span>
             {' '}afectan directamente al modelo de predicción.
           </p>
         </div>
 
         {/* Mi Casa */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
-          <div className="flex items-center gap-2.5 mb-3">
-            <div className="w-8 h-8 bg-blue-50 rounded-xl flex items-center justify-center">
-              <Home size={15} className="text-blue-600" />
-            </div>
-            <p className="font-semibold text-gray-900 text-sm">Mi Casa</p>
+        <div style={{ background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', overflow: 'hidden' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '13px 14px 8px' }}>
+            <span style={{ width: 22, height: 22, borderRadius: 7, background: 'var(--primary-tint)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Home size={12} />
+            </span>
+            <p style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)', letterSpacing: '-0.01em', margin: 0 }}>Mi Casa</p>
           </div>
-          <p className="text-[10px] text-gray-400 mb-1.5 font-semibold uppercase tracking-wider">Dirección</p>
-          <input
-            type="text"
-            value={settings.homeAddress}
-            onChange={e => updateSetting('homeAddress', e.target.value)}
-            placeholder="Ej: Calle Gran Vía, 10, Madrid"
-            className="w-full text-sm text-gray-700 border border-gray-100 rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-50 transition-all placeholder-gray-300"
-          />
-          <p className="text-xs text-gray-400 mt-2 leading-relaxed">
-            Punto de partida para calcular tiempos desde casa.
-          </p>
+          <div style={{ padding: '4px 14px 14px' }}>
+            <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', letterSpacing: '0.18em', fontWeight: 500, textTransform: 'uppercase', marginBottom: 6 }}>Dirección de casa</p>
+            <input
+              type="text"
+              value={settings.homeAddress}
+              onChange={e => updateSetting('homeAddress', e.target.value)}
+              placeholder="Ej: Calle Gran Vía, 10, Madrid"
+              style={{ width: '100%', fontSize: 13.5, color: 'var(--ink)', border: '1px solid var(--border-soft)', borderRadius: 10, padding: '10px 12px', outline: 'none', background: 'var(--bg-2)', fontFamily: 'inherit', boxSizing: 'border-box' }}
+            />
+            <p style={{ fontSize: 11.5, color: 'var(--ink-3)', marginTop: 8, marginBottom: 0, lineHeight: 1.4 }}>
+              Punto de partida para calcular tiempos desde casa.
+            </p>
+          </div>
         </div>
 
         {/* Modelo de predicción */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
-          <p className="font-semibold text-gray-900 text-sm mb-1">Modelo de predicción</p>
+        <div style={{ background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', overflow: 'hidden' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '13px 14px 8px' }}>
+            <span style={{ width: 22, height: 22, borderRadius: 7, background: 'var(--primary-tint)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <BarChart2 size={12} />
+            </span>
+            <p style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)', letterSpacing: '-0.01em', margin: 0 }}>Modelo de predicción</p>
+          </div>
           <SettingRow
             icon={Cloud}
             label="Datos meteorológicos"
@@ -141,31 +164,25 @@ export default function Settings() {
         </div>
 
         {/* Estado de la API */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
-          <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-3">Estado actual</p>
-          <div className="space-y-2.5">
+        <div style={{ background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', overflow: 'hidden' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '13px 14px 8px' }}>
+            <span style={{ width: 22, height: 22, borderRadius: 7, background: 'var(--success-tint)', color: 'var(--success)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <ChevronRight size={12} />
+            </span>
+            <p style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)', letterSpacing: '-0.01em', margin: 0 }}>Estado actual de la API</p>
+          </div>
+          <div style={{ padding: '4px 14px 12px', display: 'flex', flexDirection: 'column', gap: 0 }}>
             {[
-              {
-                label: 'Meteorología',
-                value: settings.weatherData ? '✓ Open-Meteo' : '✗ Neutro',
-                ok: settings.weatherData,
-              },
+              { label: 'Meteorología', value: settings.weatherData ? 'Open-Meteo activo' : 'Neutro', ok: settings.weatherData },
               { label: 'Modo por defecto', value: 'OSM (red vial)', ok: true },
-              {
-                label: 'Velocidad libre',
-                value: settings.useOsmSpeedLimits ? '✓ OSM maxspeed' : '✗ 50/100 km/h',
-                ok: settings.useOsmSpeedLimits,
-              },
-              {
-                label: 'Semáforos',
-                value: settings.useTrafficSignals ? '✓ Activados' : '✗ Desactivados',
-                ok: settings.useTrafficSignals,
-              },
+              { label: 'Velocidad libre', value: settings.useOsmSpeedLimits ? 'OSM maxspeed' : '50/100 km/h', ok: settings.useOsmSpeedLimits },
+              { label: 'Semáforos', value: settings.useTrafficSignals ? 'Activados' : 'Desactivados', ok: settings.useTrafficSignals },
               { label: 'Backend', value: 'localhost:8000', ok: true },
-            ].map(({ label, value, ok }) => (
-              <div key={label} className="flex items-center justify-between">
-                <span className="text-xs text-gray-500">{label}</span>
-                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ok ? 'bg-emerald-50 text-emerald-600' : 'bg-gray-100 text-gray-400'}`}>
+            ].map(({ label, value, ok }, i, arr) => (
+              <div key={label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border-soft)' : 'none' }}>
+                <span style={{ fontSize: 13, color: 'var(--ink-2)' }}>{label}</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 11.5, fontFamily: "'JetBrains Mono', monospace", fontWeight: 500, background: ok ? 'var(--success-tint)' : 'var(--bg-2)', color: ok ? 'var(--success)' : 'var(--ink-3)', padding: '3px 9px', borderRadius: 999 }}>
+                  <span style={{ width: 5, height: 5, borderRadius: 999, background: ok ? 'var(--success)' : 'var(--ink-4)' }} />
                   {value}
                 </span>
               </div>
@@ -174,25 +191,37 @@ export default function Settings() {
         </div>
 
         {/* Preferencias de viaje */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
-          <p className="font-semibold text-gray-900 text-sm mb-1">Preferencias de viaje</p>
-          <SliderRow
-            label="Velocidad caminando"
-            value={settings.walkSpeed}
-            onChange={v => updateSetting('walkSpeed', v)}
-            min={2} max={8} unit="km/h"
-          />
-          <SliderRow
-            label="Velocidad máxima"
-            value={settings.maxSpeed}
-            onChange={v => updateSetting('maxSpeed', Math.round(v))}
-            min={50} max={130} step={1} unit="km/h"
-          />
+        <div style={{ background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', overflow: 'hidden' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '13px 14px 8px' }}>
+            <span style={{ width: 22, height: 22, borderRadius: 7, background: 'var(--primary-tint)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Gauge size={12} />
+            </span>
+            <p style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)', letterSpacing: '-0.01em', margin: 0 }}>Preferencias de viaje</p>
+          </div>
+          <div style={{ padding: '0 14px 6px' }}>
+            <SliderRow
+              label="Velocidad caminando"
+              value={settings.walkSpeed}
+              onChange={v => updateSetting('walkSpeed', v)}
+              min={2} max={8} unit="km/h"
+            />
+            <SliderRow
+              label="Velocidad máxima"
+              value={settings.maxSpeed}
+              onChange={v => updateSetting('maxSpeed', Math.round(v))}
+              min={50} max={130} step={1} unit="km/h"
+            />
+          </div>
         </div>
 
         {/* Notificaciones */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
-          <p className="font-semibold text-gray-900 text-sm mb-1">Notificaciones</p>
+        <div style={{ background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', overflow: 'hidden' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '13px 14px 8px' }}>
+            <span style={{ width: 22, height: 22, borderRadius: 7, background: 'var(--primary-tint)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <RefreshCw size={12} />
+            </span>
+            <p style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)', letterSpacing: '-0.01em', margin: 0 }}>Notificaciones</p>
+          </div>
           <SettingRow
             label="Alertas proactivas"
             desc="Avisos de cambios bruscos en el tráfico"
@@ -202,30 +231,41 @@ export default function Settings() {
         </div>
 
         {/* Cuenta */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
-          <p className="font-semibold text-gray-900 text-sm mb-1">Cuenta</p>
+        <div style={{ background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', overflow: 'hidden' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '13px 14px 8px' }}>
+            <span style={{ width: 22, height: 22, borderRadius: 7, background: 'var(--primary-tint)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Lock size={12} />
+            </span>
+            <p style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)', letterSpacing: '-0.01em', margin: 0 }}>Cuenta</p>
+          </div>
           {[
             { Icon: Lock, label: 'Privacidad y seguridad' },
             { Icon: RefreshCw, label: 'Sincronización de datos' },
           ].map(({ Icon, label }) => (
             <div
               key={label}
-              className="flex items-center justify-between py-3 border-b border-gray-50 last:border-0 cursor-pointer"
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px', borderBottom: '1px solid var(--border-soft)', cursor: 'pointer' }}
             >
-              <div className="flex items-center gap-2.5">
-                <Icon size={14} className="text-gray-400" />
-                <span className="text-sm text-gray-700">{label}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <Icon size={14} style={{ color: 'var(--ink-2)' }} />
+                <span style={{ fontSize: 13.5, fontWeight: 500, color: 'var(--ink)' }}>{label}</span>
               </div>
-              <ChevronRight size={14} className="text-gray-300" />
+              <ChevronRight size={14} style={{ color: 'var(--ink-4)' }} />
             </div>
           ))}
-          <div className="flex items-center gap-2.5 pt-3 cursor-pointer">
-            <LogOut size={14} className="text-red-400" />
-            <span className="text-sm text-red-400 font-medium">Cerrar sesión</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', cursor: 'pointer' }}>
+            <LogOut size={14} style={{ color: 'var(--danger)' }} />
+            <span style={{ fontSize: 13.5, fontWeight: 500, color: 'var(--danger)' }}>Cerrar sesión</span>
           </div>
         </div>
 
-        <div className="h-4" />
+        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 4px', color: 'var(--ink-4)', fontSize: 11 }}>
+          <span>Predictive Traffic · Madrid</span>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace" }}>v2.3.0</span>
+        </div>
+
+        <div style={{ height: 8 }} />
+      </div>
       </div>
 
       <BottomNav />

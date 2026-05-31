@@ -144,128 +144,127 @@ export default function Route() {
   const traffic = sensorColor(avgCarga)
 
   return (
-    <div className="flex flex-col h-full" style={{ background: '#f8fafc' }}>
+    <div className="flex flex-col h-full" style={{ background: 'var(--bg)' }}>
       <Header />
 
       <div className="flex-1 overflow-y-auto scrollbar-hide">
 
         {/* Formulario de búsqueda */}
         {showForm ? (
-          <div className="px-4 py-4 space-y-3">
+          <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+
+            {/* Eyebrow + título */}
+            <div style={{ padding: '4px 2px 0' }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-3)', marginBottom: 6 }}>Planificador de rutas</div>
+              <h1 style={{ fontFamily: 'inherit', fontWeight: 600, fontSize: 24, letterSpacing: '-0.025em', lineHeight: 1.3, color: 'var(--ink)', margin: 0 }}>Nueva ruta</h1>
+            </div>
 
             {/* Origen / Destino */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-4">
-              <div className="flex gap-3 items-stretch">
-                <div className="flex flex-col items-center pt-5 pb-2 flex-shrink-0">
-                  <div className="w-3 h-3 rounded-full bg-blue-600 shadow-sm shadow-blue-300" />
-                  <div className="w-px flex-1 bg-gray-200 my-1.5" style={{ minHeight: 20 }} />
-                  <div className="w-3 h-3 rounded-full border-2 border-gray-300" />
+            <div style={{ background: 'var(--surface)', borderRadius: 18, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', padding: 14 }}>
+              <div style={{ display: 'flex', gap: 12, alignItems: 'stretch' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 20, alignSelf: 'stretch' }}>
+                  <span style={{ width: 14, height: 14, borderRadius: 999, background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 18, flexShrink: 0 }}>
+                    <span style={{ width: 5, height: 5, borderRadius: 999, background: '#fff' }} />
+                  </span>
+                  <span style={{ flex: 1, width: 0, borderLeft: '2px dotted var(--border)', margin: '6px 0' }} />
+                  <span style={{ width: 14, height: 14, borderRadius: 999, marginBottom: 18, background: 'var(--surface)', border: '2px solid var(--ink-3)', flexShrink: 0 }} />
                 </div>
-                <div className="flex-1 min-w-0 space-y-1">
+                <div style={{ flex: 1, minWidth: 0 }}>
                   <div>
-                    <label className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Origen</label>
-                    <input
-                      type="text"
-                      value={origin}
-                      onChange={e => setOrigin(e.target.value)}
-                      className="w-full text-sm text-gray-900 font-medium py-1 focus:outline-none"
-                    />
+                    <label style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase' }}>Origen</label>
+                    <input type="text" value={origin} onChange={e => setOrigin(e.target.value)}
+                      style={{ width: '100%', fontSize: 14, fontWeight: 500, color: 'var(--ink)', border: 'none', outline: 'none', background: 'transparent', padding: '4px 0', fontFamily: 'inherit' }} />
                   </div>
-                  <div className="border-t border-gray-100" />
+                  <div style={{ height: 1, background: 'var(--border-soft)', margin: '4px 0' }} />
                   <div>
-                    <label className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Destino</label>
-                    <input
-                      type="text"
-                      value={destination}
-                      onChange={e => setDestination(e.target.value)}
-                      className="w-full text-sm text-gray-900 font-medium py-1 focus:outline-none placeholder-gray-300"
-                      placeholder="¿A dónde vas?"
-                    />
+                    <label style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase' }}>Destino</label>
+                    <input type="text" value={destination} onChange={e => setDestination(e.target.value)}
+                      style={{ width: '100%', fontSize: 14, fontWeight: 500, color: 'var(--ink)', border: 'none', outline: 'none', background: 'transparent', padding: '4px 0', fontFamily: 'inherit' }}
+                      placeholder="¿A dónde vas?" />
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Fecha y hora */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-7 h-7 bg-blue-50 rounded-xl flex items-center justify-center">
-                  <Clock size={13} className="text-blue-600" />
-                </div>
-                <span className="font-semibold text-gray-900 text-sm">Hora de salida</span>
+            <div style={{ background: 'var(--surface)', borderRadius: 18, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', overflow: 'hidden' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 14px 10px' }}>
+                <span style={{ width: 22, height: 22, borderRadius: 7, background: 'var(--primary-tint)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Clock size={12} />
+                </span>
+                <span style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)', letterSpacing: '-0.01em' }}>Hora de salida</span>
               </div>
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest mb-1.5">Fecha</p>
-                  <div className="flex items-center gap-1.5">
-                    <Calendar size={12} className="text-gray-300" />
+              <div style={{ display: 'flex', padding: '0 14px 14px' }}>
+                <div style={{ flex: 1, padding: '0 8px 0 0' }}>
+                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', letterSpacing: '0.18em', fontWeight: 500, margin: '0 0 6px' }}>FECHA</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <Calendar size={12} style={{ color: 'var(--ink-4)', flexShrink: 0 }} />
                     <input type="date" value={date} onChange={e => setDate(e.target.value)}
-                      className="text-sm text-gray-700 focus:outline-none w-full" />
+                      style={{ fontSize: 13, color: 'var(--ink)', border: 'none', outline: 'none', width: '100%', fontFamily: 'inherit' }} />
                   </div>
                 </div>
-                <div className="w-px bg-gray-100" />
-                <div className="flex-1">
-                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest mb-1.5">Hora</p>
-                  <div className="flex items-center gap-1.5">
-                    <Clock size={12} className="text-gray-300" />
+                <div style={{ width: 1, background: 'var(--border)' }} />
+                <div style={{ flex: 1, padding: '0 0 0 14px' }}>
+                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', letterSpacing: '0.18em', fontWeight: 500, margin: '0 0 6px' }}>HORA</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <Clock size={12} style={{ color: 'var(--ink-4)', flexShrink: 0 }} />
                     <input type="time" value={time} onChange={e => setTime(e.target.value)}
-                      className="text-sm text-gray-700 focus:outline-none w-full" />
+                      style={{ fontSize: 13, color: 'var(--ink)', border: 'none', outline: 'none', width: '100%', fontFamily: 'inherit' }} />
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Modo de ruta */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-7 h-7 bg-blue-50 rounded-xl flex items-center justify-center">
-                  <Layers size={13} className="text-blue-600" />
-                </div>
-                <span className="font-semibold text-gray-900 text-sm">Modo de ruta</span>
+            <div style={{ background: 'var(--surface)', borderRadius: 18, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', overflow: 'hidden' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 14px 10px' }}>
+                <span style={{ width: 22, height: 22, borderRadius: 7, background: 'var(--primary-tint)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Layers size={12} />
+                </span>
+                <span style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)', letterSpacing: '-0.01em' }}>Modo de ruta</span>
               </div>
-              <div className="flex bg-gray-100 rounded-xl p-1">
-                <button onClick={() => setMode('osm')}
-                  className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all ${mode === 'osm' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}>
-                  🛣️ Red Vial (OSM)
+              <div style={{ position: 'relative', display: 'flex', margin: '0 14px', background: 'var(--bg-2)', borderRadius: 10, padding: 4 }}>
+                <div style={{ position: 'absolute', top: 4, left: 4, width: 'calc(50% - 4px)', height: 'calc(100% - 8px)', background: 'var(--surface)', borderRadius: 7, boxShadow: '0 1px 3px rgba(15,20,50,0.08)', transition: 'transform 220ms cubic-bezier(.2,.7,.2,1)', transform: mode === 'osm' ? 'translateX(0)' : 'translateX(100%)' }} />
+                <button onClick={() => setMode('osm')} style={{ flex: 1, position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 500, padding: '8px 0', color: mode === 'osm' ? 'var(--primary)' : 'var(--ink-3)', transition: 'color 160ms' }}>
+                  🛣️ Red Vial
                 </button>
-                <button onClick={() => setMode('sensors')}
-                  className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all ${mode === 'sensors' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}>
+                <button onClick={() => setMode('sensors')} style={{ flex: 1, position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 500, padding: '8px 0', color: mode === 'sensors' ? 'var(--primary)' : 'var(--ink-3)', transition: 'color 160ms' }}>
                   📡 Sensores
                 </button>
               </div>
-              <p className="text-xs text-gray-400 mt-2.5 leading-relaxed">
-                {mode === 'osm' ? 'Ruta real por la red vial de Madrid (recomendado).' : 'Dijkstra sobre el grafo de sensores DGT.'}
+              <p style={{ margin: 0, padding: '10px 14px 14px', fontSize: 12, color: 'var(--ink-3)', lineHeight: 1.5 }}>
+                {mode === 'osm' ? <>Ruta real por la red vial de Madrid. <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '0.1em', background: 'var(--success-tint)', color: 'var(--success)', padding: '2px 6px', borderRadius: 5, marginLeft: 4, textTransform: 'uppercase', fontWeight: 600 }}>recomendado</span></> : 'Dijkstra sobre el grafo de sensores DGT.'}
               </p>
             </div>
 
             {/* Simular incidente */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-4 flex items-center gap-3">
-              <div className="w-9 h-9 bg-amber-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                <AlertTriangle size={16} className="text-amber-500" />
+            <div style={{ background: 'var(--surface)', borderRadius: 18, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', padding: '14px 14px', display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 32, height: 32, borderRadius: 9, background: '#fef3c7', color: 'var(--warn)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <AlertTriangle size={15} />
               </div>
-              <div className="flex-1">
-                <p className="text-sm font-semibold text-gray-900">Simular incidente</p>
-                <p className="text-xs text-gray-400 mt-0.5">Penaliza todos los sensores de la ruta</p>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink)', letterSpacing: '-0.005em', margin: 0 }}>Simular incidente</p>
+                <p style={{ fontSize: 11.5, color: 'var(--ink-3)', marginTop: 2, marginBottom: 0 }}>Penaliza todos los sensores de la ruta</p>
               </div>
               <button
                 onClick={() => setAccidente(v => !v)}
-                className={`relative w-11 h-6 rounded-full transition-colors flex-shrink-0 ${accidente ? 'bg-blue-600' : 'bg-gray-200'}`}
+                style={{ width: 44, height: 26, borderRadius: 999, border: 'none', cursor: 'pointer', position: 'relative', padding: 0, transition: 'background 200ms', background: accidente ? 'var(--primary)' : '#D1D5DB', flexShrink: 0 }}
               >
-                <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${accidente ? 'translate-x-5' : ''}`} />
+                <span style={{ position: 'absolute', top: 2, left: 2, width: 20, height: 20, borderRadius: 999, background: '#fff', transition: 'transform 200ms cubic-bezier(.2,.7,.2,1)', transform: accidente ? 'translateX(18px)' : 'translateX(0)', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
               </button>
             </div>
 
             {!settings.weatherData && (
-              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-3.5 flex items-center gap-2">
-                <CloudRain size={14} className="text-blue-400 flex-shrink-0" />
-                <span className="text-xs text-blue-600">Meteorología desactivada — usando condiciones neutras.</span>
+              <div style={{ background: 'var(--primary-tint)', border: '1px solid var(--primary-tint-2)', borderRadius: 14, padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <CloudRain size={14} style={{ color: 'var(--primary)', flexShrink: 0 }} />
+                <span style={{ fontSize: 12, color: 'var(--ink-2)' }}>Meteorología desactivada — usando condiciones neutras.</span>
               </div>
             )}
 
             {error && (
-              <div className="bg-red-50 border border-red-100 rounded-2xl p-3.5 flex items-center gap-2">
-                <AlertTriangle size={14} className="text-red-400 flex-shrink-0" />
-                <span className="text-xs text-red-600">{error}</span>
+              <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 14, padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <AlertTriangle size={14} style={{ color: 'var(--danger)', flexShrink: 0 }} />
+                <span style={{ fontSize: 12, color: 'var(--danger)' }}>{error}</span>
               </div>
             )}
 
@@ -273,7 +272,16 @@ export default function Route() {
             <button
               onClick={handleSearch}
               disabled={loading || !destination.trim()}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98] transition-all shadow-md shadow-blue-100"
+              style={{
+                position: 'relative', overflow: 'hidden',
+                width: '100%', height: 52, borderRadius: 14, border: 'none',
+                background: 'var(--primary)',
+                color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                gap: 10, cursor: 'pointer', fontSize: 15, fontWeight: 600, fontFamily: 'inherit',
+                boxShadow: '0 2px 8px rgba(37,99,235,0.3)',
+                opacity: (loading || !destination.trim()) ? 0.5 : 1,
+                letterSpacing: '-0.005em',
+              }}
             >
               {loading ? (
                 <>
@@ -282,13 +290,13 @@ export default function Route() {
                 </>
               ) : (
                 <>
-                  <Search size={16} strokeWidth={2.5} />
+                  <Search size={16} strokeWidth={2} />
                   Buscar ruta
                 </>
               )}
             </button>
 
-            <div className="h-2" />
+            <div style={{ height: 8 }} />
           </div>
         ) : (
           /* Resultados */
@@ -383,125 +391,97 @@ export default function Route() {
               </button>
             </div>
 
-            <div className="px-4 py-4 space-y-3">
+            <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
 
-              {/* Toggle modo vista */}
-              <div className="flex bg-gray-100 rounded-xl p-1">
-                <button
-                  onClick={() => handleToggleMode('osm')}
-                  disabled={loading}
-                  className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all disabled:opacity-60 ${mode === 'osm' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
-                >
+              {/* Toggle modo */}
+              <div style={{ position: 'relative', display: 'flex', background: 'var(--bg-2)', borderRadius: 10, padding: 4 }}>
+                <div style={{ position: 'absolute', top: 4, left: 4, width: 'calc(50% - 4px)', height: 'calc(100% - 8px)', background: 'var(--surface)', borderRadius: 7, boxShadow: '0 1px 3px rgba(15,20,50,0.08)', transition: 'transform 220ms cubic-bezier(.2,.7,.2,1)', transform: mode === 'osm' ? 'translateX(0)' : 'translateX(100%)' }} />
+                <button onClick={() => handleToggleMode('osm')} disabled={loading} style={{ flex: 1, position: 'relative', zIndex: 1, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 500, padding: '8px 0', color: mode === 'osm' ? 'var(--primary)' : 'var(--ink-3)', transition: 'color 160ms', opacity: loading ? 0.6 : 1 }}>
                   🛣️ Red Vial (OSM)
                 </button>
-                <button
-                  onClick={() => handleToggleMode('sensors')}
-                  disabled={loading}
-                  className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all disabled:opacity-60 ${mode === 'sensors' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
-                >
+                <button onClick={() => handleToggleMode('sensors')} disabled={loading} style={{ flex: 1, position: 'relative', zIndex: 1, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 500, padding: '8px 0', color: mode === 'sensors' ? 'var(--primary)' : 'var(--ink-3)', transition: 'color 160ms', opacity: loading ? 0.6 : 1 }}>
                   📡 Sensores
                 </button>
               </div>
 
               {loading && (
-                <div className="bg-blue-50 rounded-xl px-4 py-3 flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin flex-shrink-0" />
-                  <span className="text-xs text-blue-600 font-medium">Recalculando ruta en modo {mode === 'osm' ? 'Red Vial' : 'Sensores'}...</span>
+                <div style={{ background: 'var(--primary-tint)', borderRadius: 12, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <div className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin flex-shrink-0" style={{ borderColor: 'var(--primary)', borderTopColor: 'transparent' }} />
+                  <span style={{ fontSize: 12, color: 'var(--primary)', fontWeight: 500 }}>Recalculando en modo {mode === 'osm' ? 'Red Vial' : 'Sensores'}...</span>
                 </div>
               )}
 
               {error && (
-                <div className="bg-red-50 rounded-xl px-4 py-3 flex items-center gap-2">
-                  <AlertTriangle size={14} className="text-red-400 flex-shrink-0" />
-                  <span className="text-xs text-red-600">{error}</span>
+                <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 12, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <AlertTriangle size={14} style={{ color: 'var(--danger)', flexShrink: 0 }} />
+                  <span style={{ fontSize: 12, color: 'var(--danger)' }}>{error}</span>
                 </div>
               )}
 
               {/* Ruta info */}
-              <div className="bg-white rounded-2xl shadow-sm p-3 flex items-center gap-2">
-                <div className="flex items-center gap-1.5 flex-1 min-w-0">
-                  <div className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
-                  <span className="text-xs text-gray-600 truncate">{origin}</span>
+              <div style={{ background: 'var(--surface)', borderRadius: 14, boxShadow: 'var(--shadow-sm)', border: '1px solid var(--border)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1, minWidth: 0 }}>
+                  <div style={{ width: 8, height: 8, borderRadius: 999, background: 'var(--success)', flexShrink: 0 }} />
+                  <span style={{ fontSize: 11.5, color: 'var(--ink-2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{origin}</span>
                 </div>
-                <ChevronDown size={14} className="text-gray-400 rotate-[-90deg] flex-shrink-0" />
-                <div className="flex items-center gap-1.5 flex-1 min-w-0">
-                  <div className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0" />
-                  <span className="text-xs text-gray-600 truncate">{destination}</span>
+                <ChevronDown size={13} style={{ color: 'var(--ink-4)', flexShrink: 0, transform: 'rotate(-90deg)' }} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1, minWidth: 0 }}>
+                  <div style={{ width: 8, height: 8, borderRadius: 999, background: 'var(--danger)', flexShrink: 0 }} />
+                  <span style={{ fontSize: 11.5, color: 'var(--ink-2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{destination}</span>
                 </div>
               </div>
 
               {/* ETA principal */}
-              <div className="bg-white rounded-2xl shadow-sm p-4 text-center">
-                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-1">Tiempo Total</p>
-                <p className="text-5xl font-bold text-gray-900 leading-none">
-                  {result.eta_minutes.toFixed(0)}
-                  <span className="text-2xl text-gray-400 ml-1">min</span>
-                </p>
-                <p className="text-xs text-gray-400 mt-1.5">± 2 min según condiciones en tiempo real</p>
-
-                {signalCount > 0 && (
-                  <div className="mt-3 pt-3 border-t border-gray-50">
-                    <div className="flex items-center justify-between text-xs mb-1.5">
-                      <span className="text-gray-400">🚗 Tiempo de circulación</span>
-                      <span className="font-semibold text-gray-700">
-                        {(result.eta_minutes - signalDelayMin).toFixed(1)} min
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-gray-400">🚦 {signalCount} semáforos</span>
-                      <span className="font-semibold text-amber-600">
-                        +{signalDelayMin.toFixed(1)} min
-                      </span>
-                    </div>
-                  </div>
-                )}
+              <div style={{ display: 'flex', alignItems: 'stretch', background: '#ffffff', border: '1px solid var(--border)', borderRadius: 16, padding: '14px 8px' }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '4px 8px' }}>
+                  <span style={{ fontSize: 10, letterSpacing: '0.06em', color: 'var(--ink-3)', textTransform: 'uppercase', fontWeight: 500 }}>Duración</span>
+                  <span style={{ fontSize: 34, fontWeight: 700, marginTop: 4, lineHeight: 1, color: 'var(--primary)', letterSpacing: '-0.02em' }}>
+                    {result.eta_minutes.toFixed(0)}<span style={{ fontSize: 14, fontWeight: 500, color: 'var(--ink-3)', marginLeft: 3 }}>min</span>
+                  </span>
+                  <span style={{ fontSize: 10.5, color: 'var(--ink-4)', marginTop: 4 }}>± 2 min</span>
+                </div>
+                <div style={{ width: 1, background: 'var(--border)', alignSelf: 'stretch' }} />
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '4px 8px' }}>
+                  <span style={{ fontSize: 10, letterSpacing: '0.06em', color: 'var(--ink-3)', textTransform: 'uppercase', fontWeight: 500 }}>Distancia</span>
+                  <span style={{ fontSize: 34, fontWeight: 700, marginTop: 4, lineHeight: 1, color: 'var(--ink)', letterSpacing: '-0.02em' }}>
+                    {(result.distance_total_m / 1000).toFixed(1)}<span style={{ fontSize: 14, fontWeight: 500, color: 'var(--ink-3)', marginLeft: 3 }}>km</span>
+                  </span>
+                  <span style={{ fontSize: 10.5, color: 'var(--ink-4)', marginTop: 4 }}>recorrido</span>
+                </div>
+                <div style={{ width: 1, background: 'var(--border)', alignSelf: 'stretch' }} />
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '4px 8px' }}>
+                  <span style={{ fontSize: 10, letterSpacing: '0.06em', color: 'var(--ink-3)', textTransform: 'uppercase', fontWeight: 500 }}>Vel. media</span>
+                  <span style={{ fontSize: 34, fontWeight: 700, marginTop: 4, lineHeight: 1, color: 'var(--ink)', letterSpacing: '-0.02em' }}>
+                    {result.avg_speed_kmh != null ? result.avg_speed_kmh.toFixed(0) : '–'}<span style={{ fontSize: 14, fontWeight: 500, color: 'var(--ink-3)', marginLeft: 3 }}>km/h</span>
+                  </span>
+                  {signalCount > 0 && <span style={{ fontSize: 10.5, color: 'var(--ink-4)', marginTop: 4 }}>{signalCount} semáforos</span>}
+                </div>
               </div>
 
-              {/* Stats */}
-              <div className="bg-white rounded-2xl shadow-sm p-4">
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="text-center">
-                    <Gauge size={18} className="text-blue-500 mx-auto mb-1" />
-                    <p className="text-[10px] text-gray-400">Velocidad media</p>
-                    <p className="text-sm font-bold text-gray-800">
-                      {result.avg_speed_kmh != null ? result.avg_speed_kmh.toFixed(1) : '–'} km/h
-                    </p>
+              {signalCount > 0 && (
+                <div style={{ background: 'var(--surface)', borderRadius: 14, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+                    <span style={{ color: 'var(--ink-3)' }}>🚗 Tiempo de circulación</span>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 600, color: 'var(--ink)' }}>{(result.eta_minutes - signalDelayMin).toFixed(1)} min</span>
                   </div>
-                  <div className="text-center border-x border-gray-50">
-                    <MapPin size={18} className="text-blue-500 mx-auto mb-1" />
-                    <p className="text-[10px] text-gray-400">Distancia</p>
-                    <p className="text-sm font-bold text-gray-800">
-                      {(result.distance_total_m / 1000).toFixed(2)} km
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <span className="text-lg block text-center mb-1">📡</span>
-                    <p className="text-[10px] text-gray-400">Sensores</p>
-                    <p className="text-sm font-bold text-gray-800">{sensors.length}</p>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+                    <span style={{ color: 'var(--ink-3)' }}>🚦 {signalCount} semáforos</span>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 600, color: 'var(--warn)' }}>+{signalDelayMin.toFixed(1)} min</span>
                   </div>
                 </div>
-                {rs && (
-                  <div className="mt-3 pt-3 border-t border-gray-50 flex justify-between text-[11px] text-gray-400">
-                    <span>Modo: <b className="text-gray-600">{rs.mode.toUpperCase()}</b></span>
-                    <span>Omitidos: <b className="text-gray-600">{rs.n_sensors_skipped}</b></span>
-                    <span>Tiempo: <b className="text-gray-600">{(result.eta_seconds / 60).toFixed(0)} min</b></span>
-                  </div>
-                )}
-              </div>
+              )}
 
               {/* Tráfico + Opción */}
-              <div className="flex gap-3">
-                <div className={`flex-1 rounded-2xl p-3.5 ${traffic.bg}`}>
-                  <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400 mb-1">🚦 Tráfico</p>
-                  <p className={`text-base font-bold ${traffic.text}`}>{traffic.label}</p>
-                  <p className="text-[11px] text-gray-500 mt-0.5">{sensors.length} sensores predichos</p>
+              <div style={{ display: 'flex', gap: 10 }}>
+                <div style={{ flex: 1, borderRadius: 14, padding: '12px 14px', background: traffic.hex === '#16a34a' ? 'var(--success-tint)' : traffic.hex === '#d97706' ? '#fffbeb' : '#fef2f2', border: `1px solid ${traffic.hex === '#16a34a' ? '#bbf7d0' : traffic.hex === '#d97706' ? '#fde68a' : '#fecaca'}` }}>
+                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--ink-3)', margin: '0 0 4px' }}>Tráfico</p>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: traffic.hex, margin: 0 }}>{traffic.label}</p>
+                  <p style={{ fontSize: 11, color: 'var(--ink-3)', marginTop: 2, marginBottom: 0 }}>{sensors.length} sensores</p>
                 </div>
-                <div className="flex-1 rounded-2xl p-3.5 bg-green-50">
-                  <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400 mb-1">⚡ Mejor opción</p>
-                  <p className="text-base font-bold text-green-700">
-                    {result.eta_minutes > 30 ? 'Sal 10 min antes' : 'Sal puntual'}
-                  </p>
-                  <p className="text-[11px] text-gray-500 mt-0.5">para optimizar el trayecto</p>
+                <div style={{ flex: 1, borderRadius: 14, padding: '12px 14px', background: 'var(--success-tint)', border: '1px solid #bbf7d0' }}>
+                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--ink-3)', margin: '0 0 4px' }}>Recomendación</p>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--success)', margin: 0 }}>{result.eta_minutes > 30 ? 'Sal 10 min antes' : 'Sal puntual'}</p>
+                  <p style={{ fontSize: 11, color: 'var(--ink-3)', marginTop: 2, marginBottom: 0 }}>para optimizar</p>
                 </div>
               </div>
 

@@ -13,7 +13,7 @@ export default function App() {
       <BrowserRouter>
         <div
           className="h-screen flex flex-col overflow-hidden"
-          style={{ maxWidth: 430, margin: '0 auto', background: '#f8fafc' }}
+          style={{ maxWidth: 430, margin: '0 auto', background: 'var(--bg)' }}
         >
           <Routes>
             <Route path="/" element={<Planner />} />

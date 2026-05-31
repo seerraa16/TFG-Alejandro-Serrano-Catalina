@@ -199,48 +199,67 @@ export default function Planner() {
     : getMonthLabel(new Date().toISOString().slice(0, 10))
 
   return (
-    <div className="flex flex-col h-full" style={{ background: '#f8fafc' }}>
-      {/* Header propio del Planner */}
-      <div className="bg-white border-b border-gray-100 px-4 py-3 flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm shadow-blue-200">
-            <CalendarDays size={17} className="text-white" strokeWidth={2.5} />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="font-bold text-gray-900 text-[15px] leading-tight">Planificador</p>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${isGoogleConnected ? 'bg-green-400' : 'bg-gray-300'}`} />
-              <span className="text-[11px] text-gray-400 leading-none">
-                {isGoogleConnected ? 'Google Calendar · Conectado' : 'Google Calendar · No conectado'}
-              </span>
-            </div>
-          </div>
-          <button
-            onClick={connectGoogle}
-            disabled={googleLoading}
-            className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center hover:bg-gray-100 transition-colors disabled:opacity-40"
-            title={isGoogleConnected ? 'Actualizar' : 'Conectar Google Calendar'}
-          >
-            <RefreshCw size={14} className={`text-gray-400 ${googleLoading ? 'animate-spin' : ''}`} />
-          </button>
+    <div className="flex flex-col h-full" style={{ background: 'var(--bg)' }}>
+      {/* Header Planificador */}
+      <div style={{
+        background: 'var(--surface)', borderBottom: '1px solid var(--border-soft)',
+        padding: '6px 16px 12px', flexShrink: 0,
+        display: 'flex', alignItems: 'center', gap: 10,
+      }}>
+        <div style={{
+          width: 34, height: 34, borderRadius: 10, flexShrink: 0,
+          background: 'linear-gradient(135deg, oklch(0.58 0.22 262), oklch(0.4 0.22 262))',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          boxShadow: '0 6px 14px -6px oklch(0.5 0.22 262 / 0.6)',
+        }}>
+          <CalendarDays size={17} color="#fff" strokeWidth={2} />
         </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <p style={{ fontWeight: 600, fontSize: 14.5, color: 'var(--ink)', letterSpacing: '-0.015em', lineHeight: 1.1, margin: 0 }}>
+            Planificador
+          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 3 }}>
+            <span style={{
+              width: 5, height: 5, borderRadius: 999, flexShrink: 0,
+              background: isGoogleConnected ? 'var(--success)' : 'var(--ink-4)',
+              boxShadow: isGoogleConnected ? '0 0 0 2.5px oklch(0.58 0.14 150 / 0.18)' : 'none',
+            }} />
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.04em' }}>
+              {isGoogleConnected ? 'Google Calendar · sincronizado' : 'Google Calendar · no conectado'}
+            </span>
+          </div>
+        </div>
+        <button
+          onClick={connectGoogle}
+          disabled={googleLoading}
+          style={{
+            width: 34, height: 34, borderRadius: 10,
+            background: 'var(--surface)', border: '1px solid var(--border)',
+            color: 'var(--ink-2)', display: 'flex', alignItems: 'center',
+            justifyContent: 'center', cursor: 'pointer', flexShrink: 0,
+            boxShadow: 'var(--shadow-sm)', opacity: googleLoading ? 0.4 : 1,
+          }}
+          title={isGoogleConnected ? 'Actualizar' : 'Conectar Google Calendar'}
+        >
+          <RefreshCw size={14} className={googleLoading ? 'animate-spin' : ''} />
+        </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 scrollbar-hide">
+      <div className="flex-1 overflow-y-auto px-4 py-4 scrollbar-hide" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
 
         {googleError && (
-          <div className="bg-red-50 border border-red-100 rounded-2xl px-4 py-3 text-xs text-red-500">
+          <div style={{ background: 'oklch(0.97 0.04 22)', border: '1px solid oklch(0.92 0.06 22)', borderRadius: 14, padding: '10px 14px', fontSize: 12, color: 'var(--danger)' }}>
             {googleError}
           </div>
         )}
 
         {trafficAlerts.map(alert => (
-          <div key={alert.id} className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 flex items-start gap-2.5">
-            <Bell size={14} className="text-amber-500 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-amber-700 flex-1 leading-relaxed">{alert.msg}</p>
+          <div key={alert.id} style={{ background: 'oklch(0.97 0.04 60)', border: '1px solid oklch(0.9 0.07 60)', borderRadius: 14, padding: '10px 14px', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+            <Bell size={14} style={{ color: 'var(--warn)', flexShrink: 0, marginTop: 1 }} />
+            <p style={{ fontSize: 12, color: 'oklch(0.45 0.1 60)', flex: 1, lineHeight: 1.5, margin: 0 }}>{alert.msg}</p>
             <button
               onClick={() => setTrafficAlerts(prev => prev.filter(a => a.id !== alert.id))}
-              className="text-amber-400 hover:text-amber-600 flex-shrink-0"
+              style={{ color: 'var(--warn)', background: 'none', border: 'none', cursor: 'pointer', flexShrink: 0 }}
             >
               <X size={13} />
             </button>
@@ -251,11 +270,17 @@ export default function Planner() {
           <button
             onClick={connectGoogle}
             disabled={googleLoading}
-            className="w-full bg-white border border-gray-200 py-3 rounded-2xl text-sm flex items-center justify-center gap-2 hover:bg-gray-50 active:scale-[0.98] transition-all disabled:opacity-50 text-gray-600 font-medium"
+            style={{
+              width: '100%', background: 'var(--surface)', border: '1px solid var(--border)',
+              borderRadius: 14, padding: '10px 0', fontSize: 13, fontWeight: 500,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+              cursor: 'pointer', color: 'var(--ink-2)', boxShadow: 'var(--shadow-sm)',
+              opacity: googleLoading ? 0.5 : 1, fontFamily: 'inherit',
+            }}
           >
             {googleLoading
-              ? <Loader size={15} className="animate-spin text-gray-400" />
-              : <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" className="w-4 h-4" />
+              ? <Loader size={15} className="animate-spin" style={{ color: 'var(--ink-3)' }} />
+              : <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" style={{ width: 16, height: 16 }} />
             }
             {googleLoading ? 'Importando eventos...' : 'Importar desde Google Calendar'}
           </button>
@@ -264,36 +289,48 @@ export default function Planner() {
         {/* Crear evento */}
         <button
           onClick={() => setShowAddModal(true)}
-          className="w-full bg-blue-600 text-white py-3.5 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 shadow-md shadow-blue-100 active:scale-[0.98] transition-all hover:bg-blue-700"
+          style={{
+            position: 'relative', overflow: 'hidden',
+            width: '100%', height: 50, borderRadius: 14, border: 'none',
+            background: 'linear-gradient(180deg, oklch(0.55 0.22 262) 0%, oklch(0.46 0.22 262) 100%)',
+            color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            gap: 9, cursor: 'pointer', fontSize: 15, fontWeight: 600, fontFamily: 'inherit',
+            boxShadow: '0 1px 0 oklch(0.65 0.18 262) inset, 0 8px 24px -8px oklch(0.5 0.22 262 / 0.55)',
+            letterSpacing: '-0.005em',
+          }}
         >
-          <Plus size={18} strokeWidth={2.5} />
+          <span style={{ position: 'absolute', inset: 0, borderRadius: 14, background: 'linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0) 40%)', pointerEvents: 'none' }} />
+          <Plus size={17} strokeWidth={1.8} />
           Crear evento
         </button>
 
         {/* Buscador */}
-        <div className="bg-white rounded-2xl border border-gray-100 px-4 py-3 flex items-center gap-2">
-          <Search size={14} className="text-gray-300 flex-shrink-0" />
+        <div style={{ background: 'var(--surface)', borderRadius: 12, border: '1px solid var(--border)', padding: '0 14px', height: 44, display: 'flex', alignItems: 'center', gap: 10, color: 'var(--ink-3)' }}>
+          <Search size={15} style={{ flexShrink: 0 }} />
           <input
             type="text"
             placeholder="Buscar evento o ubicación"
-            className="flex-1 text-sm text-gray-600 placeholder-gray-300 focus:outline-none bg-transparent"
+            style={{ flex: 1, fontSize: 13.5, color: 'var(--ink)', border: 'none', outline: 'none', background: 'transparent', fontFamily: 'inherit' }}
           />
         </div>
 
         {/* Encabezado lista */}
-        <div className="flex items-center justify-between px-0.5">
-          <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Próximos eventos</span>
-          <span className="text-xs text-gray-400">{monthLabel}</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 2px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+            <span style={{ width: 3, height: 14, borderRadius: 2, background: 'var(--primary)', flexShrink: 0 }} />
+            <span style={{ fontWeight: 600, fontSize: 13.5, color: 'var(--ink)', letterSpacing: '-0.01em' }}>Próximos eventos</span>
+          </div>
+          <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', fontSize: 15, color: 'var(--ink-3)' }}>{monthLabel}</span>
         </div>
 
         {upcomingEvents.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-gray-100 py-10 text-center">
-            <CalendarDays size={36} className="text-gray-200 mx-auto mb-3" />
-            <p className="text-sm font-medium text-gray-400">Sin eventos próximos</p>
-            <p className="text-xs text-gray-300 mt-1">Pulsa "Crear evento" para añadir uno</p>
+          <div style={{ background: 'var(--surface)', borderRadius: 18, border: '1px solid var(--border)', padding: '40px 0', textAlign: 'center' }}>
+            <CalendarDays size={36} style={{ color: 'var(--ink-4)', margin: '0 auto 12px' }} />
+            <p style={{ fontSize: 13.5, fontWeight: 500, color: 'var(--ink-3)', margin: 0 }}>Sin eventos próximos</p>
+            <p style={{ fontSize: 12, color: 'var(--ink-4)', marginTop: 4 }}>Pulsa "Crear evento" para añadir uno</p>
           </div>
         ) : (
-          <div className="space-y-2.5">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {upcomingEvents.map((event) => (
               <EventCard
                 key={event.id}
@@ -314,20 +351,19 @@ export default function Planner() {
       {/* Modal añadir evento */}
       {showAddModal && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-end"
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(4px)', zIndex: 50, display: 'flex', alignItems: 'flex-end' }}
           onClick={e => e.target === e.currentTarget && setShowAddModal(false)}
         >
-          <div className="bg-white w-full rounded-t-3xl p-6 space-y-4 max-w-[430px] mx-auto">
-            {/* Handle */}
-            <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto -mt-2" />
+          <div style={{ background: 'var(--surface)', width: '100%', borderRadius: '24px 24px 0 0', padding: 24, maxWidth: 430, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <div style={{ width: 36, height: 4, background: 'var(--border)', borderRadius: 999, margin: '-4px auto 0' }} />
 
-            <div className="flex items-center justify-between">
-              <h2 className="font-bold text-gray-900 text-base">Nuevo evento</h2>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <h2 style={{ fontWeight: 700, fontSize: 16, color: 'var(--ink)', margin: 0, letterSpacing: '-0.015em' }}>Nuevo evento</h2>
               <button
                 onClick={() => { setShowAddModal(false); setAddError('') }}
-                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                style={{ width: 32, height: 32, borderRadius: 999, background: 'var(--bg-2)', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink-2)' }}
               >
-                <X size={15} className="text-gray-500" />
+                <X size={15} />
               </button>
             </div>
 
@@ -336,49 +372,57 @@ export default function Planner() {
               placeholder="Título del evento *"
               value={newEvent.title}
               onChange={e => setNewEvent(p => ({ ...p, title: e.target.value }))}
-              className="w-full border border-gray-200 rounded-xl px-3.5 py-3 text-sm focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50 transition-all placeholder-gray-300"
+              style={{ width: '100%', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px', fontSize: 13.5, outline: 'none', fontFamily: 'inherit', color: 'var(--ink)', background: 'var(--bg-2)', boxSizing: 'border-box' }}
             />
 
-            <div className="flex gap-3">
-              <div className="flex-1">
-                <p className="text-[10px] text-gray-400 mb-1.5 font-semibold uppercase tracking-wider">Fecha *</p>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', marginBottom: 6, fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase' }}>Fecha *</p>
                 <input
                   type="date"
                   value={newEvent.date}
                   onChange={e => setNewEvent(p => ({ ...p, date: e.target.value }))}
-                  className="w-full border border-gray-200 rounded-xl px-3.5 py-3 text-sm focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50 transition-all"
+                  style={{ width: '100%', border: '1px solid var(--border)', borderRadius: 12, padding: '11px 12px', fontSize: 13, outline: 'none', fontFamily: 'inherit', color: 'var(--ink)', background: 'var(--bg-2)', boxSizing: 'border-box' }}
                 />
               </div>
-              <div className="flex-1">
-                <p className="text-[10px] text-gray-400 mb-1.5 font-semibold uppercase tracking-wider">Hora *</p>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', marginBottom: 6, fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase' }}>Hora *</p>
                 <input
                   type="time"
                   value={newEvent.eventTime}
                   onChange={e => setNewEvent(p => ({ ...p, eventTime: e.target.value }))}
-                  className="w-full border border-gray-200 rounded-xl px-3.5 py-3 text-sm focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50 transition-all"
+                  style={{ width: '100%', border: '1px solid var(--border)', borderRadius: 12, padding: '11px 12px', fontSize: 13, outline: 'none', fontFamily: 'inherit', color: 'var(--ink)', background: 'var(--bg-2)', boxSizing: 'border-box' }}
                 />
               </div>
             </div>
 
             <div>
-              <p className="text-[10px] text-gray-400 mb-1.5 font-semibold uppercase tracking-wider">Dirección *</p>
+              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', marginBottom: 6, fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase' }}>Dirección *</p>
               <input
                 type="text"
                 placeholder="Ej: Calle Gran Vía, 10, Madrid"
                 value={newEvent.destination}
                 onChange={e => setNewEvent(p => ({ ...p, destination: e.target.value }))}
-                className="w-full border border-gray-200 rounded-xl px-3.5 py-3 text-sm focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-50 transition-all placeholder-gray-300"
+                style={{ width: '100%', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px', fontSize: 13.5, outline: 'none', fontFamily: 'inherit', color: 'var(--ink)', background: 'var(--bg-2)', boxSizing: 'border-box' }}
               />
             </div>
 
             {addError && (
-              <p className="text-xs text-red-500 bg-red-50 px-3.5 py-2.5 rounded-xl">{addError}</p>
+              <p style={{ fontSize: 12, color: 'var(--danger)', background: 'oklch(0.97 0.04 22)', padding: '10px 14px', borderRadius: 10, margin: 0 }}>{addError}</p>
             )}
 
             <button
               onClick={handleAddEvent}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl font-semibold text-sm active:scale-[0.98] transition-all shadow-md shadow-blue-100"
+              style={{
+                width: '100%', position: 'relative', overflow: 'hidden',
+                height: 50, borderRadius: 14, border: 'none',
+                background: 'linear-gradient(180deg, oklch(0.55 0.22 262) 0%, oklch(0.46 0.22 262) 100%)',
+                color: '#fff', fontWeight: 600, fontSize: 15, fontFamily: 'inherit',
+                cursor: 'pointer', letterSpacing: '-0.005em',
+                boxShadow: '0 1px 0 oklch(0.65 0.18 262) inset, 0 8px 24px -8px oklch(0.5 0.22 262 / 0.55)',
+              }}
             >
+              <span style={{ position: 'absolute', inset: 0, borderRadius: 14, background: 'linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0) 40%)', pointerEvents: 'none' }} />
               Guardar evento
             </button>
           </div>
@@ -395,81 +439,89 @@ function EventCard({ event, eta, etaLoading, loadingRoute, onOpenRoute, onRemove
   const noLocation = isGoogle && !event.hasLocation
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-      <div className="p-3.5 flex gap-3 items-start">
+    <article style={{ background: 'var(--surface)', borderRadius: 18, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', overflow: 'hidden' }}>
+      <div style={{ padding: '14px 14px 12px', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
         {/* Badge día */}
-        <div className="bg-blue-600 text-white rounded-xl px-2.5 py-2 text-center flex-shrink-0 min-w-[46px]">
-          <p className="text-[9px] font-bold leading-none uppercase tracking-wide opacity-80">{event.dayLabel}</p>
-          <p className="text-2xl font-bold leading-none mt-0.5">{event.dayNum}</p>
+        <div style={{ width: 50, minHeight: 56, borderRadius: 12, background: 'var(--primary-tint)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--primary)', fontWeight: 500, lineHeight: 1, margin: 0 }}>{event.dayLabel}</p>
+          <p style={{ fontFamily: 'inherit', fontWeight: 700, fontSize: 22, lineHeight: 1, letterSpacing: '-0.02em', color: 'var(--primary)', marginTop: 4, marginBottom: 0 }}>{event.dayNum}</p>
         </div>
 
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-2">
-            <span className="text-sm font-semibold text-gray-900 leading-snug">{event.title}</span>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+            <span style={{ flex: 1, fontSize: 15, fontWeight: 600, color: 'var(--ink)', lineHeight: 1.25, letterSpacing: '-0.01em' }}>{event.title}</span>
             {!isGoogle && (
               <button
                 onClick={onRemove}
-                className="w-6 h-6 rounded-lg flex items-center justify-center hover:bg-red-50 transition-colors flex-shrink-0"
+                style={{ width: 22, height: 22, borderRadius: 6, background: 'transparent', border: 'none', color: 'var(--ink-4)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
               >
-                <X size={12} className="text-gray-300 hover:text-red-400" />
+                <X size={12} />
               </button>
             )}
           </div>
 
-          <div className="flex items-center gap-2 mt-1 flex-wrap">
-            <div className="flex items-center gap-1 text-gray-500">
-              <Clock size={10} strokeWidth={2} />
-              <span className="text-xs">{event.eventTime}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: 'var(--ink-2)' }}>
+              <Clock size={11} strokeWidth={2} />
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 500, color: 'var(--ink)' }}>{event.eventTime}</span>
             </div>
+            <span style={{ width: 1, height: 10, background: 'var(--border)' }} />
             {isGoogle ? (
-              <span className="inline-flex items-center gap-1 text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded-full font-medium">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" className="w-2.5 h-2.5" />
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 10.5, background: 'var(--primary-tint)', color: 'var(--primary)', padding: '2px 7px', borderRadius: 999, fontWeight: 500 }}>
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" style={{ width: 10, height: 10 }} />
                 Google
               </span>
             ) : event.status ? (
-              <span className="text-[10px] bg-emerald-50 text-emerald-600 px-1.5 py-0.5 rounded-full font-medium">
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 10, background: 'var(--success-tint)', color: 'var(--success)', padding: '3px 8px 3px 6px', borderRadius: 999, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
                 {event.status}
               </span>
             ) : null}
           </div>
 
-          <div className="flex items-center gap-1 text-gray-400 mt-1">
-            <MapPin size={10} strokeWidth={2} className="flex-shrink-0" />
-            <span className="text-xs truncate">{event.location}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 7, color: 'var(--ink-2)', fontSize: 12.5 }}>
+            <MapPin size={12} strokeWidth={2} style={{ flexShrink: 0 }} />
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{event.location}</span>
           </div>
         </div>
       </div>
 
-      {/* Footer con ETA + botón */}
+      {/* ETA strip */}
       {!noLocation && (
-        <div className="border-t border-gray-50 px-3.5 py-2.5 flex items-center justify-between gap-3 bg-gray-50/50">
-          <div className="text-xs text-gray-500">
+        <div style={{ borderTop: '1px solid var(--border-soft)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10, background: 'var(--bg)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.15em', color: 'var(--ink-3)', fontWeight: 500 }}>VIAJE</span>
             {etaLoading ? (
-              <span className="flex items-center gap-1.5 text-gray-400">
+              <span style={{ display: 'flex', alignItems: 'center', gap: 5, color: 'var(--ink-3)', marginTop: 2 }}>
                 <Loader size={10} className="animate-spin" />
-                Calculando tiempo…
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>calculando…</span>
               </span>
             ) : eta != null ? (
-              <span>
-                Desde casa: <span className="font-semibold text-gray-800">{eta.toFixed(0)} min</span>
-              </span>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12.5, color: 'var(--ink)', fontWeight: 600, marginTop: 2 }}>{eta.toFixed(0)} min</span>
             ) : (
-              <span className="text-gray-300">Sin datos de tiempo</span>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'var(--ink-4)', marginTop: 2 }}>—</span>
             )}
           </div>
           <button
             onClick={onOpenRoute}
             disabled={loadingRoute || etaLoading}
-            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-3 py-1.5 rounded-xl active:scale-95 transition-all disabled:opacity-50 flex-shrink-0"
+            style={{
+              marginLeft: 'auto',
+              display: 'inline-flex', alignItems: 'center', gap: 5,
+              background: 'var(--primary)', color: '#fff', border: 'none',
+              height: 30, padding: '0 12px', borderRadius: 9, fontSize: 12, fontWeight: 500,
+              cursor: 'pointer', fontFamily: 'inherit',
+              boxShadow: '0 4px 10px -3px oklch(0.5 0.22 262 / 0.5)',
+              opacity: (loadingRoute || etaLoading) ? 0.5 : 1,
+            }}
           >
             {loadingRoute
-              ? <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              ? <div style={{ width: 12, height: 12, border: '2px solid rgba(255,255,255,0.4)', borderTopColor: '#fff', borderRadius: 999, animation: 'spin 0.8s linear infinite' }} />
               : <Navigation size={11} strokeWidth={2.5} />
             }
             Calcular ruta
           </button>
         </div>
       )}
-    </div>
+    </article>
   )
 }

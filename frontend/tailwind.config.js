@@ -2,7 +2,13 @@
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Geist', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+        serif: ['Instrument Serif', 'serif'],
+      },
+    },
   },
   plugins: [],
 }

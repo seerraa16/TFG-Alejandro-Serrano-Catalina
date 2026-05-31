@@ -1,27 +1,60 @@
-import { Navigation, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 
 export default function Header({ subtitle = null }) {
   return (
-    <header className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3 flex-shrink-0">
-      <div className="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm shadow-blue-200">
-        <Navigation size={17} className="text-white" strokeWidth={2.5} />
+    <header style={{
+      background: '#ffffff',
+      borderBottom: '1px solid var(--border)',
+      padding: '8px 16px 10px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 10,
+      flexShrink: 0,
+    }}>
+      <div style={{
+        width: 32, height: 32, borderRadius: 8, flexShrink: 0,
+        background: 'var(--primary)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 11l18-8-8 18-2-8-8-2z" />
+        </svg>
       </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-baseline gap-0.5 leading-none">
-          <span className="font-bold text-gray-900 text-[15px] tracking-tight">Predictive</span>
-          <span className="font-bold italic text-blue-600 text-[15px] tracking-tight ml-1">Traffic</span>
-        </div>
-        <div className="flex items-center gap-1.5 mt-0.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
-          <span className="text-[11px] text-gray-400 leading-none truncate">
-            {subtitle ?? 'Madrid · sensores en vivo'}
+
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 3, lineHeight: 1.1 }}>
+          <span style={{ fontWeight: 700, fontSize: 15, color: 'var(--ink)', letterSpacing: '-0.02em' }}>
+            Predictive Traffic
           </span>
         </div>
+        <div style={{
+          fontSize: 11, color: 'var(--ink-3)',
+          marginTop: 1, display: 'inline-flex', alignItems: 'center', gap: 5,
+        }}>
+          <span style={{
+            width: 5, height: 5, borderRadius: 999,
+            background: 'var(--success)',
+            flexShrink: 0,
+          }} />
+          {subtitle ?? 'Madrid · sensores en vivo'}
+        </div>
       </div>
-      <button className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center flex-shrink-0 hover:bg-gray-100 transition-colors">
-        <Search size={14} className="text-gray-400" />
+
+      <button style={{
+        width: 32, height: 32, borderRadius: 8,
+        background: 'var(--bg-2)', border: '1px solid var(--border)',
+        color: 'var(--ink-3)', display: 'flex', alignItems: 'center',
+        justifyContent: 'center', cursor: 'pointer', flexShrink: 0,
+      }}>
+        <Search size={14} />
       </button>
-      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-rose-400 to-red-600 flex items-center justify-center text-white text-[11px] font-bold flex-shrink-0 shadow-sm">
+
+      <div style={{
+        width: 32, height: 32, borderRadius: 999, flexShrink: 0,
+        background: '#2563eb',
+        color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontWeight: 700, fontSize: 11.5, letterSpacing: '0.02em',
+      }}>
         AS
       </div>
     </header>
