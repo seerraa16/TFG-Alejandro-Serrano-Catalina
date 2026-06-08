@@ -1,14 +1,17 @@
-"""Carga lazy de los caches generados por el notebook de inferencia.
+"""Carga lazy de los caches generados por el notebook de entrenamiento.
 
-Tres artefactos pesados que el notebook deja en `outputs/inferencia/`:
+Tres artefactos que Modelo2.0.ipynb deja en `outputs/inferencia/`:
 
-    - scaler_X_inference.pkl  (StandardScaler ajustado en train sobre features)
-    - scaler_y_inference.pkl  (StandardScaler ajustado en train sobre targets)
+    - bilstm_X_mean.npy    (media de las 22 features, shape (22,))
+    - bilstm_X_std.npy     (desv. típica de las 22 features, shape (22,))
+    - bilstm_scaler_y.pkl  (StandardScaler ajustado en train sobre los 3 targets)
     - historical_profiles.pkl (perfiles medios por sensor/slot/dow)
 
+Los tres primeros se generan ejecutando la celda "Guardar stats de normalización"
+del notebook Modelo2.0.ipynb.
+
 Se cargan a memoria del proceso la primera vez que se piden y se mantienen
-en singletons. Si los archivos no existen, se lanza `FileNotFoundError`
-con un mensaje explicando que hay que regenerarlos desde el notebook.
+como singletons.
 """
 
 from __future__ import annotations
@@ -17,6 +20,7 @@ import logging
 from typing import Any
 
 import joblib
+import numpy as np
 import pandas as pd
 
 from app.core.config import settings
@@ -33,6 +37,23 @@ _profile_idx: dict[tuple[int, int, int], dict[str, float]] | None = None
 
 
 # ---------------------------------------------------------------------------
+# Wrapper numpy → misma API que StandardScaler
+# ---------------------------------------------------------------------------
+class _NumpyScaler:
+    """Normalización z-score con arrays numpy. Interfaz compatible con StandardScaler."""
+
+    def __init__(self, mean_: np.ndarray, scale_: np.ndarray) -> None:
+        self.mean_ = mean_.astype("float32")
+        self.scale_ = scale_.astype("float32")
+
+    def transform(self, X: np.ndarray) -> np.ndarray:
+        return ((X.astype("float32") - self.mean_) / self.scale_).astype("float32")
+
+    def inverse_transform(self, X: np.ndarray) -> np.ndarray:
+        return (X.astype("float32") * self.scale_ + self.mean_).astype("float32")
+
+
+# ---------------------------------------------------------------------------
 # Errores específicos
 # ---------------------------------------------------------------------------
 class CacheNotFoundError(FileNotFoundError):
@@ -43,21 +64,25 @@ def _require(path, kind: str) -> None:
     if not path.exists():
         raise CacheNotFoundError(
             f"No se encontró el cache de {kind} en {path}. "
-            f"Genera los caches ejecutando inferencia_app.ipynb (celdas 11 y 27) "
-            f"o ajusta la ruta en settings."
+            f"Genera los caches ejecutando la celda 'Guardar stats de normalización' "
+            f"del notebook Modelo2.0.ipynb."
         )
 
 
 # ---------------------------------------------------------------------------
 # API pública
 # ---------------------------------------------------------------------------
-def get_scaler_x() -> Any:
-    """Devuelve el StandardScaler de features (X). Lo carga la primera vez."""
+def get_scaler_x() -> _NumpyScaler:
+    """Devuelve el normalizador de features (X). Lo carga la primera vez."""
     global _scaler_x
     if _scaler_x is None:
-        _require(settings.SCALER_X_INFERENCE, "scaler_X")
-        logger.info("Cargando scaler_X desde %s", settings.SCALER_X_INFERENCE)
-        _scaler_x = joblib.load(settings.SCALER_X_INFERENCE)
+        _require(settings.SCALER_X_INFERENCE, "bilstm_X_mean")
+        _require(settings.SCALER_X_STD, "bilstm_X_std")
+        logger.info("Cargando stats de normalización X desde %s / %s",
+                    settings.SCALER_X_INFERENCE, settings.SCALER_X_STD)
+        mean_ = np.load(str(settings.SCALER_X_INFERENCE))
+        std_ = np.load(str(settings.SCALER_X_STD))
+        _scaler_x = _NumpyScaler(mean_, std_)
     return _scaler_x
 
 
@@ -65,7 +90,7 @@ def get_scaler_y() -> Any:
     """Devuelve el StandardScaler de targets (y). Lo carga la primera vez."""
     global _scaler_y
     if _scaler_y is None:
-        _require(settings.SCALER_Y_INFERENCE, "scaler_y")
+        _require(settings.SCALER_Y_INFERENCE, "bilstm_scaler_y")
         logger.info("Cargando scaler_y desde %s", settings.SCALER_Y_INFERENCE)
         _scaler_y = joblib.load(settings.SCALER_Y_INFERENCE)
     return _scaler_y

@@ -1,4 +1,4 @@
-"""Carga del modelo LSTM en memoria una sola vez al arrancar la API.
+"""Carga del modelo BiLSTM v2 (PyTorch) en memoria una sola vez al arrancar la API.
 
 Patrón de uso (desde main.py vía lifespan de FastAPI):
 
@@ -14,100 +14,98 @@ Y desde cualquier endpoint o servicio:
 
     from app.models.model_loader import get_model
     model = get_model()
-    # ... usar model.predict(...)
+    y_n = model.predict(X_n)   # ndarray (N, 3), misma API que antes
 """
 
 from __future__ import annotations
 
-import json
 import logging
-import zipfile
-from pathlib import Path
 from typing import Any
+
+import numpy as np
 
 from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
-# Estado interno del módulo. No se accede directamente desde fuera.
 _model: Any = None
 _model_path = settings.MODEL_LSTM
 
-# Kwargs presentes en modelos guardados con Keras !=3.12 y que esta versión
-# no acepta al deserializar. Se eliminan de la copia "compat" sin afectar
-# a los pesos ni a la inferencia.
-#   - renorm/* : kwargs legacy de BatchNormalization
-#   - quantization_config : metadato de cuantización (Keras 3.13+)
-#   - synchronized : flag de BatchNormalization (Keras 3.0+)
-_DEPRECATED_KWARGS = {
-    "renorm",
-    "renorm_clipping",
-    "renorm_momentum",
-    "quantization_config",
-}
 
+# ---------------------------------------------------------------------------
+# Arquitectura BiLSTM v2 (réplica exacta del notebook Modelo2.0.ipynb)
+# ---------------------------------------------------------------------------
+class BiLSTMv2:
+    """Bidirectional LSTM de dos capas para predicción de tráfico.
 
-def _strip_deprecated_kwargs(obj: Any) -> None:
-    """Elimina recursivamente kwargs deprecados de un dict de config Keras."""
-    if isinstance(obj, dict):
-        for key in list(obj.keys()):
-            if key in _DEPRECATED_KWARGS:
-                obj.pop(key)
-            else:
-                _strip_deprecated_kwargs(obj[key])
-    elif isinstance(obj, list):
-        for item in obj:
-            _strip_deprecated_kwargs(item)
+    Arquitectura:
+        Bidirectional(LSTM(128)) → Dropout(0.3) →
+        Bidirectional(LSTM(64))  → Dropout(0.3) →
+        Dense(64, ReLU) → Dense(32, ReLU) → Dense(3)
 
-
-def _ensure_compatible_keras_file(src: Path) -> Path:
-    """Devuelve un .keras compatible con Keras 3.12, creándolo en cache si hace falta.
-
-    Un archivo .keras es un zip con `config.json`, `metadata.json` y los pesos.
-    Si el `config.json` contiene kwargs deprecados, generamos una copia limpia
-    en `app/modelos/<nombre>.compat.keras` y la devolvemos.
-    Si no contiene kwargs deprecados, devolvemos el original.
+    Input:  (N, 12, 22)  — 12 pasos × 22 features
+    Output: (N, 3)       — intensidad, ocupacion, carga (normalizados)
     """
-    # Resolver symlinks para que el cache no dependa del nombre del enlace
-    src_resolved = src.resolve()
 
-    with zipfile.ZipFile(src_resolved) as zin:
-        config_raw = zin.read("config.json")
-    config = json.loads(config_raw)
+    def __init__(self, n_features: int = 22, n_targets: int = 3, dropout: float = 0.3):
+        import torch.nn as nn  # import local: torch puede no estar disponible en todos los entornos
+        import torch
 
-    # Detectar si el config tiene kwargs deprecados
-    serialized = json.dumps(config)
-    if not any(k in serialized for k in _DEPRECATED_KWARGS):
-        return src_resolved  # original ya válido
+        class _Net(nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.lstm1 = nn.LSTM(n_features, 128, batch_first=True, bidirectional=True)
+                self.drop1 = nn.Dropout(dropout)
+                self.lstm2 = nn.LSTM(2 * 128, 64, batch_first=True, bidirectional=True)
+                self.drop2 = nn.Dropout(dropout)
+                self.dense1 = nn.Linear(2 * 64, 64)
+                self.dense2 = nn.Linear(64, 32)
+                self.out = nn.Linear(32, n_targets)
+                self.act = nn.ReLU()
 
-    # Generar copia limpia en app/modelos/
-    cache_dir = settings.BACKEND_MODELOS_DIR
-    cache_dir.mkdir(parents=True, exist_ok=True)
-    dst = cache_dir / f"{src_resolved.stem}.compat.keras"
+            def forward(self, x):
+                x, _ = self.lstm1(x)
+                x = self.drop1(x)
+                _, (h_n, _) = self.lstm2(x)
+                x = torch.cat([h_n[0], h_n[1]], dim=1)
+                x = self.drop2(x)
+                x = self.act(self.dense1(x))
+                x = self.act(self.dense2(x))
+                return self.out(x)
 
-    if dst.exists() and dst.stat().st_mtime >= src_resolved.stat().st_mtime:
-        logger.info("Usando copia compat existente: %s", dst)
-        return dst
+        self._net = _Net()
+        self._torch = torch
 
-    logger.info("Generando copia compat (sin kwargs deprecados) en %s ...", dst)
-    _strip_deprecated_kwargs(config)
-    with zipfile.ZipFile(src_resolved) as zin, zipfile.ZipFile(dst, "w", zipfile.ZIP_DEFLATED) as zout:
-        for name in zin.namelist():
-            data = zin.read(name)
-            if name == "config.json":
-                data = json.dumps(config).encode("utf-8")
-            zout.writestr(name, data)
-    return dst
+    def load_weights(self, path) -> None:
+        state = self._torch.load(str(path), map_location="cpu", weights_only=True)
+        self._net.load_state_dict(state)
+        self._net.eval()
+
+    def predict(self, X: np.ndarray, verbose: int = 0) -> np.ndarray:
+        """Inferencia compatible con la API del modelo Keras anterior.
+
+        Args:
+            X: array float32 (N, seq_len, n_features) ya normalizado.
+            verbose: ignorado (solo compatibilidad).
+
+        Returns:
+            ndarray float32 (N, 3) en escala normalizada.
+        """
+        import torch
+        with torch.no_grad():
+            t = torch.from_numpy(X).float()
+            out = self._net(t)
+        return out.numpy()
 
 
+# ---------------------------------------------------------------------------
+# API pública (misma interfaz que la versión Keras anterior)
+# ---------------------------------------------------------------------------
 def load_model() -> bool:
-    """Carga el modelo Keras desde disco si aún no está en memoria.
+    """Carga el modelo BiLSTM v2 desde disco si aún no está en memoria.
 
     Devuelve True si el modelo está disponible al terminar la llamada,
-    False si no se pudo cargar (archivo no encontrado o error de Keras).
-    Diseñado para no romper el arranque de la API: si falla, deja
-    `_model = None` y los endpoints que llamen a `get_model()`
-    recibirán un RuntimeError explícito.
+    False si no se pudo cargar. No interrumpe el arranque de la API.
     """
     global _model
 
@@ -125,25 +123,20 @@ def load_model() -> bool:
         return False
 
     try:
-        # Import perezoso: TensorFlow tarda en importar y puede no estar
-        # instalado en entornos donde sólo se sirven endpoints sin modelo.
-        from tensorflow.keras.models import load_model as keras_load_model
+        import torch  # noqa: F401 — verificar que torch está instalado
     except ImportError:
         logger.exception(
-            "TensorFlow no está instalado. "
-            "Instálalo con: pip install tensorflow"
+            "PyTorch no está instalado. "
+            "Instálalo con: pip install torch"
         )
         return False
 
     try:
-        path_to_load = _ensure_compatible_keras_file(_model_path)
-        logger.info("Cargando modelo Keras desde %s ...", path_to_load)
-        _model = keras_load_model(path_to_load, compile=False)
-        logger.info(
-            "Modelo cargado correctamente — input_shape=%s output_shape=%s",
-            getattr(_model, "input_shape", "?"),
-            getattr(_model, "output_shape", "?"),
-        )
+        logger.info("Cargando modelo BiLSTM v2 desde %s ...", _model_path)
+        net = BiLSTMv2()
+        net.load_weights(_model_path)
+        _model = net
+        logger.info("Modelo BiLSTM v2 cargado correctamente — input (N, 12, 22) → output (N, 3)")
         return True
     except Exception:
         logger.exception("Error cargando el modelo desde %s", _model_path)
@@ -154,9 +147,7 @@ def load_model() -> bool:
 def get_model() -> Any:
     """Devuelve el modelo cargado en memoria.
 
-    Lanza RuntimeError si el modelo no se ha cargado todavía
-    (ej. el archivo no existía al arrancar, o se llama antes
-    de inicializar el lifespan de FastAPI).
+    Lanza RuntimeError si el modelo no se ha cargado todavía.
     """
     if _model is None:
         raise RuntimeError(

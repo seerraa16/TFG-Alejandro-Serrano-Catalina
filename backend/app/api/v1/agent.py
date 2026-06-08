@@ -165,7 +165,7 @@ def _explanation_system(today: datetime, home_address: str) -> str:
         "2. Cuánto tiempo tardará y la distancia.\n"
         "3. Si hay sensores con ocupación alta (>40%), avisa de que puede haber tráfico en esas zonas.\n"
         "4. Si llueve o la temperatura es extrema, menciónalo brevemente.\n"
-        "Sé conciso, amigable y práctico. Puedes usar algún emoji."
+        "Sé conciso, amigable y práctico. No uses emojis en tus respuestas."
     )
 
 

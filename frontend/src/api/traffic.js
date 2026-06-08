@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8001'
+const BASE_URL = 'http://localhost:8000'
 
 export async function chatAgent({ message, homeAddress = 'Madrid', history = [] }) {
   const res = await fetch(`${BASE_URL}/agent/chat`, {

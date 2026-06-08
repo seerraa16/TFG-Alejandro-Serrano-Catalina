@@ -7,7 +7,7 @@ import Header from '../components/Header'
 import BottomNav from '../components/BottomNav'
 import {
   Clock, MapPin, Navigation, Plus, X,
-  Loader, Search, RefreshCw, CalendarDays, Bell,
+  Loader, RefreshCw, CalendarDays, Bell,
 } from 'lucide-react'
 
 const ALERT_THRESHOLD_MIN = 10   // avisar si el ETA sube más de 10 min
@@ -200,50 +200,25 @@ export default function Planner() {
 
   return (
     <div className="flex flex-col h-full" style={{ background: 'var(--bg)' }}>
-      {/* Header Planificador */}
-      <div style={{
-        background: 'var(--surface)', borderBottom: '1px solid var(--border-soft)',
-        padding: '6px 16px 12px', flexShrink: 0,
-        display: 'flex', alignItems: 'center', gap: 10,
-      }}>
-        <div style={{
-          width: 34, height: 34, borderRadius: 10, flexShrink: 0,
-          background: 'linear-gradient(135deg, oklch(0.58 0.22 262), oklch(0.4 0.22 262))',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          boxShadow: '0 6px 14px -6px oklch(0.5 0.22 262 / 0.6)',
-        }}>
-          <CalendarDays size={17} color="#fff" strokeWidth={2} />
-        </div>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <p style={{ fontWeight: 600, fontSize: 14.5, color: 'var(--ink)', letterSpacing: '-0.015em', lineHeight: 1.1, margin: 0 }}>
-            Planificador
-          </p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 3 }}>
-            <span style={{
-              width: 5, height: 5, borderRadius: 999, flexShrink: 0,
-              background: isGoogleConnected ? 'var(--success)' : 'var(--ink-4)',
-              boxShadow: isGoogleConnected ? '0 0 0 2.5px oklch(0.58 0.14 150 / 0.18)' : 'none',
-            }} />
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.04em' }}>
-              {isGoogleConnected ? 'Google Calendar · sincronizado' : 'Google Calendar · no conectado'}
-            </span>
-          </div>
-        </div>
-        <button
-          onClick={connectGoogle}
-          disabled={googleLoading}
-          style={{
-            width: 34, height: 34, borderRadius: 10,
-            background: 'var(--surface)', border: '1px solid var(--border)',
-            color: 'var(--ink-2)', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', cursor: 'pointer', flexShrink: 0,
-            boxShadow: 'var(--shadow-sm)', opacity: googleLoading ? 0.4 : 1,
-          }}
-          title={isGoogleConnected ? 'Actualizar' : 'Conectar Google Calendar'}
-        >
-          <RefreshCw size={14} className={googleLoading ? 'animate-spin' : ''} />
-        </button>
-      </div>
+      <Header
+        subtitle={isGoogleConnected ? 'Google Calendar · sincronizado' : 'Google Calendar · no conectado'}
+        rightAction={
+          <button
+            onClick={connectGoogle}
+            disabled={googleLoading}
+            style={{
+              width: 32, height: 32, borderRadius: 8,
+              background: 'var(--bg-2)', border: '1px solid var(--border)',
+              color: 'var(--ink-2)', display: 'flex', alignItems: 'center',
+              justifyContent: 'center', cursor: 'pointer', flexShrink: 0,
+              opacity: googleLoading ? 0.4 : 1,
+            }}
+            title={isGoogleConnected ? 'Actualizar' : 'Conectar Google Calendar'}
+          >
+            <RefreshCw size={14} className={googleLoading ? 'animate-spin' : ''} />
+          </button>
+        }
+      />
 
       <div className="flex-1 overflow-y-auto px-4 py-4 scrollbar-hide" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
 
@@ -271,10 +246,10 @@ export default function Planner() {
             onClick={connectGoogle}
             disabled={googleLoading}
             style={{
-              width: '100%', background: 'var(--surface)', border: '1px solid var(--border)',
+              width: '100%', background: 'var(--bg-2)', border: '1px solid var(--border)',
               borderRadius: 14, padding: '10px 0', fontSize: 13, fontWeight: 500,
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-              cursor: 'pointer', color: 'var(--ink-2)', boxShadow: 'var(--shadow-sm)',
+              cursor: 'pointer', color: 'var(--ink-3)',
               opacity: googleLoading ? 0.5 : 1, fontFamily: 'inherit',
             }}
           >
@@ -290,29 +265,16 @@ export default function Planner() {
         <button
           onClick={() => setShowAddModal(true)}
           style={{
-            position: 'relative', overflow: 'hidden',
             width: '100%', height: 50, borderRadius: 14, border: 'none',
-            background: 'linear-gradient(180deg, oklch(0.55 0.22 262) 0%, oklch(0.46 0.22 262) 100%)',
+            background: 'var(--primary)',
             color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
             gap: 9, cursor: 'pointer', fontSize: 15, fontWeight: 600, fontFamily: 'inherit',
-            boxShadow: '0 1px 0 oklch(0.65 0.18 262) inset, 0 8px 24px -8px oklch(0.5 0.22 262 / 0.55)',
             letterSpacing: '-0.005em',
           }}
         >
-          <span style={{ position: 'absolute', inset: 0, borderRadius: 14, background: 'linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0) 40%)', pointerEvents: 'none' }} />
           <Plus size={17} strokeWidth={1.8} />
           Crear evento
         </button>
-
-        {/* Buscador */}
-        <div style={{ background: 'var(--surface)', borderRadius: 12, border: '1px solid var(--border)', padding: '0 14px', height: 44, display: 'flex', alignItems: 'center', gap: 10, color: 'var(--ink-3)' }}>
-          <Search size={15} style={{ flexShrink: 0 }} />
-          <input
-            type="text"
-            placeholder="Buscar evento o ubicación"
-            style={{ flex: 1, fontSize: 13.5, color: 'var(--ink)', border: 'none', outline: 'none', background: 'transparent', fontFamily: 'inherit' }}
-          />
-        </div>
 
         {/* Encabezado lista */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 2px' }}>
@@ -320,14 +282,13 @@ export default function Planner() {
             <span style={{ width: 3, height: 14, borderRadius: 2, background: 'var(--primary)', flexShrink: 0 }} />
             <span style={{ fontWeight: 600, fontSize: 13.5, color: 'var(--ink)', letterSpacing: '-0.01em' }}>Próximos eventos</span>
           </div>
-          <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic', fontSize: 15, color: 'var(--ink-3)' }}>{monthLabel}</span>
+          <span style={{ fontFamily: "'Geist', sans-serif", fontSize: 14, color: 'var(--ink-3)', letterSpacing: '-0.01em' }}>{monthLabel}</span>
         </div>
 
         {upcomingEvents.length === 0 ? (
-          <div style={{ background: 'var(--surface)', borderRadius: 18, border: '1px solid var(--border)', padding: '40px 0', textAlign: 'center' }}>
-            <CalendarDays size={36} style={{ color: 'var(--ink-4)', margin: '0 auto 12px' }} />
-            <p style={{ fontSize: 13.5, fontWeight: 500, color: 'var(--ink-3)', margin: 0 }}>Sin eventos próximos</p>
-            <p style={{ fontSize: 12, color: 'var(--ink-4)', marginTop: 4 }}>Pulsa "Crear evento" para añadir uno</p>
+          <div style={{ background: 'var(--surface)', borderRadius: 18, border: '1px solid var(--border)', padding: '40px 24px', textAlign: 'center' }}>
+            <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--ink-2)', margin: 0 }}>No tienes eventos esta semana</p>
+            <p style={{ fontSize: 12.5, color: 'var(--ink-3)', marginTop: 6, lineHeight: 1.5 }}>Añade uno para ver cuánto tardarás en llegar</p>
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -414,15 +375,12 @@ export default function Planner() {
             <button
               onClick={handleAddEvent}
               style={{
-                width: '100%', position: 'relative', overflow: 'hidden',
-                height: 50, borderRadius: 14, border: 'none',
-                background: 'linear-gradient(180deg, oklch(0.55 0.22 262) 0%, oklch(0.46 0.22 262) 100%)',
+                width: '100%', height: 50, borderRadius: 14, border: 'none',
+                background: 'var(--primary)',
                 color: '#fff', fontWeight: 600, fontSize: 15, fontFamily: 'inherit',
                 cursor: 'pointer', letterSpacing: '-0.005em',
-                boxShadow: '0 1px 0 oklch(0.65 0.18 262) inset, 0 8px 24px -8px oklch(0.5 0.22 262 / 0.55)',
               }}
             >
-              <span style={{ position: 'absolute', inset: 0, borderRadius: 14, background: 'linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0) 40%)', pointerEvents: 'none' }} />
               Guardar evento
             </button>
           </div>
@@ -489,11 +447,11 @@ function EventCard({ event, eta, etaLoading, loadingRoute, onOpenRoute, onRemove
       {!noLocation && (
         <div style={{ borderTop: '1px solid var(--border-soft)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10, background: 'var(--bg)' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.15em', color: 'var(--ink-3)', fontWeight: 500 }}>VIAJE</span>
+            <span style={{ fontFamily: "'Geist', sans-serif", fontSize: 9, letterSpacing: '0.06em', color: 'var(--ink-3)', fontWeight: 600 }}>VIAJE</span>
             {etaLoading ? (
               <span style={{ display: 'flex', alignItems: 'center', gap: 5, color: 'var(--ink-3)', marginTop: 2 }}>
                 <Loader size={10} className="animate-spin" />
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>calculando…</span>
+                <span style={{ fontFamily: "'Geist', sans-serif", fontSize: 11 }}>calculando…</span>
               </span>
             ) : eta != null ? (
               <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12.5, color: 'var(--ink)', fontWeight: 600, marginTop: 2 }}>{eta.toFixed(0)} min</span>
@@ -510,7 +468,7 @@ function EventCard({ event, eta, etaLoading, loadingRoute, onOpenRoute, onRemove
               background: 'var(--primary)', color: '#fff', border: 'none',
               height: 30, padding: '0 12px', borderRadius: 9, fontSize: 12, fontWeight: 500,
               cursor: 'pointer', fontFamily: 'inherit',
-              boxShadow: '0 4px 10px -3px oklch(0.5 0.22 262 / 0.5)',
+              boxShadow: '0 4px 10px -3px oklch(0.45 0.18 142 / 0.5)',
               opacity: (loadingRoute || etaLoading) ? 0.5 : 1,
             }}
           >

@@ -1,0 +1,5 @@
+﻿ruta,origen_lat,origen_lon,destino_lat,destino_lon,datetime,eta_google_min
+Casa-NTTData (jue 9am),40.48790,-3.72800,40.49150,-3.67200,2026-06-04T09:00:00,20
+Casa-Bernabeu (mar 18h),40.48790,-3.72800,40.45310,-3.68830,2026-06-09T18:00:00,15
+NTTData-Bernabeu (mie 20h),40.49150,-3.67200,40.45310,-3.68830,2026-06-10T20:00:00,25
+Metropolitano-Bernabeu (sab 10am),40.43630,-3.59930,40.45310,-3.68830,2026-06-07T10:00:00,19

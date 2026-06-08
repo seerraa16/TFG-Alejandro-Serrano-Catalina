@@ -78,7 +78,7 @@ export default function Settings() {
 
         {/* Eyebrow + título */}
         <div style={{ padding: '4px 2px 0' }}>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-3)', marginBottom: 6 }}>Cuenta · Ajustes</div>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-3)', marginBottom: 6 }}>Ajustes</div>
           <h1 style={{ fontFamily: 'inherit', fontWeight: 600, fontSize: 24, letterSpacing: '-0.025em', lineHeight: 1.3, color: 'var(--ink)', margin: 0 }}>Tu configuración</h1>
         </div>
 
@@ -101,7 +101,7 @@ export default function Settings() {
             <p style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)', letterSpacing: '-0.01em', margin: 0 }}>Mi Casa</p>
           </div>
           <div style={{ padding: '4px 14px 14px' }}>
-            <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', letterSpacing: '0.18em', fontWeight: 500, textTransform: 'uppercase', marginBottom: 6 }}>Dirección de casa</p>
+            <p style={{ fontFamily: "'Geist', sans-serif", fontSize: 9.5, color: 'var(--ink-3)', letterSpacing: '0.06em', fontWeight: 500, textTransform: 'uppercase', marginBottom: 6 }}>Dirección de casa</p>
             <input
               type="text"
               value={settings.homeAddress}
@@ -260,7 +260,7 @@ export default function Settings() {
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 4px', color: 'var(--ink-4)', fontSize: 11 }}>
-          <span>Predictive Traffic · Madrid</span>
+          <span>¡A tiempo! · Madrid</span>
           <span style={{ fontFamily: "'JetBrains Mono', monospace" }}>v2.3.0</span>
         </div>
 

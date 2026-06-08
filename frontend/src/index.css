@@ -12,10 +12,10 @@
   --ink-2: #444444;
   --ink-3: #888888;
   --ink-4: #b8b8b8;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-tint: #eff6ff;
-  --primary-tint-2: #dbeafe;
+  --primary: #15803d;
+  --primary-hover: #166534;
+  --primary-tint: #f0fdf4;
+  --primary-tint-2: #dcfce7;
   --success: #16a34a;
   --success-tint: #f0fdf4;
   --warn: #d97706;
@@ -30,14 +30,20 @@ body {
   font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  background: #ffffff;
+  background: #000000;
   overflow: hidden;
   height: 100vh;
   color: var(--ink);
+  display: flex;
+  justify-content: center;
 }
 
 #root {
   height: 100vh;
+  width: 100%;
+  max-width: 430px;
+  background: var(--bg);
+  position: relative;
 }
 
 .scrollbar-hide {
@@ -51,3 +57,4 @@ body {
 input[type='range'] {
   accent-color: var(--primary);
 }
+

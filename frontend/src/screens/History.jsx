@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Send, Loader2, Map, Trash2, Zap, WifiOff, MapPin } from 'lucide-react'
+import { Send, Loader2, Map, Trash2, Bot, WifiOff, MapPin } from 'lucide-react'
 import Header from '../components/Header'
 import BottomNav from '../components/BottomNav'
 import { chatAgent, predictETA } from '../api/traffic'
@@ -32,8 +32,8 @@ function saveMessages(msgs) {
 function TypingIndicator() {
   return (
     <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8 }}>
-      <div style={{ width: 26, height: 26, borderRadius: 8, flexShrink: 0, background: 'linear-gradient(135deg, oklch(0.6 0.22 262), oklch(0.45 0.22 262))', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 6px -2px oklch(0.5 0.22 262 / 0.5)' }}>
-        <Zap size={12} color="#fff" strokeWidth={2.5} />
+      <div style={{ width: 26, height: 26, borderRadius: 8, flexShrink: 0, background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Bot size={13} color="#fff" strokeWidth={2} />
       </div>
       <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '14px 14px 14px 4px', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 5, boxShadow: 'var(--shadow-sm)' }}>
         <span className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce [animation-delay:0ms]" />
@@ -58,7 +58,7 @@ function MessageBubble({ msg, onVerMapa, mapLoading }) {
   if (isUser) {
     return (
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <div style={{ maxWidth: '80%', background: 'var(--ink)', color: '#fff', padding: '10px 14px', borderRadius: '14px 14px 4px 14px', fontSize: 13, lineHeight: 1.45, boxShadow: 'var(--shadow-sm)' }}>
+        <div style={{ maxWidth: '80%', background: 'var(--primary-tint-2)', color: 'var(--primary)', padding: '10px 14px', borderRadius: '14px 14px 4px 14px', fontSize: 13, lineHeight: 1.45, boxShadow: 'var(--shadow-sm)' }}>
           {msg.content}
         </div>
       </div>
@@ -91,8 +91,8 @@ function MessageBubble({ msg, onVerMapa, mapLoading }) {
 
   return (
     <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-      <div style={{ width: 26, height: 26, borderRadius: 8, flexShrink: 0, marginTop: 2, background: 'linear-gradient(135deg, oklch(0.6 0.22 262), oklch(0.45 0.22 262))', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 6px -2px oklch(0.5 0.22 262 / 0.5)' }}>
-        <Zap size={12} color="#fff" strokeWidth={2.5} />
+      <div style={{ width: 26, height: 26, borderRadius: 8, flexShrink: 0, marginTop: 2, background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Bot size={13} color="#fff" strokeWidth={2} />
       </div>
       <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
         <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '14px 14px 14px 4px', padding: '12px 14px', boxShadow: 'var(--shadow-sm)', fontSize: 13.5, color: 'var(--ink-2)', lineHeight: 1.55 }}>
@@ -109,17 +109,17 @@ function MessageBubble({ msg, onVerMapa, mapLoading }) {
                   <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 120 }}>{msg.destination}</span>
                 </div>
               )}
-              <div style={{ display: 'flex', gap: 20, background: 'linear-gradient(135deg, oklch(0.28 0.04 262), oklch(0.16 0.03 258))', borderRadius: 12, padding: '10px 14px' }}>
+              <div style={{ display: 'flex', gap: 16, background: 'var(--primary-tint)', borderRadius: 12, padding: '10px 14px', border: '1px solid var(--primary-tint-2)' }}>
                 <div>
-                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.5)', margin: 0 }}>DURACIÓN</p>
-                  <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: '#fff', margin: '2px 0 0', lineHeight: 1 }}>{Number(msg.eta_minutes).toFixed(0)}<span style={{ fontSize: 11, fontFamily: "'JetBrains Mono', monospace", opacity: 0.7, marginLeft: 3 }}>min</span></p>
+                  <p style={{ fontSize: 10, color: 'var(--ink-3)', margin: 0 }}>Duración estimada</p>
+                  <p style={{ fontSize: 20, fontWeight: 700, color: 'var(--primary)', margin: '2px 0 0', lineHeight: 1 }}>{Number(msg.eta_minutes).toFixed(0)}<span style={{ fontSize: 12, fontWeight: 400, color: 'var(--ink-3)', marginLeft: 3 }}>min</span></p>
                 </div>
                 {msg.departure_time && (
                   <>
-                    <div style={{ width: 1, background: 'rgba(255,255,255,0.15)' }} />
+                    <div style={{ width: 1, background: 'var(--primary-tint-2)' }} />
                     <div>
-                      <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.5)', margin: 0 }}>SALIR</p>
-                      <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: '#fff', margin: '2px 0 0', lineHeight: 1 }}>{msg.departure_time}</p>
+                      <p style={{ fontSize: 10, color: 'var(--ink-3)', margin: 0 }}>Sale a las</p>
+                      <p style={{ fontSize: 20, fontWeight: 700, color: 'var(--primary)', margin: '2px 0 0', lineHeight: 1 }}>{msg.departure_time}</p>
                     </div>
                   </>
                 )}
@@ -232,7 +232,7 @@ export default function AgentScreen() {
       {!isEmpty && (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 16px', background: 'var(--surface)', borderBottom: '1px solid var(--border-soft)', flexShrink: 0 }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 12, color: 'var(--ink-3)' }}>
-            <span style={{ width: 6, height: 6, borderRadius: 999, background: 'var(--primary)', boxShadow: '0 0 0 3px oklch(0.5 0.22 262 / 0.18)' }} />
+            <span style={{ width: 6, height: 6, borderRadius: 999, background: 'var(--primary)', boxShadow: '0 0 0 3px oklch(0.45 0.18 142 / 0.18)' }} />
             {messages.length} mensajes en memoria
           </span>
           <button
@@ -251,11 +251,10 @@ export default function AgentScreen() {
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px', gap: 16 }}>
               <div style={{
                 width: 52, height: 52, borderRadius: 14, flexShrink: 0,
-                background: 'linear-gradient(135deg, oklch(0.6 0.22 262), oklch(0.45 0.22 262))',
+                background: 'var(--primary)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 8px 24px -6px oklch(0.5 0.22 262 / 0.5)',
               }}>
-                <Zap size={22} color="#fff" strokeWidth={2.5} />
+                <Bot size={22} color="#fff" strokeWidth={2} />
               </div>
               <div>
                 <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-3)', marginBottom: 8 }}>
@@ -323,7 +322,7 @@ export default function AgentScreen() {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer', flexShrink: 0,
               opacity: (!input.trim() || loading) ? 0.4 : 1,
-              boxShadow: '0 4px 10px -3px oklch(0.5 0.22 262 / 0.55)',
+              boxShadow: '0 4px 10px -3px oklch(0.45 0.18 142 / 0.55)',
               transition: 'opacity 120ms',
             }}
           >

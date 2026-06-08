@@ -7,7 +7,7 @@ import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png'
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png'
 import Header from '../components/Header'
 import BottomNav from '../components/BottomNav'
-import { ArrowLeft, Navigation, Gauge, MapPin, CloudRain, Thermometer, AlertCircle } from 'lucide-react'
+import { ArrowLeft, Navigation } from 'lucide-react'
 
 // Fix Leaflet bundler icon issue
 delete L.Icon.Default.prototype._getIconUrl
@@ -86,7 +86,7 @@ export default function Results() {
               attributionControl={false}
             >
               <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
-              <Polyline positions={geometry} color="#2563eb" weight={5} opacity={0.85} />
+              <Polyline positions={geometry} color="#15803d" weight={5} opacity={0.85} />
               <Marker position={geometry[0]} icon={originIcon}>
                 <Popup><b>Origen</b><br />{origin}</Popup>
               </Marker>
@@ -109,7 +109,7 @@ export default function Results() {
           </button>
 
           {/* Botón navegación */}
-          <button className="absolute bottom-3 left-1/2 -translate-x-1/2 z-[1000] bg-blue-600 text-white px-6 py-2.5 rounded-full font-semibold text-sm flex items-center gap-2 shadow-lg active:scale-95 transition-transform">
+          <button className="absolute bottom-3 left-1/2 -translate-x-1/2 z-[1000] bg-green-700 text-white px-6 py-2.5 rounded-full font-semibold text-sm flex items-center gap-2 shadow-lg active:scale-95 transition-transform">
             <Navigation size={15} />
             Iniciar Navegación
           </button>
@@ -117,121 +117,64 @@ export default function Results() {
 
         <div className="px-4 py-4 space-y-3">
 
-          {/* ETA principal */}
-          <div className="bg-white rounded-2xl shadow-sm p-4 text-center">
-            <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-1">Tiempo Total</p>
-            <p className="text-5xl font-bold text-gray-900 leading-none">
-              {etaMin.toFixed(0)}
-              <span className="text-2xl text-gray-400 ml-1">min</span>
-            </p>
-            <p className="text-xs text-gray-400 mt-2">± 2 min según condiciones en tiempo real</p>
-          </div>
-
-          {/* Desglose trayecto */}
+          {/* ETA principal + stats */}
           <div className="bg-white rounded-2xl shadow-sm p-4">
-            <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-3">Desglose del Trayecto</p>
-            <div className="flex items-center gap-2">
-              <div className="flex flex-col items-center gap-1">
-                <span className="text-lg">🚶</span>
-                <span className="text-[10px] text-gray-400">5m</span>
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-1 mb-1">
-                  <div className="h-2 flex-1 bg-amber-400 rounded-l-full" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-500 flex-shrink-0" />
-                  <div className="h-2 flex-1 bg-amber-400 rounded-r-full" />
-                </div>
-                <div className="flex justify-between px-1">
-                  <span className="text-[10px] text-gray-400">🚗 {etaMin.toFixed(0)} min en coche</span>
-                  <span className="text-[10px] text-gray-400">{distKm} km</span>
-                </div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <span className="text-lg">🚶</span>
-                <span className="text-[10px] text-gray-400">5m</span>
-              </div>
+            <div className="text-center mb-4">
+              <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-1">Tiempo estimado</p>
+              <p className="text-5xl font-bold text-gray-900 leading-none">
+                {etaMin.toFixed(0)}
+                <span className="text-2xl text-gray-400 ml-1">min</span>
+              </p>
             </div>
-            <div className="flex gap-3 mt-3 pt-3 border-t border-gray-50">
-              <div className="flex-1 flex items-center gap-2">
-                <Gauge size={14} className="text-blue-500 flex-shrink-0" />
-                <div>
-                  <p className="text-[10px] text-gray-400">Velocidad media</p>
-                  <p className="text-sm font-semibold text-gray-800">{vmed} km/h</p>
-                </div>
+            <div className="flex gap-3 pt-3 border-t border-gray-50">
+              <div className="flex-1 text-center">
+                <p className="text-[10px] text-gray-400">Vel. media</p>
+                <p className="text-sm font-semibold text-gray-800">{vmed} km/h</p>
               </div>
               <div className="w-px bg-gray-100" />
-              <div className="flex-1 flex items-center gap-2">
-                <MapPin size={14} className="text-blue-500 flex-shrink-0" />
-                <div>
-                  <p className="text-[10px] text-gray-400">Distancia</p>
-                  <p className="text-sm font-semibold text-gray-800">{distKm} km</p>
-                </div>
+              <div className="flex-1 text-center">
+                <p className="text-[10px] text-gray-400">Distancia</p>
+                <p className="text-sm font-semibold text-gray-800">{distKm} km</p>
               </div>
               {rs && (
                 <>
                   <div className="w-px bg-gray-100" />
-                  <div className="flex-1 flex items-center gap-2">
-                    <span className="text-sm flex-shrink-0">📡</span>
-                    <div>
-                      <p className="text-[10px] text-gray-400">Sensores</p>
-                      <p className="text-sm font-semibold text-gray-800">{rs.n_sensors_predicted}</p>
-                    </div>
+                  <div className="flex-1 text-center">
+                    <p className="text-[10px] text-gray-400">Sensores</p>
+                    <p className="text-sm font-semibold text-gray-800">{rs.n_sensors_predicted}</p>
                   </div>
                 </>
               )}
             </div>
           </div>
 
-          {/* Tráfico + Mejor opción */}
-          <div className="flex gap-3">
-            <div className={`flex-1 rounded-2xl p-3.5 ${traffic.bg}`}>
-              <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400 mb-1">🚦 Tráfico</p>
-              <p className={`text-base font-bold ${traffic.text}`}>{traffic.label}</p>
-              <p className="text-[11px] text-gray-500 mt-0.5">
-                {sensors.length} sensores · modo {rs?.mode ?? '–'}
-              </p>
-            </div>
-            <div className="flex-1 rounded-2xl p-3.5 bg-green-50">
-              <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400 mb-1">⚡ Mejor opción</p>
-              <p className="text-base font-bold text-green-700">
-                {etaMin > 30 ? 'Sal 10 min antes' : 'Sal puntual'}
-              </p>
-              <p className="text-[11px] text-gray-500 mt-0.5">para optimizar el trayecto</p>
-            </div>
+          {/* Tráfico */}
+          <div className={`rounded-2xl p-3.5 ${traffic.bg}`}>
+            <p className="text-[10px] font-bold uppercase tracking-wide text-gray-400 mb-1">Estado del tráfico</p>
+            <p className={`text-base font-bold ${traffic.text}`}>{traffic.label}</p>
+            <p className="text-[11px] text-gray-500 mt-0.5">{sensors.length} sensores monitorizados en la ruta</p>
           </div>
 
           {/* Meteorología */}
           {weather && (
             <div className="bg-white rounded-2xl shadow-sm p-4">
-              <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-3">🌤️ Condiciones Meteorológicas</p>
+              <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-3">Condiciones Meteorológicas</p>
               <div className="grid grid-cols-2 gap-3">
-                <div className="flex items-center gap-2">
-                  <CloudRain size={16} className="text-blue-400 flex-shrink-0" />
-                  <div>
-                    <p className="text-[10px] text-gray-400">Precipitación</p>
-                    <p className="text-sm font-semibold text-gray-800">{weather.precip_mm.toFixed(1)} mm</p>
-                  </div>
+                <div>
+                  <p className="text-[10px] text-gray-400">Precipitación</p>
+                  <p className="text-sm font-semibold text-gray-800">{weather.precip_mm.toFixed(1)} mm</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Thermometer size={16} className="text-orange-400 flex-shrink-0" />
-                  <div>
-                    <p className="text-[10px] text-gray-400">Temperatura</p>
-                    <p className="text-sm font-semibold text-gray-800">{weather.temperatura} °C</p>
-                  </div>
+                <div>
+                  <p className="text-[10px] text-gray-400">Temperatura</p>
+                  <p className="text-sm font-semibold text-gray-800">{weather.temperatura} °C</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-base flex-shrink-0">🌧️</span>
-                  <div>
-                    <p className="text-[10px] text-gray-400">Estado</p>
-                    <p className="text-sm font-semibold text-gray-800">{rainLabel(weather.lluvia_ord)}</p>
-                  </div>
+                <div>
+                  <p className="text-[10px] text-gray-400">Estado</p>
+                  <p className="text-sm font-semibold text-gray-800">{rainLabel(weather.lluvia_ord)}</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <AlertCircle size={16} className="text-blue-300 flex-shrink-0" />
-                  <div>
-                    <p className="text-[10px] text-gray-400">Prob. lluvia</p>
-                    <p className="text-sm font-semibold text-gray-800">{fmtProb(weather.prob_lluvia)}</p>
-                  </div>
+                <div>
+                  <p className="text-[10px] text-gray-400">Prob. lluvia</p>
+                  <p className="text-sm font-semibold text-gray-800">{fmtProb(weather.prob_lluvia)}</p>
                 </div>
               </div>
               <p className="text-[9px] text-gray-300 mt-2">Fuente: {weather.fuente}</p>
@@ -242,7 +185,7 @@ export default function Results() {
           {sensors.length > 0 && (
             <div className="bg-white rounded-2xl shadow-sm p-4">
               <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-3">
-                📡 Sensores en Ruta ({sensors.length})
+                Sensores en Ruta ({sensors.length})
               </p>
               <div className="space-y-0 max-h-52 overflow-y-auto scrollbar-hide">
                 {sensors.slice(0, 12).map((s) => {

@@ -60,13 +60,12 @@ class Settings:
 
     # Pesos de los modelos DL ya entrenados en outputs/
     # MODEL_LSTM apunta al artefacto que servirá la API en producción.
-    # IMPORTANTE: el pipeline de inferencia (scalers + perfiles + features)
-    # espera arquitectura (4, 22) → 3 targets. Modelos compatibles:
-    #   lstm_last.keras, exp1_lstm_deep_best.keras,
-    #   exp2_gru_baseline_best.keras, exp3_gru_deep_best.keras
-    # Cuando entrenes un nuevo lstm_best.keras con esa misma arquitectura,
-    # cambia esta constante.
-    MODEL_LSTM: Path = PROJECT_ROOT / "outputs" / "lstm_last.keras"
+    # Modelo activo: BiLSTM v2 (PyTorch .pt)
+    #   Arquitectura: Bidirectional(LSTM(128)) → Dropout(0.3) →
+    #                 Bidirectional(LSTM(64))  → Dropout(0.3) →
+    #                 Dense(64) → Dense(32) → Dense(3)
+    #   Input shape: (N, 12, 22)  |  seq_len=12 (3 h de historial)
+    MODEL_LSTM: Path = PROJECT_ROOT / "SALIDAS modelo 2" / "lstm_v2_best.pt"
     MODEL_GRU: Path = PROJECT_ROOT / "outputs" / "best_GRU.keras"
     MODEL_RNN: Path = PROJECT_ROOT / "outputs" / "best_RNN.keras"
     MODEL_EXP1_LSTM_DEEP: Path = PROJECT_ROOT / "outputs" / "exp1_lstm_deep_best.keras"
@@ -116,10 +115,13 @@ class Settings:
     # --- Constantes físicas ---------------------------------------------
     EARTH_RADIUS_M: int = 6_371_000   # radio medio terrestre (m), para haversine
 
-    # --- Caches de inferencia LSTM (generados por inferencia_app.ipynb) -
+    # --- Caches de inferencia BiLSTM v2 (generados por Modelo2.0.ipynb) ---
+    # Ejecuta la celda "Guardar stats de normalización" del notebook para
+    # generar bilstm_X_mean.npy, bilstm_X_std.npy y bilstm_scaler_y.pkl.
     INFERENCE_DIR: Path = PROJECT_ROOT / "outputs" / "inferencia"
-    SCALER_X_INFERENCE: Path = PROJECT_ROOT / "outputs" / "inferencia" / "scaler_X_inference.pkl"
-    SCALER_Y_INFERENCE: Path = PROJECT_ROOT / "outputs" / "inferencia" / "scaler_y_inference.pkl"
+    SCALER_X_INFERENCE: Path = PROJECT_ROOT / "outputs" / "inferencia" / "bilstm_X_mean.npy"
+    SCALER_X_STD: Path = PROJECT_ROOT / "outputs" / "inferencia" / "bilstm_X_std.npy"
+    SCALER_Y_INFERENCE: Path = PROJECT_ROOT / "outputs" / "inferencia" / "bilstm_scaler_y.pkl"
     HISTORICAL_PROFILES: Path = PROJECT_ROOT / "outputs" / "inferencia" / "historical_profiles.pkl"
 
     # --- Open-Meteo / weather -------------------------------------------

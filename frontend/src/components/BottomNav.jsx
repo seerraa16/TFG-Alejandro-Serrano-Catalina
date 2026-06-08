@@ -19,7 +19,7 @@ export default function BottomNav() {
 
   return (
     <nav style={{
-      background: '#ffffff',
+      background: 'var(--surface)',
       borderTop: '1px solid var(--border)',
       flexShrink: 0,
     }}>

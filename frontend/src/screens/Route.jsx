@@ -11,8 +11,8 @@ import Header from '../components/Header'
 import BottomNav from '../components/BottomNav'
 import {
   Search, MapPin, Clock, Calendar, Layers,
-  Navigation, Gauge, AlertTriangle, CloudRain,
-  Thermometer, ChevronDown, RotateCcw,
+  Navigation, Gauge, AlertTriangle,
+  ChevronDown, RotateCcw, CloudRain,
 } from 'lucide-react'
 
 delete L.Icon.Default.prototype._getIconUrl
@@ -155,7 +155,7 @@ export default function Route() {
 
             {/* Eyebrow + título */}
             <div style={{ padding: '4px 2px 0' }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-3)', marginBottom: 6 }}>Planificador de rutas</div>
+              <div style={{ fontFamily: "'Geist', sans-serif", fontSize: 10.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--ink-3)', marginBottom: 6 }}>Planificador de rutas</div>
               <h1 style={{ fontFamily: 'inherit', fontWeight: 600, fontSize: 24, letterSpacing: '-0.025em', lineHeight: 1.3, color: 'var(--ink)', margin: 0 }}>Nueva ruta</h1>
             </div>
 
@@ -171,13 +171,13 @@ export default function Route() {
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div>
-                    <label style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase' }}>Origen</label>
+                    <label style={{ fontFamily: "'Geist', sans-serif", fontSize: 9.5, color: 'var(--ink-3)', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Origen</label>
                     <input type="text" value={origin} onChange={e => setOrigin(e.target.value)}
                       style={{ width: '100%', fontSize: 14, fontWeight: 500, color: 'var(--ink)', border: 'none', outline: 'none', background: 'transparent', padding: '4px 0', fontFamily: 'inherit' }} />
                   </div>
                   <div style={{ height: 1, background: 'var(--border-soft)', margin: '4px 0' }} />
                   <div>
-                    <label style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', fontWeight: 500, letterSpacing: '0.18em', textTransform: 'uppercase' }}>Destino</label>
+                    <label style={{ fontFamily: "'Geist', sans-serif", fontSize: 9.5, color: 'var(--ink-3)', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Destino</label>
                     <input type="text" value={destination} onChange={e => setDestination(e.target.value)}
                       style={{ width: '100%', fontSize: 14, fontWeight: 500, color: 'var(--ink)', border: 'none', outline: 'none', background: 'transparent', padding: '4px 0', fontFamily: 'inherit' }}
                       placeholder="¿A dónde vas?" />
@@ -196,7 +196,7 @@ export default function Route() {
               </div>
               <div style={{ display: 'flex', padding: '0 14px 14px' }}>
                 <div style={{ flex: 1, padding: '0 8px 0 0' }}>
-                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', letterSpacing: '0.18em', fontWeight: 500, margin: '0 0 6px' }}>FECHA</p>
+                  <p style={{ fontFamily: "'Geist', sans-serif", fontSize: 9.5, color: 'var(--ink-3)', letterSpacing: '0.06em', fontWeight: 500, margin: '0 0 6px' }}>FECHA</p>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                     <Calendar size={12} style={{ color: 'var(--ink-4)', flexShrink: 0 }} />
                     <input type="date" value={date} onChange={e => setDate(e.target.value)}
@@ -205,7 +205,7 @@ export default function Route() {
                 </div>
                 <div style={{ width: 1, background: 'var(--border)' }} />
                 <div style={{ flex: 1, padding: '0 0 0 14px' }}>
-                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9.5, color: 'var(--ink-3)', letterSpacing: '0.18em', fontWeight: 500, margin: '0 0 6px' }}>HORA</p>
+                  <p style={{ fontFamily: "'Geist', sans-serif", fontSize: 9.5, color: 'var(--ink-3)', letterSpacing: '0.06em', fontWeight: 500, margin: '0 0 6px' }}>HORA</p>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                     <Clock size={12} style={{ color: 'var(--ink-4)', flexShrink: 0 }} />
                     <input type="time" value={time} onChange={e => setTime(e.target.value)}
@@ -226,10 +226,10 @@ export default function Route() {
               <div style={{ position: 'relative', display: 'flex', margin: '0 14px', background: 'var(--bg-2)', borderRadius: 10, padding: 4 }}>
                 <div style={{ position: 'absolute', top: 4, left: 4, width: 'calc(50% - 4px)', height: 'calc(100% - 8px)', background: 'var(--surface)', borderRadius: 7, boxShadow: '0 1px 3px rgba(15,20,50,0.08)', transition: 'transform 220ms cubic-bezier(.2,.7,.2,1)', transform: mode === 'osm' ? 'translateX(0)' : 'translateX(100%)' }} />
                 <button onClick={() => setMode('osm')} style={{ flex: 1, position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 500, padding: '8px 0', color: mode === 'osm' ? 'var(--primary)' : 'var(--ink-3)', transition: 'color 160ms' }}>
-                  🛣️ Red Vial
+                  Red Vial
                 </button>
                 <button onClick={() => setMode('sensors')} style={{ flex: 1, position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 500, padding: '8px 0', color: mode === 'sensors' ? 'var(--primary)' : 'var(--ink-3)', transition: 'color 160ms' }}>
-                  📡 Sensores
+                  Sensores
                 </button>
               </div>
               <p style={{ margin: 0, padding: '10px 14px 14px', fontSize: 12, color: 'var(--ink-3)', lineHeight: 1.5 }}>
@@ -312,7 +312,7 @@ export default function Route() {
                   attributionControl={false}
                 >
                   <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
-                  <Polyline positions={geometry} color="#2563eb" weight={5} opacity={0.85} />
+                  <Polyline positions={geometry} color="#15803d" weight={5} opacity={0.85} />
 
                   {/* Sensores con coordenadas */}
                   {sensors.filter(s => s.lat != null && s.lon != null).map(s => {
@@ -385,7 +385,7 @@ export default function Route() {
               </button>
 
               {/* Botón navegar */}
-              <button className="absolute bottom-3 left-1/2 -translate-x-1/2 z-[1000] bg-blue-600 text-white px-5 py-2.5 rounded-full font-semibold text-sm flex items-center gap-2 shadow-lg active:scale-95 transition-transform">
+              <button className="absolute bottom-3 left-1/2 -translate-x-1/2 z-[1000] bg-green-700 text-white px-5 py-2.5 rounded-full font-semibold text-sm flex items-center gap-2 shadow-lg active:scale-95 transition-transform">
                 <Navigation size={15} />
                 Iniciar Navegación
               </button>
@@ -397,17 +397,17 @@ export default function Route() {
               <div style={{ position: 'relative', display: 'flex', background: 'var(--bg-2)', borderRadius: 10, padding: 4 }}>
                 <div style={{ position: 'absolute', top: 4, left: 4, width: 'calc(50% - 4px)', height: 'calc(100% - 8px)', background: 'var(--surface)', borderRadius: 7, boxShadow: '0 1px 3px rgba(15,20,50,0.08)', transition: 'transform 220ms cubic-bezier(.2,.7,.2,1)', transform: mode === 'osm' ? 'translateX(0)' : 'translateX(100%)' }} />
                 <button onClick={() => handleToggleMode('osm')} disabled={loading} style={{ flex: 1, position: 'relative', zIndex: 1, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 500, padding: '8px 0', color: mode === 'osm' ? 'var(--primary)' : 'var(--ink-3)', transition: 'color 160ms', opacity: loading ? 0.6 : 1 }}>
-                  🛣️ Red Vial (OSM)
+                  Red Vial (OSM)
                 </button>
                 <button onClick={() => handleToggleMode('sensors')} disabled={loading} style={{ flex: 1, position: 'relative', zIndex: 1, background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 500, padding: '8px 0', color: mode === 'sensors' ? 'var(--primary)' : 'var(--ink-3)', transition: 'color 160ms', opacity: loading ? 0.6 : 1 }}>
-                  📡 Sensores
+                  Sensores
                 </button>
               </div>
 
               {loading && (
                 <div style={{ background: 'var(--primary-tint)', borderRadius: 12, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
                   <div className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin flex-shrink-0" style={{ borderColor: 'var(--primary)', borderTopColor: 'transparent' }} />
-                  <span style={{ fontSize: 12, color: 'var(--primary)', fontWeight: 500 }}>Recalculando en modo {mode === 'osm' ? 'Red Vial' : 'Sensores'}...</span>
+                  <span style={{ fontSize: 12, color: 'var(--primary)', fontWeight: 500 }}>Recalculando ruta...</span>
                 </div>
               )}
 
@@ -432,7 +432,7 @@ export default function Route() {
               </div>
 
               {/* ETA principal */}
-              <div style={{ display: 'flex', alignItems: 'stretch', background: '#ffffff', border: '1px solid var(--border)', borderRadius: 16, padding: '14px 8px' }}>
+              <div style={{ display: 'flex', alignItems: 'stretch', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '14px 8px' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '4px 8px' }}>
                   <span style={{ fontSize: 10, letterSpacing: '0.06em', color: 'var(--ink-3)', textTransform: 'uppercase', fontWeight: 500 }}>Duración</span>
                   <span style={{ fontSize: 34, fontWeight: 700, marginTop: 4, lineHeight: 1, color: 'var(--primary)', letterSpacing: '-0.02em' }}>
@@ -461,12 +461,12 @@ export default function Route() {
               {signalCount > 0 && (
                 <div style={{ background: 'var(--surface)', borderRadius: 14, border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
-                    <span style={{ color: 'var(--ink-3)' }}>🚗 Tiempo de circulación</span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 600, color: 'var(--ink)' }}>{(result.eta_minutes - signalDelayMin).toFixed(1)} min</span>
+                    <span style={{ color: 'var(--ink-3)' }}>Tiempo de circulación</span>
+                    <span style={{ fontFamily: "'Geist', sans-serif", fontWeight: 600, color: 'var(--ink)' }}>{(result.eta_minutes - signalDelayMin).toFixed(1)} min</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
-                    <span style={{ color: 'var(--ink-3)' }}>🚦 {signalCount} semáforos</span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 600, color: 'var(--warn)' }}>+{signalDelayMin.toFixed(1)} min</span>
+                    <span style={{ color: 'var(--ink-3)' }}>{signalCount} semáforos</span>
+                    <span style={{ fontFamily: "'Geist', sans-serif", fontWeight: 600, color: 'var(--warn)' }}>+{signalDelayMin.toFixed(1)} min</span>
                   </div>
                 </div>
               )}
@@ -488,35 +488,23 @@ export default function Route() {
               {/* Meteorología */}
               {weather && (
                 <div className="bg-white rounded-2xl shadow-sm p-4">
-                  <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-3">🌤️ Meteorología</p>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-3">Meteorología</p>
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="flex items-center gap-2">
-                      <CloudRain size={15} className="text-blue-400 flex-shrink-0" />
-                      <div>
-                        <p className="text-[10px] text-gray-400">Precipitación</p>
-                        <p className="text-sm font-semibold text-gray-800">{weather.precip_mm.toFixed(1)} mm</p>
-                      </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400">Precipitación</p>
+                      <p className="text-sm font-semibold text-gray-800">{weather.precip_mm.toFixed(1)} mm</p>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Thermometer size={15} className="text-orange-400 flex-shrink-0" />
-                      <div>
-                        <p className="text-[10px] text-gray-400">Temperatura</p>
-                        <p className="text-sm font-semibold text-gray-800">{weather.temperatura} °C</p>
-                      </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400">Temperatura</p>
+                      <p className="text-sm font-semibold text-gray-800">{weather.temperatura} °C</p>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm flex-shrink-0">🌧️</span>
-                      <div>
-                        <p className="text-[10px] text-gray-400">Estado</p>
-                        <p className="text-sm font-semibold text-gray-800">{rainLabel(weather.lluvia_ord)}</p>
-                      </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400">Estado</p>
+                      <p className="text-sm font-semibold text-gray-800">{rainLabel(weather.lluvia_ord)}</p>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm flex-shrink-0">☔</span>
-                      <div>
-                        <p className="text-[10px] text-gray-400">Prob. lluvia</p>
-                        <p className="text-sm font-semibold text-gray-800">{fmtProb(weather.prob_lluvia)}</p>
-                      </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400">Prob. lluvia</p>
+                      <p className="text-sm font-semibold text-gray-800">{fmtProb(weather.prob_lluvia)}</p>
                     </div>
                   </div>
                   <p className="text-[9px] text-gray-300 mt-2">Fuente: {weather.fuente}</p>
@@ -527,7 +515,7 @@ export default function Route() {
               {sensors.length > 0 && (
                 <div className="bg-white rounded-2xl shadow-sm p-4">
                   <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-3">
-                    📡 Sensores en Ruta ({sensors.length})
+                    Sensores en Ruta ({sensors.length})
                   </p>
                   <div className="space-y-0 max-h-56 overflow-y-auto scrollbar-hide">
                     {sensors.slice(0, 15).map(s => {

@@ -1,13 +1,14 @@
-"""Construcción de features para inferencia LSTM.
+"""Construcción de features para inferencia BiLSTM v2.
 
-Migrado de `inferencia_app.ipynb` (celdas 11 y 29). Dos responsabilidades:
+Migrado de `inferencia_app.ipynb` y actualizado para el modelo BiLSTM v2
+(Modelo2.0.ipynb). Dos responsabilidades:
 
     - `build_features_anytime`: para una fecha cualquiera (futura o pasada),
       sintetiza las 22 features que el modelo espera por sensor, combinando
       perfiles históricos (PROFILE_IDX) con weather y flags de accidente.
 
     - `build_sequences`: pasa de un DataFrame de filas (con todas las features
-      lag y context) al tensor (N, 4, 22) que el LSTM consume.
+      lag y context) al tensor (N, 12, 22) que el BiLSTM consume.
 """
 
 from __future__ import annotations
@@ -21,14 +22,14 @@ import pandas as pd
 from app.prediction.data_cache import get_profile_idx
 
 # ---------------------------------------------------------------------------
-# Schema del modelo LSTM (idéntico a inferencia_app.ipynb celda 2)
+# Schema del modelo BiLSTM v2 (idéntico a Modelo2.0.ipynb)
 # ---------------------------------------------------------------------------
 TARGET_COLS: tuple[str, ...] = ("intensidad_trafico", "ocupacion", "carga")
 
-# Pasos temporales que componen la secuencia. El modelo recibe (N, 4, 22)
-# con t-4, t-3, t-2, t-1 (orden creciente en proximidad al momento objetivo).
-SEQ_STEPS: tuple[int, ...] = (4, 3, 2, 1)
-SEQ_LEN: int = len(SEQ_STEPS)
+# Pasos temporales que componen la secuencia. El modelo recibe (N, 12, 22)
+# con t-12, t-11, ..., t-1 (orden cronológico: antiguo → reciente).
+SEQ_STEPS: tuple[int, ...] = tuple(range(12, 0, -1))
+SEQ_LEN: int = len(SEQ_STEPS)  # 12
 
 # 19 columnas de contexto que se replican en cada step de la secuencia.
 CONTEXT_COLS: tuple[str, ...] = (
@@ -103,10 +104,11 @@ def build_features_anytime(
     """
     ts = pd.Timestamp(dt)
 
-    # Lags 1..8 (los 4 últimos van como features explícitas; los 8 alimentan
-    # las rolling means). Para "futuro" estos lags son perfiles medios.
+    # Lags 1..12 (los 12 van como features explícitas en la secuencia;
+    # los primeros 8 también alimentan las rolling means de contexto).
+    # Para fechas futuras estos lags son perfiles medios del histórico.
     samples: dict[int, dict[str, float]] = {}
-    for k in range(1, 9):
+    for k in range(1, 13):
         t_lag = ts - timedelta(minutes=15 * k)
         slot = t_lag.hour * 4 + t_lag.minute // 15
         dow = t_lag.dayofweek
@@ -114,13 +116,13 @@ def build_features_anytime(
 
     feat: dict[str, float | int] = {}
 
-    # Lags explícitas 1..4
-    for k in (1, 2, 3, 4):
+    # Lags explícitas 1..12 (necesario para la ventana de 12 pasos del BiLSTM)
+    for k in range(1, 13):
         feat[f"intensidad_trafico_lag{k}"] = samples[k]["intensidad"]
         feat[f"ocupacion_lag{k}"] = samples[k]["ocupacion"]
         feat[f"carga_lag{k}"] = samples[k]["carga"]
 
-    # Rolling means
+    # Rolling means (features de contexto, igual que antes: roll4 y roll8)
     intens4 = [samples[k]["intensidad"] for k in (1, 2, 3, 4)]
     occ4 = [samples[k]["ocupacion"] for k in (1, 2, 3, 4)]
     car4 = [samples[k]["carga"] for k in (1, 2, 3, 4)]
@@ -166,17 +168,17 @@ def build_features_anytime(
 # DataFrame de filas → tensor (N, 4, 22)
 # ---------------------------------------------------------------------------
 def build_sequences(df_rows: pd.DataFrame) -> np.ndarray:
-    """Convierte filas de features en el tensor que el LSTM espera.
+    """Convierte filas de features en el tensor que el BiLSTM v2 espera.
 
     Args:
         df_rows: DataFrame con TODAS las columnas que aparecen en
-            CONTEXT_COLS + lag1..4 (intensidad, ocupacion, carga). Cada
+            CONTEXT_COLS + lag1..12 (intensidad, ocupacion, carga). Cada
             fila representa un sensor en el instante objetivo.
 
     Returns:
-        np.ndarray float32 con shape `(N, 4, 22)` donde:
+        np.ndarray float32 con shape `(N, 12, 22)` donde:
             - N = nº de sensores (una fila por sensor)
-            - 4 = SEQ_LEN (steps t-4..t-1)
+            - 12 = SEQ_LEN (steps t-12..t-1, orden cronológico)
             - 22 = 3 features de tráfico lagged + 19 de contexto
     """
     context = df_rows.loc[:, list(CONTEXT_COLS)].values.astype("float32")
