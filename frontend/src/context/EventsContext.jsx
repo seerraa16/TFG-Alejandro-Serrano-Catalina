@@ -60,17 +60,17 @@ function sortEvents(events) {
   })
 }
 
-const STREET_PREFIXES = /^(calle|c\/|av\.|avda\.|avenida|paseo|pso\.|plaza|pl\.|camino|ronda|carretera|ctra\.|bulevar|\d)/i
+const STREET_PREFIXES = /^(calle|c[/.\\]|av[./]|avda\.|avenida|paseo|pso\.|plaza|pl\.|cam\.|camino|ronda|carretera|ctra\.|bulevar|\d)/i
 
 function extractStreetAddress(location) {
   if (!location) return ''
   const parts = location.split(',').map(s => s.trim()).filter(Boolean)
   if (parts.length <= 1) return location
-  // Si la primera parte no parece calle, descartarla (es nombre de empresa/edificio)
-  if (!STREET_PREFIXES.test(parts[0])) {
-    return parts.slice(1).join(', ').trim()
-  }
-  return location
+  // Busca el primer fragmento que parece dirección (puede haber varios nombres de empresa antes)
+  const streetIdx = parts.findIndex(p => STREET_PREFIXES.test(p))
+  // Si la calle es el primer fragmento o no se encontró ninguna, usar la dirección completa
+  if (streetIdx <= 0) return location
+  return parts.slice(streetIdx).join(', ').trim()
 }
 
 async function fetchGoogleCalendarEvents(accessToken) {

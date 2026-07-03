@@ -41,6 +41,7 @@ export default function Planner() {
   const [eventETAs, setEventETAs] = useState({})
   const [etaLoading, setEtaLoading] = useState({})
   const [loadingRoute, setLoadingRoute] = useState(null)
+  const [routeErrors, setRouteErrors] = useState({})
   const [showAddModal, setShowAddModal] = useState(false)
   const [newEvent, setNewEvent] = useState({ title: '', date: '', eventTime: '', destination: '' })
   const [addError, setAddError] = useState('')
@@ -150,6 +151,7 @@ export default function Planner() {
 
   const handleOpenRoute = async (event) => {
     setLoadingRoute(event.id)
+    setRouteErrors(prev => { const n = { ...prev }; delete n[event.id]; return n })
     try {
       const dt = `${event.date}T${event.departureTime}:00`
       const result = await predictETA({
@@ -165,6 +167,7 @@ export default function Planner() {
       })
     } catch (e) {
       console.error(e)
+      setRouteErrors(prev => ({ ...prev, [event.id]: e.message || 'No se pudo calcular la ruta' }))
     } finally {
       setLoadingRoute(null)
     }
@@ -299,6 +302,7 @@ export default function Planner() {
                 eta={eventETAs[event.id]}
                 etaLoading={!!etaLoading[event.id]}
                 loadingRoute={loadingRoute === event.id}
+                routeError={routeErrors[event.id]}
                 onOpenRoute={() => handleOpenRoute(event)}
                 onRemove={() => removeEvent(event.id)}
               />
@@ -392,7 +396,7 @@ export default function Planner() {
   )
 }
 
-function EventCard({ event, eta, etaLoading, loadingRoute, onOpenRoute, onRemove }) {
+function EventCard({ event, eta, etaLoading, loadingRoute, routeError, onOpenRoute, onRemove }) {
   const isGoogle = event.status === 'GOOGLE'
   const noLocation = isGoogle && !event.hasLocation
 
@@ -445,39 +449,44 @@ function EventCard({ event, eta, etaLoading, loadingRoute, onOpenRoute, onRemove
 
       {/* ETA strip */}
       {!noLocation && (
-        <div style={{ borderTop: '1px solid var(--border-soft)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10, background: 'var(--bg)' }}>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontFamily: "'Geist', sans-serif", fontSize: 9, letterSpacing: '0.06em', color: 'var(--ink-3)', fontWeight: 600 }}>VIAJE</span>
-            {etaLoading ? (
-              <span style={{ display: 'flex', alignItems: 'center', gap: 5, color: 'var(--ink-3)', marginTop: 2 }}>
-                <Loader size={10} className="animate-spin" />
-                <span style={{ fontFamily: "'Geist', sans-serif", fontSize: 11 }}>calculando…</span>
-              </span>
-            ) : eta != null ? (
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12.5, color: 'var(--ink)', fontWeight: 600, marginTop: 2 }}>{eta.toFixed(0)} min</span>
-            ) : (
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'var(--ink-4)', marginTop: 2 }}>—</span>
-            )}
+        <div style={{ borderTop: '1px solid var(--border-soft)', padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 0, background: 'var(--bg)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontFamily: "'Geist', sans-serif", fontSize: 9, letterSpacing: '0.06em', color: 'var(--ink-3)', fontWeight: 600 }}>VIAJE</span>
+              {etaLoading ? (
+                <span style={{ display: 'flex', alignItems: 'center', gap: 5, color: 'var(--ink-3)', marginTop: 2 }}>
+                  <Loader size={10} className="animate-spin" />
+                  <span style={{ fontFamily: "'Geist', sans-serif", fontSize: 11 }}>calculando…</span>
+                </span>
+              ) : eta != null ? (
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12.5, color: 'var(--ink)', fontWeight: 600, marginTop: 2 }}>{eta.toFixed(0)} min</span>
+              ) : (
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'var(--ink-4)', marginTop: 2 }}>—</span>
+              )}
+            </div>
+            <button
+              onClick={onOpenRoute}
+              disabled={loadingRoute || etaLoading}
+              style={{
+                marginLeft: 'auto',
+                display: 'inline-flex', alignItems: 'center', gap: 5,
+                background: 'var(--primary)', color: '#fff', border: 'none',
+                height: 30, padding: '0 12px', borderRadius: 9, fontSize: 12, fontWeight: 500,
+                cursor: 'pointer', fontFamily: 'inherit',
+                boxShadow: '0 4px 10px -3px oklch(0.45 0.18 142 / 0.5)',
+                opacity: (loadingRoute || etaLoading) ? 0.5 : 1,
+              }}
+            >
+              {loadingRoute
+                ? <div style={{ width: 12, height: 12, border: '2px solid rgba(255,255,255,0.4)', borderTopColor: '#fff', borderRadius: 999, animation: 'spin 0.8s linear infinite' }} />
+                : <Navigation size={11} strokeWidth={2.5} />
+              }
+              Calcular ruta
+            </button>
           </div>
-          <button
-            onClick={onOpenRoute}
-            disabled={loadingRoute || etaLoading}
-            style={{
-              marginLeft: 'auto',
-              display: 'inline-flex', alignItems: 'center', gap: 5,
-              background: 'var(--primary)', color: '#fff', border: 'none',
-              height: 30, padding: '0 12px', borderRadius: 9, fontSize: 12, fontWeight: 500,
-              cursor: 'pointer', fontFamily: 'inherit',
-              boxShadow: '0 4px 10px -3px oklch(0.45 0.18 142 / 0.5)',
-              opacity: (loadingRoute || etaLoading) ? 0.5 : 1,
-            }}
-          >
-            {loadingRoute
-              ? <div style={{ width: 12, height: 12, border: '2px solid rgba(255,255,255,0.4)', borderTopColor: '#fff', borderRadius: 999, animation: 'spin 0.8s linear infinite' }} />
-              : <Navigation size={11} strokeWidth={2.5} />
-            }
-            Calcular ruta
-          </button>
+          {routeError && (
+            <p style={{ margin: '6px 0 0', fontSize: 11, color: 'var(--danger)', lineHeight: 1.4 }}>{routeError}</p>
+          )}
         </div>
       )}
     </article>
